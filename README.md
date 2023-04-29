@@ -79,9 +79,9 @@ You are better off buying the hardware directly from the hardware vendor than th
     - For the TTGO T-Display, use `config/sdkconfig_display_ttgo_tdisplay.defaults`.
 
 5. Load the sdkconfig file you found from the last step into `sdkconfig.defaults`. As an example, if you are using a T-Display, it would be:
-  ```
-  cp config/sdkconfig_display_ttgo_tdisplay.defaults sdkconfig.defaults
-  ```
+    ```
+    cp config/sdkconfig_display_ttgo_tdisplay.defaults sdkconfig.defaults
+    ```
 
 6. Modify the confiugration to disable logging in debug mode ("research and development" mode). Open the file using:
     ```
