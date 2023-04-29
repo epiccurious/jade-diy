@@ -52,8 +52,8 @@ You are better off buying the hardware directly from the hardware vendor than th
 
 2. Install the required software packages. Copy-and-paste the following lines into Terminal:
     ```bash
-    sudo apt -qq update
-    sudo apt -qq install -y cmake git python3-pip python3-venv
+    sudo apt update
+    sudo apt install -y cmake git python3-pip python3-venv
     [ -d ${HOME}/esp ] || mkdir ${HOME}/esp
     git clone -b v5.0.1 --recursive https://github.com/espressif/esp-idf.git ${HOME}/esp/esp-idf/
     cd ${HOME}/esp/esp-idf
