@@ -94,9 +94,9 @@ You are better off buying the hardware directly from the hardware vendor than th
   - When you are finished, save the file by pressing `Ctrl+X` then pressing `y` then pressing `return`.
   
 7. You are ready to start the process. On a slow computer, this step can take ___ minutes.
-  ```bash
-  idf.py flash
-  ```
+    ```bash
+    idf.py flash
+    ```
 
 8. You should see the jade initialization screen on your device.
 
