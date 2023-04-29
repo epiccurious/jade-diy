@@ -1,8 +1,10 @@
 # Jade Do-It-Yourself Hardware Guide
 
-YOU SHOULD NOT read this guide yet. It's still under development and requires testing across many hardware and operating systems.
+YOU SHOULD NOT follow this guide yet. 
 
-SERIOUSLY, if you don't already know what you're doing, do not follow this guide yet until it's compete.
+It's still under development and requires testing across many hardware and operating systems.
+
+SERIOUSLY, unless you already know what you're doing, do not follow this guide yet until it's compete.
 
 ## What is a Jade?
 
@@ -10,11 +12,11 @@ Jade is a bitcoin-only hardware wallet that runs 100% on Open Source code. The f
 
 ## Why Should I NOT Read This Guide?
 
-1. You have questions about how to use the Jade hardware wallet. Refer to the manufacturer's documentation or contact them instead.
+- You have questions about how to use the Jade hardware wallet. Refer to the manufacturer's documentation or contact them instead.
 
-2. You can't be bothered to learn how to operate a computer. We will be using the Terminal.
+- You can't be bothered to learn how to operate a computer. We will be using the Terminal.
 
-3. You are not willing to use Linux. (This guide only supports Linux Ubuntu for now but planning to add macOS support soon.)
+- You are not willing to use Linux. (This guide only supports Linux Ubuntu for now but planning to add macOS support soon once I iron out the brew dependencies.)
 
 ## Why Should I Read This Guide?
 
