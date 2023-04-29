@@ -61,43 +61,45 @@ You are better off buying the hardware directly from the hardware vendor than th
     ./install.sh esp32
     . $HOME/esp/esp-idf/export.sh
     ```
+    - On a slow internet connection and slow computer, this step can take over 5 minutes. 
   
-3. Download the most recent stable version of the Jade source code. Copy-and-paste the following lines into Terminal:
+3. Download the Jade source code and load the most recent stable version. Copy-and-paste the following lines into Terminal:
     ```
-    git clone https://github.com/blockstream.com/jade ${HOME}/jade/
+    git clone --recursive https://github.com/blockstream/jade ${HOME}/jade/
     cd ${HOME}/jade/
     git checkout $(git tag | grep -v miner | sort -V | tail -1)
     ```
   
-4. Figure out which pre-built configuration file to use under the `config/` sub-directory. We will refer to this file in the next step.
+4. Figure out which pre-built configuration file to use under the `config/` sub-directory. We will refer to this sub-directory and filename in the next step.
     ```bash
-    ls -l config/
+    ls -l configs/
     ```
-    - For the M5Stack Core, use `config/sdkconfig_display_m5blackgray.defaults`
-    - For the M5Stack Fire, use `config/sdkconfig_display_m5fire.defaults`
-    - For the M5Stack M5StickC Plus, use `config/sdkconfig_display_m5stickcplus.defaults`.
-    - For the TTGO T-Display, use `config/sdkconfig_display_ttgo_tdisplay.defaults`.
+    - For the M5Stack Core, use `configs/sdkconfig_display_m5blackgray.defaults`
+    - For the M5Stack Fire, use `configs/sdkconfig_display_m5fire.defaults`
+    - For the M5Stack M5StickC Plus, use `configs/sdkconfig_display_m5stickcplus.defaults`.
+    - For the TTGO T-Display, use `configs/sdkconfig_display_ttgo_tdisplay.defaults`.
 
-5. Load the sdkconfig file you found from the last step into `sdkconfig.defaults`. As an example, if you are using a T-Display, it would be:
+5. Load the sdkconfig file you found from the last step into `sdkconfig.defaults`. As an example, if you are flashing a TTGO T-Display, you would run in Terminal:
     ```
-    cp config/sdkconfig_display_ttgo_tdisplay.defaults sdkconfig.defaults
+    cp configs/sdkconfig_display_ttgo_tdisplay.defaults sdkconfig.defaults
     ```
 
 6. Modify the confiugration to disable logging in debug mode ("research and development" mode). Open the file using:
     ```
     nano sdkconfig.defaults
     ```
-    - Completely remove the line that says: `CONFIG_DEBUG_MODE=y`
+    - Remove the line about ten down that says: `CONFIG_DEBUG_MODE=y`
     - Add a line at the top that says: `CONFIG_LOG_DEFAULT_LEVEL_NONE=y`
     - When you are finished, save the file by pressing `Ctrl+X` then pressing `y` then pressing `return`.
   
-7. You are ready to start the process. On a slow computer, this step can take ___ minutes.
+7. You are now ready to start the process. Run the following command in Terminal:
     ```bash
     idf.py flash
     ```
+    - Please note: On a slow computer, this step can take ___ minutes.
 
 8. You should see the jade initialization screen on your device.
 
 ## Advanced Instructions (Secure Boot)
 
-This section is in progress.
+This section is still in progress.
