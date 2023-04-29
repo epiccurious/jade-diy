@@ -61,7 +61,7 @@ You are better off buying the hardware directly from the hardware vendor than th
     ./install.sh esp32
     . $HOME/esp/esp-idf/export.sh
     ```
-    - On a slow internet connection and slow computer, this step can take over 10 minutes. 
+    - Please note: On a slow computer, this step can take over 20 minutes. 
   
 3. Download the Jade source code and load the most recent stable version. Copy-and-paste the following lines into Terminal:
     ```bash
@@ -103,7 +103,7 @@ You are better off buying the hardware directly from the hardware vendor than th
     ```bash
     idf.py flash
     ```
-    - Please note: On a slow computer, this step can take ___ minutes.
+    - Please note: On a slow computer, this step can take over 10 minutes.
 
 10. You should see the Jade initialization screen on your device.
 
