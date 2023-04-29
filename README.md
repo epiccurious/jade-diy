@@ -2,7 +2,7 @@
 
 YOU SHOULD NOT read this guide yet. It's still under development and requires testing across many hardware and operating systems.
 
-If you don't already know what you're doing, do not follow this guide.
+Seriously, you don't already know what you're doing, do not follow this guide.
 
 ## What is a Jade?
 
@@ -84,7 +84,7 @@ You are better off buying the hardware directly from the hardware vendor than th
     cp configs/sdkconfig_display_ttgo_tdisplay.defaults sdkconfig.defaults
     ```
 
-6. Modify the confiugration to disable logging in debug mode ("research and development" mode). Open the file using:
+6. Modify the configuration to disable logging in debug mode ("research and development" mode). Open the file using:
     ```bash
     nano sdkconfig.defaults
     ```
