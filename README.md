@@ -30,14 +30,19 @@ After following the steps below, you should transfer
 
 You are better off buying the hardware directly from the hardware vendor than through a third-party channel like Amazon or Alibaba. In many cases, it's cheaper to buy direct too.
 
-- [M5Stack Core](https://shop.m5stack.com/products/esp32-basic-core-iot-development-kit-v2-6)
-- [M5Stack Fire](https://shop.m5stack.com/products/m5stack-fire-iot-development-kit-psram-v2-6)
-- [M5Stack M5StickC PLUS](https://shop.m5stack.com/products/m5stickc-plus-esp32-pico-mini-iot-development-kit)
-    - DO NOT confuse this hardware with the M5StickC. The newer PLUS verison with a larger screen is the one to buy.
-- [TTGO T-Display](https://www.lilygo.cc/products/lilygo%C2%AE-ttgo-t-display-1-14-inch-lcd-esp32-control-board?variant=42720264683701)
-    - DO NOT confuse this hardware with the more expensive T-Display S3 or T-Display AMOLED. The cheaper T-Display is the one to buy.
-    - The best variant for most people is the `K164`, which is the listed as `T-Display 16MB With Shell Not Solder version`.
-    - If you prefer just the raw board, buy the `Q125`, whic is listed as `T-Display 16MB`.
+- $10 [TTGO T-Display](https://www.lilygo.cc/products/lilygo%C2%AE-ttgo-t-display-1-14-inch-lcd-esp32-control-board?variant=42720264683701), either the K164 or Q125 variant
+    - Does not include a battery
+    - DO NOT confuse this hardware with the more expensive T-Display S3 or T-Display AMOLED.
+
+- $20 [M5Stack M5StickC PLUS](https://shop.m5stack.com/products/m5stickc-plus-esp32-pico-mini-iot-development-kit)
+    - Includes a built-in battery
+    - DO NOT confuse this hardware with the $15 M5StickC. The newer PLUS verison with a larger screen is the one to buy.
+
+- $40 [M5Stack Core Basic](https://shop.m5stack.com/products/esp32-basic-core-iot-development-kit-v2-6)
+    - Nice 3-button design
+
+- $50 [M5Stack Fire](https://shop.m5stack.com/products/m5stack-fire-iot-development-kit-psram-v2-6)
+    - Nice 3-button design, a bigger battery, and a magnetic charging base
 
 ## Limitations of Third-Party Hardware
 
