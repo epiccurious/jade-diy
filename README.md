@@ -6,7 +6,7 @@ If you don't already know what you're doing, do not follow this guide.
 
 ## What is a Jade?
 
-Jade is a bitcoin-only hardware wallet that runs 100% on Open Source code. The code can also be run other hardware that uses the ESP32 microcontroller.
+Jade is a bitcoin-only hardware wallet that runs 100% on Open Source code. The firmware that runs Jade can also run other ESP32-compatible.
 
 ## Why Should I NOT Read This Guide?
 
@@ -49,8 +49,14 @@ You are better off buying the hardware directly from the hardware vendor than th
 ## Beginner Instructions (without Secure Boot)
 
 1. Open the Terminal by pressing `Ctrl+Alt+T`.
-  
-2. Install the required code for the Espressif ESP32 chip. Copy-and-paste the following lines into Terminal:
+
+2. Install the dependency packages ("required tools").
+    ```bash
+    sudo apt -qq update
+    sudo apt -qq install -y git python3-pip python3-venv
+    ```
+
+3. Install the required code for the Espressif ESP32 chip. Copy-and-paste the following lines into Terminal:
     ```
     [ -d ${HOME}/esp } || mkdir ${HOME}/esp
     git clone -b v5.0.1 --recursive https://github.com/espressif/esp-idf.git ${HOME}/esp/esp-idf/
@@ -61,14 +67,14 @@ You are better off buying the hardware directly from the hardware vendor than th
     ```
     - On a slow internet connection and slow computer, this step can take over 5 minutes. 
   
-3. Download the Jade source code and load the most recent stable version. Copy-and-paste the following lines into Terminal:
+4. Download the Jade source code and load the most recent stable version. Copy-and-paste the following lines into Terminal:
     ```
     git clone --recursive https://github.com/blockstream/jade ${HOME}/jade/
     cd ${HOME}/jade/
     git checkout $(git tag | grep -v miner | sort -V | tail -1)
     ```
   
-4. Figure out which pre-built configuration file to use under the `config/` sub-directory. We will refer to this sub-directory and filename in the next step.
+5. Figure out which pre-built configuration file to use under the `config/` sub-directory. We will refer to this sub-directory and filename in the next step.
     ```bash
     ls -l configs/
     ```
@@ -77,12 +83,12 @@ You are better off buying the hardware directly from the hardware vendor than th
     - For the M5Stack M5StickC Plus, use `configs/sdkconfig_display_m5stickcplus.defaults`.
     - For the TTGO T-Display, use `configs/sdkconfig_display_ttgo_tdisplay.defaults`.
 
-5. Load the sdkconfig file you found from the last step into `sdkconfig.defaults`. As an example, if you are flashing a TTGO T-Display, you would run in Terminal:
+6. Load the sdkconfig file you found from the last step into `sdkconfig.defaults`. As an example, if you are flashing a TTGO T-Display, you would run in Terminal:
     ```
     cp configs/sdkconfig_display_ttgo_tdisplay.defaults sdkconfig.defaults
     ```
 
-6. Modify the confiugration to disable logging in debug mode ("research and development" mode). Open the file using:
+7. Modify the confiugration to disable logging in debug mode ("research and development" mode). Open the file using:
     ```
     nano sdkconfig.defaults
     ```
@@ -90,13 +96,13 @@ You are better off buying the hardware directly from the hardware vendor than th
     - Add a line at the top that says: `CONFIG_LOG_DEFAULT_LEVEL_NONE=y`
     - When you are finished, save the file by pressing `Ctrl+X` then pressing `y` then pressing `return`.
   
-7. You are now ready to start the process. Run the following command in Terminal:
+8. You are now ready to start the process. Run the following command in Terminal:
     ```bash
     idf.py flash
     ```
     - Please note: On a slow computer, this step can take ___ minutes.
 
-8. You should see the jade initialization screen on your device.
+9. You should see the jade initialization screen on your device.
 
 ## Advanced Instructions (Secure Boot)
 
