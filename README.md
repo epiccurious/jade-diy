@@ -50,14 +50,10 @@ You are better off buying the hardware directly from the hardware vendor than th
 
 1. Open the Terminal by pressing `Ctrl+Alt+T`.
 
-2. Install the dependency packages ("required tools").
+2. Install the required software packages. Copy-and-paste the following lines into Terminal:
     ```bash
     sudo apt -qq update
-    sudo apt -qq install -y git python3-pip python3-venv
-    ```
-
-3. Install the required code for the Espressif ESP32 chip. Copy-and-paste the following lines into Terminal:
-    ```
+    sudo apt -qq install -y cmake git python3-pip python3-venv
     [ -d ${HOME}/esp } || mkdir ${HOME}/esp
     git clone -b v5.0.1 --recursive https://github.com/espressif/esp-idf.git ${HOME}/esp/esp-idf/
     cd ${HOME}/esp/esp-idf
@@ -65,16 +61,16 @@ You are better off buying the hardware directly from the hardware vendor than th
     ./install.sh esp32
     . $HOME/esp/esp-idf/export.sh
     ```
-    - On a slow internet connection and slow computer, this step can take over 5 minutes. 
+    - On a slow internet connection and slow computer, this step can take over 10 minutes. 
   
-4. Download the Jade source code and load the most recent stable version. Copy-and-paste the following lines into Terminal:
-    ```
+3. Download the Jade source code and load the most recent stable version. Copy-and-paste the following lines into Terminal:
+    ```bash
     git clone --recursive https://github.com/blockstream/jade ${HOME}/jade/
     cd ${HOME}/jade/
     git checkout $(git tag | grep -v miner | sort -V | tail -1)
     ```
   
-5. Figure out which pre-built configuration file to use under the `config/` sub-directory. We will refer to this sub-directory and filename in the next step.
+4. Figure out which pre-built configuration file to use under the `config/` sub-directory. We will refer to this sub-directory and filename in the next step.
     ```bash
     ls -l configs/
     ```
@@ -83,26 +79,28 @@ You are better off buying the hardware directly from the hardware vendor than th
     - For the M5Stack M5StickC Plus, use `configs/sdkconfig_display_m5stickcplus.defaults`.
     - For the TTGO T-Display, use `configs/sdkconfig_display_ttgo_tdisplay.defaults`.
 
-6. Load the sdkconfig file you found from the last step into `sdkconfig.defaults`. As an example, if you are flashing a TTGO T-Display, you would run in Terminal:
-    ```
+5. Load the sdkconfig file you found from the last step into `sdkconfig.defaults`. As an example, if you are flashing a TTGO T-Display, you would run in Terminal:
+    ```bash
     cp configs/sdkconfig_display_ttgo_tdisplay.defaults sdkconfig.defaults
     ```
 
-7. Modify the confiugration to disable logging in debug mode ("research and development" mode). Open the file using:
-    ```
+6. Modify the confiugration to disable logging in debug mode ("research and development" mode). Open the file using:
+    ```bash
     nano sdkconfig.defaults
     ```
     - Remove the line about ten down that says: `CONFIG_DEBUG_MODE=y`
     - Add a line at the top that says: `CONFIG_LOG_DEFAULT_LEVEL_NONE=y`
     - When you are finished, save the file by pressing `Ctrl+X` then pressing `y` then pressing `return`.
   
-8. You are now ready to start the process. Run the following command in Terminal:
+7. If you haven't done it yet, plug in your device.
+
+8. . Run the following command in Terminal:
     ```bash
     idf.py flash
     ```
     - Please note: On a slow computer, this step can take ___ minutes.
 
-9. You should see the jade initialization screen on your device.
+8. You should see the Jade initialization screen on your device.
 
 ## Advanced Instructions (Secure Boot)
 
