@@ -2,7 +2,7 @@
 
 YOU SHOULD NOT read this guide yet. It's still under development and requires testing across many hardware and operating systems.
 
-Seriously, you don't already know what you're doing, do not follow this guide.
+SERIOUSLY, if you don't already know what you're doing, do not follow this guide yet until it's compete.
 
 ## What is a Jade?
 
