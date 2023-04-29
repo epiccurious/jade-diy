@@ -1,6 +1,6 @@
 # Jade Do-It-Yourself Hardware Guide
 
-Don't read this guide yet. It's still under development and requires testing in multiple operating systems.
+YOU SHOULD NOT read this guide yet. It's still under development and requires testing across many hardware and operating systems.
 
 If you don't already know what you're doing, do not follow this guide.
 
@@ -14,7 +14,7 @@ Jade is a bitcoin-only hardware wallet that runs 100% on Open Source code. The c
 
 2. You can't be bothered to learn how to operate a computer. We will be using the Terminal.
 
-3. You are unfortunately using Microsoft Windows. This guide only supports macOS and Linux for now.
+3. You are not willing to use Linux. (This guide only supports Linux Ubuntu for now but planning to add macOS support soon.)
 
 ## Why Should I Read This Guide?
 
@@ -48,9 +48,7 @@ You are better off buying the hardware directly from the hardware vendor than th
 
 ## Beginner Instructions (without Secure Boot)
 
-1. Open the Terminal.
-    - On macOS, press `Command+Space`, type `terminal`, and press `return`.
-    - On Ubuntu, press `Ctrl+Alt+T`.
+1. Open the Terminal by pressing `Ctrl+Alt+T`.
   
 2. Install the required code for the Espressif ESP32 chip. Copy-and-paste the following lines into Terminal:
     ```
