@@ -1,8 +1,8 @@
 # Jade Do-It-Yourself Hardware Guide
 
-YOU SHOULD NOT follow this guide yet. 
+DO NOT follow this guide yet.
 
-It's still under development and requires testing across many hardware and operating systems.
+It's still under development and requires testing across different hardware and operating systems.
 
 SERIOUSLY, unless you already know what you're doing, do not follow this guide yet until it's compete.
 
@@ -14,7 +14,7 @@ Jade is a bitcoin-only hardware wallet that runs 100% on Open Source code. The f
 
 - You have questions about how to use the Jade hardware wallet. Refer to the manufacturer's documentation or contact them instead.
 
-- You can't be bothered to learn how to operate a computer. We will be using the Terminal.
+- You're a normie who can't be bothered to learn how to operate a computer. (We will be using the Terminal console which normies find scary.)
 
 - You are not willing to use Linux. (This guide only supports Linux Ubuntu for now but planning to add macOS support soon once I iron out the brew dependencies.)
 
@@ -26,8 +26,6 @@ You understand that the person who sells you hardware for your bitcoin should ha
 
 Don't hold more than $100k or more than would be life-changing on a Jade.
 
-After following the steps below, you should transfer 
-
 ## What Hardware Should I Buy?
 
 You are better off buying the hardware directly from the hardware vendor than through a third-party channel like Amazon or Alibaba. In many cases, it's cheaper to buy direct too.
@@ -38,12 +36,12 @@ You are better off buying the hardware directly from the hardware vendor than th
 
 - $20 [M5Stack M5StickC PLUS](https://shop.m5stack.com/products/m5stickc-plus-esp32-pico-mini-iot-development-kit)
     - Includes a built-in battery
-    - DO NOT confuse this hardware with the $15 M5StickC. The newer PLUS verison with a larger screen is the one to buy.
+    - DO NOT confuse this hardware with the older M5StickC. The newer PLUS verison with a larger screen is the one to buy.
 
 - $40 [M5Stack Core Basic](https://shop.m5stack.com/products/esp32-basic-core-iot-development-kit-v2-6)
     - Nice 3-button design
 
-- $50 [M5Stack Fire](https://shop.m5stack.com/products/m5stack-fire-iot-development-kit-psram-v2-6)
+- $50 [M5Stack FIRE v2.6](https://shop.m5stack.com/products/m5stack-fire-iot-development-kit-psram-v2-6)
     - Nice 3-button design, a bigger battery, and a magnetic charging base
 
 ## Limitations of Third-Party Hardware
