@@ -94,13 +94,18 @@ You are better off buying the hardware directly from the hardware vendor than th
   
 7. If you haven't done it yet, plug in your device.
 
-8. . Run the following command in Terminal:
+8. Enable read-write permissions for your device.
+    ```bash
+    sudo chmod a+rw /dev/ttyACM0
+    ```
+
+9. Flash (install) Jade onto your device. Run the following command in Terminal:
     ```bash
     idf.py flash
     ```
     - Please note: On a slow computer, this step can take ___ minutes.
 
-8. You should see the Jade initialization screen on your device.
+10. You should see the Jade initialization screen on your device.
 
 ## Advanced Instructions (Secure Boot)
 
