@@ -33,16 +33,20 @@ You are better off buying the hardware directly from the hardware vendor than th
 - $10 [TTGO T-Display](https://www.lilygo.cc/products/lilygo%C2%AE-ttgo-t-display-1-14-inch-lcd-esp32-control-board?variant=42720264683701), either the K164 or Q125 variant
     - Does not include a battery
     - DO NOT confuse this hardware with the more expensive T-Display S3 or T-Display AMOLED.
+    ![TTGO T-Display](img/TTGO-T-Display.jpg)
 
 - $20 [M5Stack M5StickC PLUS](https://shop.m5stack.com/products/m5stickc-plus-esp32-pico-mini-iot-development-kit)
     - Includes a built-in battery
-    - DO NOT confuse this hardware with the older M5StickC. The newer PLUS verison with a larger screen is the one to buy.
+    - DO NOT confuse this hardware with the older, cheaper M5StickC. The newer PLUS verison with a larger screen is the one to buy.
+    ![M5Stack M5StickC PLUS](img/M5Stack-M5StickC-PLUS.jpg)
 
 - $40 [M5Stack Core Basic](https://shop.m5stack.com/products/esp32-basic-core-iot-development-kit-v2-6)
     - Nice 3-button design
+    ![M5Stack Core Basic](img/M5Stack-Core-Basic.jpg)
 
 - $50 [M5Stack FIRE v2.6](https://shop.m5stack.com/products/m5stack-fire-iot-development-kit-psram-v2-6)
     - Nice 3-button design, a bigger battery, and a magnetic charging base
+    ![M5Stack FIRE](img/M5Stack-FIRE.jpg)
 
 ## Limitations of Third-Party Hardware
 
