@@ -78,14 +78,25 @@ You are better off buying the hardware directly from the hardware vendor than th
     cd ${HOME}/jade/
     ```
   
-4. Figure out which pre-built configuration file to use under the `config/` sub-directory. We will refer to this sub-directory and filename in the next step.
+4. Load the pre-built configuration file for your DIY hardware.
+    - For the M5Stack Core, run:
+        ```bash
+        cp configs/sdkconfig_display_m5blackgray.defaults sdkconfig.defaults
+        ```
+    - For the M5Stack Fire, run:
+        ```bash
+        cp configs/sdkconfig_display_m5fire.defaults sdkconfig.defaults
+        ```
+    - For the M5Stack M5StickC Plus, run:
+        ```bash
+        cp configs/sdkconfig_display_m5stickcplus.defaults sdkconfig.defaults
+        ```
+    - For the TTGO T-Display, use:
+        ```bash
+        configs/sdkconfig_display_ttgo_tdisplay.defaults`.
     ```bash
     ls -l configs/
     ```
-    - For the M5Stack Core, use `configs/sdkconfig_display_m5blackgray.defaults`
-    - For the M5Stack Fire, use `configs/sdkconfig_display_m5fire.defaults`
-    - For the M5Stack M5StickC Plus, use `configs/sdkconfig_display_m5stickcplus.defaults`.
-    - For the TTGO T-Display, use `configs/sdkconfig_display_ttgo_tdisplay.defaults`.
 
 5. Load the sdkconfig file you found from the last step into `sdkconfig.defaults`. As an example, if you are flashing a TTGO T-Display, you would run in Terminal:
     ```bash
