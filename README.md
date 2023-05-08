@@ -76,7 +76,6 @@ You are better off buying the hardware directly from the hardware vendor than th
     ```bash
     git clone --recursive https://github.com/blockstream/jade ${HOME}/jade/
     cd ${HOME}/jade/
-    git checkout $(git tag | grep -v miner | sort -V | tail -1)
     ```
   
 4. Figure out which pre-built configuration file to use under the `config/` sub-directory. We will refer to this sub-directory and filename in the next step.
