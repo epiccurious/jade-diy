@@ -94,22 +94,13 @@ You are better off buying the hardware directly from the hardware vendor than th
     - For the TTGO T-Display, use:
         ```bash
         configs/sdkconfig_display_ttgo_tdisplay.defaults`.
-    ```bash
-    ls -l configs/
-    ```
 
-5. Load the sdkconfig file you found from the last step into `sdkconfig.defaults`. As an example, if you are flashing a TTGO T-Display, you would run in Terminal:
+6. Modify the configuration file you just loaded to disable logging in debug mode (a.k.a. "research and development" mode).
     ```bash
-    cp configs/sdkconfig_display_ttgo_tdisplay.defaults sdkconfig.defaults
+    sed -i.bak '/CONFIG_DEBUG_MODE/d' ./sdkconfig.defaults
+    sed -i.bak '1s/^/CONFIG_LOG_DEFUALT_LEVEL_NONE=y\n/' sdkconfig.defaults
+    rm sdkconfig.defaults.bak
     ```
-
-6. Modify the configuration to disable logging in debug mode ("research and development" mode). Open the file using:
-    ```bash
-    nano sdkconfig.defaults
-    ```
-    - Remove the line about ten down that says: `CONFIG_DEBUG_MODE=y`
-    - Add a line at the top that says: `CONFIG_LOG_DEFAULT_LEVEL_NONE=y`
-    - When you are finished, save the file by pressing `Ctrl+X` then pressing `y` then pressing `return`.
   
 7. If you haven't done it yet, plug in your device.
 
