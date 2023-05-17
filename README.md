@@ -8,13 +8,15 @@ Jade is a bitcoin-only hardware wallet that runs 100% on Open Source code.
 
 The firmware that runs Jade can also run other ESP32-based devices, which are listed below.
 
-## Why Should I NOT Read This Guide?
+## Who Should NOT Follow This Guide?
 
-- You want to learn how to use the Jade hardware wallet. Refer to the manufacturer's documentation or contact Blockstream for software support.
+1. You want to secure more than $100,000 (in 2023 dollars) worth of bitcoin. For large amounts, use multisig with Bitcoin Core on a cheap, dedicated laptop. The recommended guide is [the Yeti Level 3 Wallet](https://yeticold.com).
 
-- You're a normie who can't be bothered to learn how to operate a computer through the command line. We will be using the Terminal console which normies find scary. It's not not hard, I promise.
+2. You want to learn how to use the Jade hardware wallet. Refer to [the Jade's help center documentation](https://help.blockstream.com/hc/en-us/categories/900000061906-Blockstream-Jade) or [contact Blockstream](https://help.blockstream.com/hc/en-us/requests/new) for software support.
 
-- You are not willing to use Linux. (This guide only supports Linux Ubuntu for now but planning to add macOS support soon once I iron out the brew dependencies.)
+3. You're a normie who can't be bothered to learn how to operate a computer through the command line. We will be using the Terminal console which normies find scary. It's not not hard, I promise.
+
+4. You are not willing to use Linux. (This guide only supports Linux Ubuntu for now but planning to add macOS support soon once I iron out the brew dependencies.)
 
 ## Why Should I Read This Guide?
 
@@ -24,7 +26,7 @@ You understand that the person who sells you hardware for your bitcoin should ha
 
 You're looking to secure less than $100,000 (in 2023 prices) worth of bitcoin.
 
-**WARNING:** Do not hold more than $100,000 (in 2023 prices) on a hardware wallet. For large amounts, use multisig with Bitcoin Core on a cheap, dedicated laptop. The recommended guide is [the Yeti Level 3 Wallet](https://yeticold.com).
+**WARNING:** Do not hold more than $100,000 (in 2023 prices) on a hardware wallet.
 
 ## What Hardware Should I Buy?
 
