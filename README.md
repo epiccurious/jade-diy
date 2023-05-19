@@ -35,20 +35,24 @@ You are better off buying the hardware directly from the hardware vendor than th
 - $10 [TTGO T-Display](https://www.lilygo.cc/products/lilygo%C2%AE-ttgo-t-display-1-14-inch-lcd-esp32-control-board?variant=42720264683701), either the K164 or Q125 variant
     - Does not include a battery. Either keep it plugged in or add a generic battery for a few dollars.
     - DO NOT confuse this hardware with the more expensive T-Display S3 or T-Display AMOLED products.
-    ![TTGO T-Display](img/TTGO-T-Display.jpg)
+
+        ![TTGO T-Display](img/TTGO-T-Display.jpg)
 
 - $20 [M5Stack M5StickC PLUS](https://shop.m5stack.com/products/m5stickc-plus-esp32-pico-mini-iot-development-kit)
     - Includes a built-in battery
     - DO NOT confuse this hardware with the older, cheaper M5StickC. The newer PLUS verison with a larger screen is the one to buy.
-    ![M5Stack M5StickC PLUS](img/M5Stack-M5StickC-PLUS.jpg)
+
+        ![M5Stack M5StickC PLUS](img/M5Stack-M5StickC-PLUS.jpg)
 
 - $40 [M5Stack Core Basic](https://shop.m5stack.com/products/esp32-basic-core-iot-development-kit-v2-6)
     - Nice 3-button design
-    ![M5Stack Core Basic](img/M5Stack-Core-Basic.jpg)
+
+        ![M5Stack Core Basic](img/M5Stack-Core-Basic.jpg)
 
 - $50 [M5Stack FIRE v2.6](https://shop.m5stack.com/products/m5stack-fire-iot-development-kit-psram-v2-6)
     - Nice 3-button design, a bigger battery, and a magnetic charging base
-    ![M5Stack FIRE](img/M5Stack-FIRE.jpg)
+
+        ![M5Stack FIRE](img/M5Stack-FIRE.jpg)
 
 ## Current Limitations of Third-Party DIY Hardware
 
@@ -61,8 +65,8 @@ You are better off buying the hardware directly from the hardware vendor than th
 
 2. Install the required software packages. On a slow computer, this step can take over 20 minutes. Copy-and-paste the following lines into Terminal:
     ```bash
-    sudo apt update
-    sudo apt install -y cmake git python3-pip python3-venv
+    sudo apt -qq update
+    sudo apt -qq install -y cmake git python3-pip python3-venv
     [ -d ${HOME}/esp ] || mkdir ${HOME}/esp
     git clone -b v5.0.1 --recursive https://github.com/espressif/esp-idf.git ${HOME}/esp/esp-idf/
     cd ${HOME}/esp/esp-idf
@@ -78,6 +82,14 @@ You are better off buying the hardware directly from the hardware vendor than th
     ```
   
 4. Load the pre-built configuration file for your DIY hardware.
+    - For the TTGO T-Display, run:
+        ```bash
+        cp configs/sdkconfig_display_ttgo_tdisplay.defaults sdkconfig.defaults
+        ```
+    - For the M5Stack M5StickC Plus, run:
+        ```bash
+        cp configs/sdkconfig_display_m5stickcplus.defaults sdkconfig.defaults
+        ```
     - For the M5Stack Core, run:
         ```bash
         cp configs/sdkconfig_display_m5blackgray.defaults sdkconfig.defaults
@@ -85,14 +97,6 @@ You are better off buying the hardware directly from the hardware vendor than th
     - For the M5Stack Fire, run:
         ```bash
         cp configs/sdkconfig_display_m5fire.defaults sdkconfig.defaults
-        ```
-    - For the M5Stack M5StickC Plus, run:
-        ```bash
-        cp configs/sdkconfig_display_m5stickcplus.defaults sdkconfig.defaults
-        ```
-    - For the TTGO T-Display, run:
-        ```bash
-        cp configs/sdkconfig_display_ttgo_tdisplay.defaults sdkconfig.defaults
         ```
 
 6. Modify the configuration file you just loaded to disable logging in debug mode (a.k.a. "research and development" mode).
