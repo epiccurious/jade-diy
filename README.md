@@ -116,7 +116,7 @@ You are better off buying the hardware directly from the hardware vendor than th
 
 9. Flash (install) Jade onto your device. On a slow computer, this step can take over 10 minutes. Run the following command in Terminal:
     ```bash
-    idf.py flash
+    idf.py -b 115200 flash
     ```
 
 10. You should see the Jade initialization screen on your device.
