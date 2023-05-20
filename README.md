@@ -110,7 +110,8 @@ You are better off buying the hardware directly from the hardware vendor than th
 
 8. Enable read-write permissions for your device.
     ```bash
-    sudo chmod a+rw /dev/ttyACM0
+    [ -f /dev/ttyACM0 ] && sudo chmod a+rw /dev/ttyACM0
+    [ -f /dev/ttyUSB0 ] && sudo chmod a+rw /dev/ttyUSB0
     ```
 
 9. Flash (install) Jade onto your device. On a slow computer, this step can take over 10 minutes. Run the following command in Terminal:
