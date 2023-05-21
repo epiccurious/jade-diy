@@ -1,8 +1,14 @@
 #!/bin/bash
 set -e
 
-sudo apt -qq update
-sudo apt -qq install -y cmake git python3-pip python3-venv
+clear
+echo "Checking for sudo permissions... "
+sudo echo -n
+
+echo -n "Checking for cmake, git, pip, and venv... "
+sudo apt-get -qq update
+sudo apt-get -qq install -y cmake git python3-pip python3-venv
+echo "ok."
 
 esp_git_dir="${HOME}/esp"
 jade_git_dir="${HOME}/jade"
@@ -11,64 +17,87 @@ device2="M5Stack M5StickC PLUS"
 device3="M5Stack Core Basic"
 device4="M5Stack FIRE"
 
-if [ ! -f $esp_git_dir/esp-idf/export.sh ]
+echo -n "Checking for the Espressif IoT Development Framework... "
+if [ ! -f "${esp_git_dir}"/esp-idf/export.sh ]
 then
-    [ -d $esp_git_dir ] || mkdir $esp_git_dir
-    git clone -b v5.0.1 --recursive https://github.com/espressif/esp-idf.git $esp_git_dir/esp-idf/
-    cd $esp_git_dir/esp-idf
+    [ -d "${esp_git_dir}" ] || mkdir "${esp_git_dir}"
+    git clone -b v5.0.1 --recursive https://github.com/espressif/esp-idf.git "${esp_git_dir}"/esp-idf/ 1>/dev/null
+    cd "${esp_git_dir}"/esp-idf
     git checkout a4afa44435ef4488d018399e1de50ad2ee964be8
-    ./install.sh esp32
+    ./install.sh esp32 1>/dev/null
 fi
-. $esp_git_dir/esp-idf/export.sh
+. "${esp_git_dir}"/esp-idf/export.sh 1>/dev/null
+echo "ok."
 
-[ -d ${jade_git_dir} ] || git clone --recursive https://github.com/blockstream/jade ${jade_git_dir}
-cd ${jade_git_dir}
+echo -n "Checking for the Blockstream Jade repository... "
+if [ ! -d "${jade_git_dir}" ]
+then
+    clone --recursive https://github.com/blockstream/jade "${jade_git_dir}" 1>/dev/null
+fi
+cd "${jade_git_dir}"
+echo "ok."
 
-clear
-
-PS3='Please enter your choice: '
-options=("$device1" "$device2" "$device3" "$device4" "Quit")
+echo "Which device do you want to flash?"
+PS3='Please enter the number for your device or QUIT: '
+options=("${device1}" "${device2}" "${device3}" "${device4}" "QUIT")
 select opt in "${options[@]}"
 do
     case $opt in
         "$device1")
-            echo "You chose option $REPLY, the $device1."
+            echo "You chose the ${opt}."
+            tty_device="/dev/ttyACM0"
             cp configs/sdkconfig_display_ttgo_tdisplay.defaults sdkconfig.defaults
             break
             ;;
         "$device2")
-            echo "You chose option $REPLY, the $device1."
+            echo "You chose the ${opt}."
+            tty_device="/dev/ttyUSB0"
             cp configs/sdkconfig_display_m5stickcplus.defaults sdkconfig.defaults
             break
             ;;
         "$device3")
-            echo "You chose option $REPLY, the $opt."
+            echo "You chose the ${opt}."
+            tty_device="/dev/ttyACM0"
             cp configs/sdkconfig_display_m5blackgray.defaults sdkconfig.defaults
             break
             ;;
         "$device4")
-            echo "You chose option $REPLY, the $opt."
+            echo "You chose the ${opt}."
+            tty_device="/dev/ttyACM0"
             cp configs/sdkconfig_display_m5fire.defaults sdkconfig.defaults
             break
             ;;
-        "Quit")
+        "QUIT")
             echo "You chose to quit."
             exit 0
             ;;
-        *) echo "You entered $REPLY which is invalid."
+        *) echo "You entered ${REPLY}, which is invalid."
     esac
 done
+
+[ -f sdkconfig ] && rm sdkconfig
 
 sed -i.bak '/CONFIG_DEBUG_MODE/d' ./sdkconfig.defaults
 sed -i.bak '1s/^/CONFIG_LOG_DEFUALT_LEVEL_NONE=y\n/' sdkconfig.defaults
 
-if [[ $opt == $device2 ]]
+while [ ! -c ${tty_device} ]
+do
+    echo -n "Connect your $opt then press any key to continue..."
+    read -rn1
+    echo
+done
+
+echo "Ready to install. This process can take over 10 minutes."
+echo -n "PRESS ANY KEY to continue... "
+read -rn1
+echo
+
+sudo chmod o+rw ${tty_device}
+if [[ ${opt} == "${device2}" ]]
 then
-    sudo chmod a+rw /dev/ttyUSB0
     idf.py -b 115200 flash
 else
-    sudo chmod a+rw /dev/ttyACM0
     idf.py flash
-fi 
+fi
 
-echo "SUCCESS! Your device should be properly flashed now."
+echo "SUCCESS! Your device should be flashed now."
