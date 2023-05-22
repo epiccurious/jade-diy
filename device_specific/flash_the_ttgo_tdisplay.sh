@@ -1,3 +1,6 @@
+#!/bin/bash
+set -e
+
 sudo apt -qq update
 sudo apt -qq install -y cmake git python3-pip python3-venv
 
