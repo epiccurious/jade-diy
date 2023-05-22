@@ -1,8 +1,19 @@
 #!/bin/bash
 set -e
-
 clear
-echo "Checking for sudo permissions... "
+
+echo "------------------------------------------------------------"
+echo "------------------------------------------------------------"
+echo "---                                                      ---"
+echo "---          Jade Do-It-Yourself Install Script          ---"
+echo "---                Written by Epic Curious               ---"
+echo "---                Twitter: @epic_curious                ---"
+echo "---                                                      ---"
+echo "------------------------------------------------------------"
+echo "------------------------------------------------------------"
+echo
+
+echo "Checking for sudo permission... "
 sudo echo -n
 
 echo -n "Checking for cmake, git, pip, and venv... "
@@ -17,14 +28,17 @@ device2="M5Stack M5StickC PLUS"
 device3="M5Stack Core Basic"
 device4="M5Stack FIRE"
 
-echo -n "Checking for the Espressif IoT Development Framework... "
+echo -n "Checking for Espressif IoT Development Framework... "
 if [ ! -f "${esp_git_dir}"/esp-idf/export.sh ]
 then
+    echo -ne "\n  Downloading the framework... "
     [ -d "${esp_git_dir}" ] || mkdir "${esp_git_dir}"
-    git clone -b v5.0.1 --recursive https://github.com/espressif/esp-idf.git "${esp_git_dir}"/esp-idf/ 1>/dev/null
+    git clone --quiet --recursive https://github.com/espressif/esp-idf.git "${esp_git_dir}"/esp-idf/
     cd "${esp_git_dir}"/esp-idf
-    git checkout a4afa44435ef4488d018399e1de50ad2ee964be8
-    ./install.sh esp32 1>/dev/null
+    git checkout v5.0.1 &>/dev/null
+    echo "ok."
+    echo -n "  Installing the framework... "
+    ./install.sh esp32
 fi
 . "${esp_git_dir}"/esp-idf/export.sh 1>/dev/null
 echo "ok."
@@ -32,38 +46,39 @@ echo "ok."
 echo -n "Checking for the Blockstream Jade repository... "
 if [ ! -d "${jade_git_dir}" ]
 then
-    clone --recursive https://github.com/blockstream/jade "${jade_git_dir}" 1>/dev/null
+    echo -ne "\n  Downloading the repo... "
+    git clone --quiet --recursive https://github.com/blockstream/jade "${jade_git_dir}"
 fi
 cd "${jade_git_dir}"
 echo "ok."
 
-echo "Which device do you want to flash?"
+echo -e "\nWhich device do you want to flash?"
 PS3='Please enter the number for your device or QUIT: '
 options=("${device1}" "${device2}" "${device3}" "${device4}" "QUIT")
 select opt in "${options[@]}"
 do
     case $opt in
         "$device1")
-            echo "You chose the ${opt}."
             tty_device="/dev/ttyACM0"
+            flash_command="idf.py flash"
             cp configs/sdkconfig_display_ttgo_tdisplay.defaults sdkconfig.defaults
             break
             ;;
         "$device2")
-            echo "You chose the ${opt}."
             tty_device="/dev/ttyUSB0"
+            flash_command="idf.py -b 115200 flash"
             cp configs/sdkconfig_display_m5stickcplus.defaults sdkconfig.defaults
             break
             ;;
         "$device3")
-            echo "You chose the ${opt}."
             tty_device="/dev/ttyACM0"
+            flash_command="idf.py flash"
             cp configs/sdkconfig_display_m5blackgray.defaults sdkconfig.defaults
             break
             ;;
         "$device4")
-            echo "You chose the ${opt}."
             tty_device="/dev/ttyACM0"
+            flash_command="idf.py flash"
             cp configs/sdkconfig_display_m5fire.defaults sdkconfig.defaults
             break
             ;;
@@ -76,28 +91,23 @@ do
 done
 
 [ -f sdkconfig ] && rm sdkconfig
-
 sed -i.bak '/CONFIG_DEBUG_MODE/d' ./sdkconfig.defaults
 sed -i.bak '1s/^/CONFIG_LOG_DEFUALT_LEVEL_NONE=y\n/' sdkconfig.defaults
 
 while [ ! -c ${tty_device} ]
 do
-    echo -n "Connect your $opt then press any key to continue..."
+    echo -ne "\nConnect your $opt then PRESS ANY KEY TO CONTINUE... "
     read -rn1
     echo
 done
 
-echo "Ready to install. This process can take over 10 minutes."
-echo -n "PRESS ANY KEY to continue... "
+echo -E "Ready to install Jade on your ${opt}."
+echo "(This process can take over 10 minutes.)"
+echo -n "PRESS ANY KEY TO CONTINUE... "
 read -rn1
 echo
 
 sudo chmod o+rw ${tty_device}
-if [[ ${opt} == "${device2}" ]]
-then
-    idf.py -b 115200 flash
-else
-    idf.py flash
-fi
+${flash_command}
 
-echo "SUCCESS! Your device should be flashed now."
+echo -e "\nSUCCESS!\nJade is now installed on your ${opt}."
