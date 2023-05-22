@@ -179,3 +179,7 @@ This options is provided for people who want to run the commands themselves.
     ```
 
 After the build and flash process completes, you should see the Jade initialization screen on your device.
+
+## Acknowledgements
+
+Inspiration for this project came from the Blockstream Jade team ([link to contributors](https://github.com/Blockstream/Jade/graphs/contributors)) and Crypto Guide ([link to YouTube](https://youtube.com/CryptoGuide), [Twitter](https://twitter.com/YTCryptoGuide)).
