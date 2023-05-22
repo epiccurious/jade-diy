@@ -14,11 +14,11 @@ The firmware that runs Jade can also run other ESP32-based devices, which are li
 
 2. You want to learn how to use the Jade hardware wallet. Refer to [the Jade's help center documentation](https://help.blockstream.com/hc/en-us/categories/900000061906-Blockstream-Jade) or [contact Blockstream](https://help.blockstream.com/hc/en-us/requests/new) for software support.
 
-3. You're a normie who can't be bothered to learn how to operate a computer through the command line. We will be using the Terminal console which normies find scary. It's not not hard, I promise.
+3. You're a normie who can't be bothered to learn how to operate a computer through the command line. We will be using the Terminal console, which some people find scary. It's not not hard, I promise.
 
-4. You are not willing to use Linux. (This guide only supports Linux Ubuntu for now but planning to add macOS support soon once I iron out the brew dependencies.)
+4. You you're not willing to [use Linux](https://ubuntu.com/tutorials/install-ubuntu-desktop). (This guide only supports Linux Ubuntu for now but planning to add macOS support soon once I iron out the brew dependencies.)
 
-## Why Should I Read This Guide?
+## Why Should I Follow This Guide?
 
 Three words: **supply chain attacks**.
 
@@ -32,25 +32,29 @@ You're looking to secure less than $100,000 (in 2023 prices) worth of bitcoin.
 
 You are better off buying the hardware directly from the hardware vendor than through a third-party channel like Amazon or Alibaba. In many cases, it's cheaper to buy direct too.
 
-- $10 [TTGO T-Display](https://www.lilygo.cc/products/lilygo%C2%AE-ttgo-t-display-1-14-inch-lcd-esp32-control-board?variant=42720264683701), either the K164 or Q125 variant
+- $8-$11 [TTGO T-Display](https://www.lilygo.cc/products/lilygo%C2%AE-ttgo-t-display-1-14-inch-lcd-esp32-control-board?variant=42720264683701), either the K164 or Q125 variant
     - Does not include a battery. Either keep it plugged in or add a generic battery for a few dollars.
     - DO NOT confuse this hardware with the more expensive T-Display S3 or T-Display AMOLED products.
+    - If ordering direct, use code: LILYGO5
 
         ![TTGO T-Display](img/TTGO-T-Display.jpg)
 
 - $20 [M5Stack M5StickC PLUS](https://shop.m5stack.com/products/m5stickc-plus-esp32-pico-mini-iot-development-kit)
     - Includes a built-in battery
     - DO NOT confuse this hardware with the older, cheaper M5StickC. The newer PLUS verison with a larger screen is the one to buy.
+    - If ordering direct, use code: TAKE5
 
         ![M5Stack M5StickC PLUS](img/M5Stack-M5StickC-PLUS.jpg)
 
 - $40 [M5Stack Core Basic](https://shop.m5stack.com/products/esp32-basic-core-iot-development-kit-v2-6)
     - Nice 3-button design
+    - If ordering direct, use code: TAKE5
 
         ![M5Stack Core Basic](img/M5Stack-Core-Basic.jpg)
 
 - $50 [M5Stack FIRE v2.6](https://shop.m5stack.com/products/m5stack-fire-iot-development-kit-psram-v2-6)
     - Nice 3-button design, a bigger battery, and a magnetic charging base
+    - If ordering direct, use code: TAKE5
 
         ![M5Stack FIRE](img/M5Stack-FIRE.jpg)
 
@@ -61,12 +65,65 @@ You are better off buying the hardware directly from the hardware vendor than th
 
 ## Set Up Instructions
 
+There are three options for flashing your device:
+- **Install with a Semi-Automated Script** (easiest way)
+- **Install with a Device-Specific Script** (other easy way)
+- **Install by Running Each Line of Code** (hardest way)
+
+### Install with a Semi-Automated Script
+
+This option is recommended for the average user who doesn't know how to read and write bash.
+
+1. Open the Terminal by pressing `Ctrl+Alt+T`.
+
+2. Clone (download) this repository and start the scipt by running this line in Terminal:
+    ```bash
+    git clone --quiet https://github.com/epiccurious/jade-diy && jade-diy/flash_your_device.sh
+    ```
+
+You should see the Jade initialization screen on your device.
+
+### Install with a Device-Specific Script
+
+1. Open the Terminal by pressing `Ctrl+Alt+T`.
+
+2. Clone (download) this repository and run this line:
+    ```bash
+    git clone --quiet https://github.com/epiccurious/jade-diy && cd jade-diy/
+    ```
+
+3. Connect your device to your computer via USB.
+
+4. Run the device-specific script corresponding to the hardware you're using. This process can take up to 30 minutes on a slow computer.
+    - If you're using the TTGO T-Dispay, run:
+        ```
+        device_specific/flash_the_ttgo_tdisplay.sh
+        ```
+    - If you're using the M5Stack M5StickC PLUS, run:
+        ```
+        device_specific/flash_the_m5stack_m5stickc_plus.sh
+        ```
+    - If you're using the M5Stack Core Basic, run:
+        ```
+        device_specific/flash_the_m5stack_core_basic.sh
+        ```
+    - If you're using the M5Stack FIRE, run:
+        ```
+        device_specific/flash_the_m5stack_fire.sh
+        ```
+
+You should see the Jade initialization screen on your device.
+
+### Install by Running Each Line of Code
+
+This options is provided for people who want to run the commands themselves.
+
 1. Open the Terminal by pressing `Ctrl+Alt+T`.
 
 2. Install the required software packages. On a slow computer, this step can take over 20 minutes. Copy-and-paste the following lines into Terminal:
     ```bash
-    sudo apt -qq update
-    sudo apt -qq install -y cmake git python3-pip python3-venv
+    sudo apt update
+    sudo apt install -y cmake git python3-pip python3-venv
     [ -d ${HOME}/esp ] || mkdir ${HOME}/esp
     git clone -b v5.0.1 --recursive https://github.com/espressif/esp-idf.git ${HOME}/esp/esp-idf/
     cd ${HOME}/esp/esp-idf
@@ -99,24 +156,24 @@ You are better off buying the hardware directly from the hardware vendor than th
         cp configs/sdkconfig_display_m5fire.defaults sdkconfig.defaults
         ```
 
-6. Modify the configuration file you just loaded to disable logging in debug mode (a.k.a. "research and development" mode).
+5. Modify the configuration file you just loaded to disable logging in debug mode (a.k.a. "research and development" mode).
     ```bash
     sed -i.bak '/CONFIG_DEBUG_MODE/d' ./sdkconfig.defaults
     sed -i.bak '1s/^/CONFIG_LOG_DEFUALT_LEVEL_NONE=y\n/' sdkconfig.defaults
     rm sdkconfig.defaults.bak
     ```
   
-7. If you haven't done it yet, your device into your computer via USB.
+6. Connect your device to your computer via USB.
 
-8. Enable read-write permissions for your device.
+7. Enable read-write permissions for your device.
     ```bash
-    [ -f /dev/ttyACM0 ] && sudo chmod a+rw /dev/ttyACM0
+    [ -f /dev/ttyACM0 ] && sudo chmod o+rw /dev/ttyACM0
     [ -f /dev/ttyUSB0 ] && sudo chmod a+rw /dev/ttyUSB0
     ```
 
-9. Flash (install) Jade onto your device. On a slow computer, this step can take over 10 minutes. Run the following command in Terminal:
+8. Flash (install) Jade onto your device. On a slow computer, this step can take over 10 minutes. Run the following command in Terminal:
     ```bash
     idf.py -b 115200 flash
     ```
 
-10. You should see the Jade initialization screen on your device.
+You should see the Jade initialization screen on your device.
