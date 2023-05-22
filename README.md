@@ -76,9 +76,9 @@ This option is recommended for the average user who doesn't know how to read and
 
 1. Open the Terminal by pressing `Ctrl+Alt+T`.
 
-2. Clone (download) this repository and start the scipt by running this line in Terminal:
+2. Clone (download) this repository and start the scipt. Run the following in Terminal:
     ```bash
-    git clone --quiet https://github.com/epiccurious/jade-diy && jade-diy/flash_your_device.sh
+    git clone --quiet https://github.com/epiccurious/jade-diy "${HOME}"/jade-diy && "${HOME}"/jade-diy/flash_your_device.sh
     ```
 
 3. When the script asks, choose your device (#1-#4).
@@ -89,9 +89,9 @@ After the script completes, you should see the Jade initialization screen on you
 
 1. Open the Terminal by pressing `Ctrl+Alt+T`.
 
-2. Clone (download) this repository and run this line:
+2. Clone (download) this repository and changie to the directory. Run the following in Terminal:
     ```bash
-    git clone --quiet https://github.com/epiccurious/jade-diy && cd jade-diy/
+    git clone --quiet https://github.com/epiccurious/jade-diy "${HOME}"/jade-diy && cd "${HOME}"/jade-diy/
     ```
 
 3. Connect your device to your computer via USB.

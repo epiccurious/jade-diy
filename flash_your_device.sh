@@ -5,7 +5,7 @@ clear
 echo "------------------------------------------------------------"
 echo "------------------------------------------------------------"
 echo "---                                                      ---"
-echo "---          Jade Do-It-Yourself Install Script          ---"
+echo "---          Do-It-Yourself Jade Install Script          ---"
 echo "---                Written by Epic Curious               ---"
 echo "---                Twitter: @epic_curious                ---"
 echo "---                                                      ---"
@@ -36,6 +36,7 @@ then
     git clone --quiet --recursive https://github.com/espressif/esp-idf.git "${esp_git_dir}"/esp-idf/
     cd "${esp_git_dir}"/esp-idf
     git checkout v5.0.1 &>/dev/null
+    git submodule update --quiet --init --recursive
     echo "ok."
     echo -n "  Installing the framework... "
     ./install.sh esp32 1>/dev/null
@@ -46,8 +47,10 @@ echo "ok."
 echo -n "Checking for the Blockstream Jade repository... "
 if [ ! -d "${jade_git_dir}" ]
 then
-    echo -ne "\n  Downloading the repo... "
+    echo -ne "\n  Downloading Jade... "
     git clone --quiet --recursive https://github.com/blockstream/jade "${jade_git_dir}"
+    #git checkout $(git tag | grep -v miner | sort -V | tail -1)
+    #git submodule update --init --recursive
 fi
 cd "${jade_git_dir}"
 echo "ok."
@@ -101,7 +104,7 @@ do
     echo
 done
 
-echo -E "Ready to install Jade on your ${opt}."
+echo "Ready to install Jade on your ${opt}."
 echo "(This process can take over 10 minutes.)"
 echo -n "PRESS ANY KEY TO CONTINUE... "
 read -rn1
