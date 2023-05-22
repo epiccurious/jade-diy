@@ -28,7 +28,7 @@ device2="M5Stack M5StickC PLUS"
 device3="M5Stack Core Basic"
 device4="M5Stack FIRE"
 
-echo -n "Checking for Espressif IoT Development Framework... "
+echo -n "Checking for theEspressif IoT Development Framework... "
 if [ ! -f "${esp_git_dir}"/esp-idf/export.sh ]
 then
     echo -ne "\n  Downloading the framework... "
@@ -38,7 +38,7 @@ then
     git checkout v5.0.1 &>/dev/null
     echo "ok."
     echo -n "  Installing the framework... "
-    ./install.sh esp32
+    ./install.sh esp32 1>/dev/null
 fi
 . "${esp_git_dir}"/esp-idf/export.sh 1>/dev/null
 echo "ok."
