@@ -81,7 +81,9 @@ This option is recommended for the average user who doesn't know how to read and
     git clone --quiet https://github.com/epiccurious/jade-diy && jade-diy/flash_your_device.sh
     ```
 
-You should see the Jade initialization screen on your device.
+3. When the script asks, choose your device (#1-#4).
+
+After the script completes, you should see the Jade initialization screen on your device.
 
 ### Install with a Device-Specific Script
 
@@ -112,7 +114,7 @@ You should see the Jade initialization screen on your device.
         device_specific/flash_the_m5stack_fire.sh
         ```
 
-You should see the Jade initialization screen on your device.
+After the script completes, you should see the Jade initialization screen on your device.
 
 ### Install by Running Each Line of Code
 
@@ -176,4 +178,4 @@ This options is provided for people who want to run the commands themselves.
     idf.py -b 115200 flash
     ```
 
-You should see the Jade initialization screen on your device.
+After the build and flash process completes, you should see the Jade initialization screen on your device.
