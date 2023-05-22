@@ -96,7 +96,7 @@ sed -i.bak '1s/^/CONFIG_LOG_DEFUALT_LEVEL_NONE=y\n/' sdkconfig.defaults
 
 while [ ! -c ${tty_device} ]
 do
-    echo -ne "\nConnect your $opt then PRESS ANY KEY TO CONTINUE... "
+    echo -ne "\nConnect your $opt and PRESS ANY KEY TO CONTINUE... "
     read -rn1
     echo
 done
