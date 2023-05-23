@@ -2,6 +2,16 @@
 set -e
 clear
 
+esp_dir="${HOME}/esp"
+esp_idf_git_dir="${esp_dir}/esp-idf"
+esp_idf_git_tag="v5.0.1"
+jade_git_dir="${HOME}/jade"
+
+device1="TTGO T-Display"
+device2="M5Stack M5StickC PLUS"
+device3="M5Stack Core Basic"
+device4="M5Stack FIRE"
+
 echo "------------------------------------------------------------"
 echo "------------------------------------------------------------"
 echo "---                                                      ---"
@@ -13,36 +23,42 @@ echo "------------------------------------------------------------"
 echo "------------------------------------------------------------"
 echo
 
-echo "Checking for sudo permission... "
-sudo echo -n
-
-echo -n "Checking for cmake, git, pip, and venv... "
-sudo apt-get -qq update
-sudo apt-get -qq install -y cmake git python3-pip python3-venv
-echo "ok."
-
-esp_git_dir="${HOME}/esp"
-esp_idf_git_tag="v5.0.1"
-jade_git_dir="${HOME}/jade"
-device1="TTGO T-Display"
-device2="M5Stack M5StickC PLUS"
-device3="M5Stack Core Basic"
-device4="M5Stack FIRE"
+case "$(uname -s)" in
+    Linux*)
+        machine="Linux"
+        echo "Detected ${machine}."
+        echo "Checking for sudo permission... "
+        sudo echo -n
+        echo -n "Checking for cmake, git, pip, and venv... "
+        sudo apt-get -qq update
+        sudo apt-get -qq install -y cmake git python3-pip python3-venv
+        echo "ok."
+        ;;
+    Darwin*)
+        machine="macOS"
+        echo "Detected ${machine}."
+        echo -n "Assuming you've already installed cmake... "
+        echo "ok."
+        ;;
+    MINGW*)
+        echo "Windows is not supported." && exit 0;;
+    *) echo "Unsupported OS: $(uname -s)" && exit 0
+esac
 
 echo -n "Checking for the Espressif IoT Development Framework... "
-if [ ! -f "${esp_git_dir}"/esp-idf/export.sh ]
+if [ ! -f "${esp_idf_git_dir}"/export.sh ]
 then
     echo -ne "\n  Downloading the framework... "
-    [ -d "${esp_git_dir}" ] || mkdir "${esp_git_dir}"
-    git clone --quiet https://github.com/espressif/esp-idf.git "${esp_git_dir}"/esp-idf/
-    cd "${esp_git_dir}"/esp-idf
+    [ -d "${esp_dir}" ] || mkdir "${esp_dir}"
+    git clone --quiet https://github.com/espressif/esp-idf.git "${esp_idf_git_dir}"/
+    cd "${esp_dir}"/esp-idf
     git checkout --quiet "${esp_idf_git_tag}"
     git submodule update --quiet --init --recursive
     echo "ok."
     echo -n "  Installing the framework... "
     ./install.sh esp32 1>/dev/null
 fi
-. "${esp_git_dir}"/esp-idf/export.sh 1>/dev/null
+. "${esp_idf_git_dir}"/export.sh 1>/dev/null
 echo "ok."
 
 echo -n "Checking for the Blockstream Jade repository... "
@@ -98,19 +114,31 @@ done
 sed -i.bak '/CONFIG_DEBUG_MODE/d' ./sdkconfig.defaults
 sed -i.bak '1s/^/CONFIG_LOG_DEFUALT_LEVEL_NONE=y\n/' sdkconfig.defaults
 
-while [ ! -c ${tty_device} ]
-do
-    echo -ne "\nConnect your $opt and PRESS ANY KEY TO CONTINUE... "
-    read -rn1
-    echo
-done
+case "${machine}" in
+    Linux*)
+        while [ ! -c "${tty_device}" ]
+        do
+            echo -ne "\nConnect your $opt and PRESS ANY KEY TO CONTINUE... "
+            read -rn1
+            echo
+        done
+        sudo chmod o+rw "${tty_device}"
+        ;;
+    macOS*)
+        echo -ne "\nConnect your $opt, click Allow on the popup, and PRESS ANY KEY TO CONTINUE... "
+        read -rn1
+        echo
+        ;;
+    MINGW*)
+        echo "Windows is not supported." && exit 0;;
+    *) echo "Unsupported OS: $(uname -s)" && exit 0
+esac
 
 echo -e "\nReady to install Jade on your ${opt}.\n(This process can take over 10 minutes.)"
 echo -n "PRESS ANY KEY TO CONTINUE... "
 read -rn1
 echo
 
-sudo chmod o+rw ${tty_device}
 ${flash_command}
 
 echo -e "\nSUCCESS!\nJade is now installed on your ${opt}."
