@@ -40,14 +40,14 @@ case "$(uname -s)" in
         echo -n "Checking for cmake... "
         if ! command -v cmake &>/dev/null; then
             if [ ! -d /Applications/CMake.app ]; then
-                echo -ne "\n  The application CMake.app is not found.\n  PRESS ANY KEY to download Cmake.app... "
+                echo -ne "\n  CMake is not found in your Applications directory.\n  PRESS ANY KEY to download CMake... "
                 read -rn1
                 echo
                 cmake_macos_url="https://github.com/Kitware/CMake/releases/download/v3.26.4/cmake-3.26.4-macos-universal.tar.gz"
                 cmake_macos_tarball="${HOME}"/$(basename "${cmake_macos_url}")
                 cmake_macos_extract_dir="${HOME}/$(basename "${cmake_macos_url}" .tar.gz)"
                 echo -n "  Downloading CMake.app... "
-                wget -P "${HOME}" "${cmake_macos_url}"
+                wget --quiet -P "${HOME}" "${cmake_macos_url}"
                 tar -xf "${cmake_macos_tarball}" -C "${HOME}/"
                 cp -r "${cmake_macos_extract_dir}"/CMake.app/ /Applications/CMake.app/
             fi
