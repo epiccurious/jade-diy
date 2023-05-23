@@ -49,12 +49,16 @@ case "$(uname -s)" in
                 #cp -r "${cmake_macos_extract_dir}"/CMake.app/ /Applications/CMake.app/
                 cmake_macos_url="https://github.com/Kitware/CMake/releases/download/v3.26.4/cmake-3.26.4-macos-universal.dmg"
                 cmake_macos_dmg="$(basename ${cmake_macos_url})"
-                echo -ne "\n  Downloading CMake file ${cmake_macos_dmg}... "
+                cmake_macos_volume="/Volumes/$(basename ${cmake_macos_url} .dmg)"
+                echo -ne "\n  Downloading cmake... "
                 wget --quiet -P "${HOME}" "${cmake_macos_url}"
+                echo "ok."
+                echo -n "  Installing cmake..."
                 hdiutil attach -quiet -nobrowse "${HOME}"/"${cmake_macos_dmg}"
-                cp -r /Volumes/$(basename ${cmake_macos_dmg} .dmg)/CMake.app/ /Applications/CMake.app/
-                hdiutil detach -quiet /Volumes/$(basename "${cmake_macos_dmg}" .dmg)
+                cp -r ${cmake_macos_volume}/CMake.app/ /Applications/CMake.app/
+                hdiutil detach -quiet ${cmake_macos_volume}
                 rm "${HOME}"/"${cmake_macos_dmg}"
+                echo "ok."
             fi
             PATH="/Applications/CMake.app/Contents/bin${PATH:+:${PATH}}"
         fi
