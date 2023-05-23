@@ -88,37 +88,39 @@ echo -n "Checking for the Blockstream Jade repository... "
 if [ ! -d "${jade_git_dir}" ]; then
     echo -ne "\n  Downloading Jade... "
     git clone --quiet https://github.com/blockstream/jade.git "${jade_git_dir}"
-    #git checkout $(git tag | grep -v miner | sort -V | tail -1)
+    cd "${jade_git_dir}"
+    git checkout --quiet $(git tag | grep -v miner | sort -V | tail -1)
+    git submodule update --quiet --init --recursive
 fi
 cd "${jade_git_dir}"
-git submodule update --quiet --init --recursive
+jade_version="$(git describe --tags)"
 echo "ok."
 
 echo -e "\nWhich device do you want to flash?"
 PS3='Please enter the number for your device or QUIT: '
 options=("${device1}" "${device2}" "${device3}" "${device4}" "QUIT")
-select opt in "${options[@]}"
+select choice in "${options[@]}"
 do
-    case $opt in
-        "$device1")
+    case "${choice}" in
+        "${device1}")
             tty_device="/dev/ttyACM0"
             flash_command="idf.py flash"
             cp configs/sdkconfig_display_ttgo_tdisplay.defaults sdkconfig.defaults
             break
             ;;
-        "$device2")
+        "${device2}")
             tty_device="/dev/ttyUSB0"
             flash_command="idf.py -b 115200 flash"
             cp configs/sdkconfig_display_m5stickcplus.defaults sdkconfig.defaults
             break
             ;;
-        "$device3")
+        "${device3}")
             tty_device="/dev/ttyACM0"
             flash_command="idf.py flash"
             cp configs/sdkconfig_display_m5blackgray.defaults sdkconfig.defaults
             break
             ;;
-        "$device4")
+        "${device4}")
             tty_device="/dev/ttyACM0"
             flash_command="idf.py flash"
             cp configs/sdkconfig_display_m5fire.defaults sdkconfig.defaults
@@ -131,6 +133,7 @@ do
         *) echo "You entered ${REPLY}, which is invalid."
     esac
 done
+chosen_device="${choice}"
 
 [ -f sdkconfig ] && rm sdkconfig
 sed -i.bak '/CONFIG_DEBUG_MODE/d' ./sdkconfig.defaults
@@ -139,19 +142,19 @@ sed -i.bak '1s/^/CONFIG_LOG_DEFUALT_LEVEL_NONE=y\n/' sdkconfig.defaults
 case "${machine}" in
     Linux*)
         while [ ! -c "${tty_device}" ]; do
-            read -srn1 -p "\nConnect your $opt and PRESS ANY KEY TO CONTINUE... " && echo
+            read -srn1 -p "Connect your ${chosen_device} and PRESS ANY KEY TO CONTINUE... " && echo
         done
         sudo chmod o+rw "${tty_device}"
         ;;
     macOS*)
-        read -srk "?Connect your $opt, click Allow on the popup, and PRESS ANY KEY TO CONTINUE... " && echo
+        read -srk "?Connect your ${chosen_device}, click Allow on the popup, and PRESS ANY KEY TO CONTINUE... " && echo
         ;;
     MINGW*)
         echo "Windows is not supported." && exit 0;;
     *) echo "Unsupported OS: $(uname -s)" && exit 0
 esac
 
-echo -e "\nReady to install Jade on your ${opt}.\n(This process can take over 10 minutes.)"
+echo -e "\nReady to install Jade ${jade_version} on your ${chosen_device}.\n(This process can take over 10 minutes.)"
 case "${machine}" in
     Linux*)
         read -srn1 -p "PRESS ANY KEY TO CONTINUE... " && echo
@@ -166,4 +169,4 @@ esac
 
 ${flash_command}
 
-echo -e "\nSUCCESS!\nJade is now installed on your ${opt}."
+echo -e "\nSUCCESS!\nJade ${jade_version} is now installed on your ${chosen_device}."
