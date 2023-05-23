@@ -40,23 +40,33 @@ case "$(uname -s)" in
         echo -n "Checking for cmake... "
         if ! command -v cmake &>/dev/null; then
             if [ ! -d /Applications/CMake.app ]; then
-                echo -ne "\n  CMake is not found in your Applications directory.\n  PRESS ANY KEY to download CMake... "
-                read -rn1
+                #read -srk "?  CMake is not found in your Applications directory.\n  PRESS ANY KEY to download CMake... " && echo
+                #cmake_macos_url="https://github.com/Kitware/CMake/releases/download/v3.26.4/cmake-3.26.4-macos-universal.tar.gz"
+                #cmake_macos_tarball="${HOME}"/$(basename "${cmake_macos_url}")
+                #cmake_macos_extract_dir="${HOME}/$(basename "${cmake_macos_url}" .tar.gz)"
+                #wget -P "${HOME}" "${cmake_macos_url}"
+                #tar -xf "${cmake_macos_tarball}" -C "${HOME}/"
+                #cp -r "${cmake_macos_extract_dir}"/CMake.app/ /Applications/CMake.app/
+                cmake_macos_url="https://github.com/Kitware/CMake/releases/download/v3.26.4/cmake-3.26.4-macos-universal.dmg"
+                cmake_macos_dmg="$(basename ${cmake_macos_url})"
+                echo -n "  Downloading CMake file ${cmake_macos_dmg}... "
+                wget --quiet -P "${HOME}/Downloads" "${cmake_macos_url}"
+                echo "ok."
                 echo
-                cmake_macos_url="https://github.com/Kitware/CMake/releases/download/v3.26.4/cmake-3.26.4-macos-universal.tar.gz"
-                cmake_macos_tarball="${HOME}"/$(basename "${cmake_macos_url}")
-                cmake_macos_extract_dir="${HOME}/$(basename "${cmake_macos_url}" .tar.gz)"
-                echo -n "  Downloading CMake.app... "
-                wget --quiet -P "${HOME}" "${cmake_macos_url}"
-                tar -xf "${cmake_macos_tarball}" -C "${HOME}/"
-                cp -r "${cmake_macos_extract_dir}"/CMake.app/ /Applications/CMake.app/
+                echo "******"
+                echo "ERROR: Automatic installation of CMake is not supported yet."
+                echo "You must manually install."
+                echo "Please open \"${cmake_macos_dmg}\" in your Downloads folder."
+                echo "******"
+                read -srk "?PRESS ANY KEY TO EXIT... " && echo
+                #exit 1
             fi
             PATH="/Applications/CMake.app/Contents/bin${PATH:+:${PATH}}"
         fi
         echo "ok."
         ;;
     MINGW*)
-        echo "Windows is not supported." && exit 0;;
+        echo "Windows is not supported. Please run in WSL (Windows Subsystem for Linux)." && exit 0;;
     *) echo "Unsupported OS: $(uname -s)" && exit 0
 esac
 
@@ -130,16 +140,12 @@ sed -i.bak '1s/^/CONFIG_LOG_DEFUALT_LEVEL_NONE=y\n/' sdkconfig.defaults
 case "${machine}" in
     Linux*)
         while [ ! -c "${tty_device}" ]; do
-            echo -ne "\nConnect your $opt and PRESS ANY KEY TO CONTINUE... "
-            read -rn1
-            echo
+            read -srn1 -p "\nConnect your $opt and PRESS ANY KEY TO CONTINUE... " && echo
         done
         sudo chmod o+rw "${tty_device}"
         ;;
     macOS*)
-        echo -ne "\nConnect your $opt, click Allow on the popup, and PRESS ANY KEY TO CONTINUE... "
-        read -rn1
-        echo
+        read -srk "?Connect your $opt, click Allow on the popup, and PRESS ANY KEY TO CONTINUE... " && echo
         ;;
     MINGW*)
         echo "Windows is not supported." && exit 0;;
@@ -147,9 +153,17 @@ case "${machine}" in
 esac
 
 echo -e "\nReady to install Jade on your ${opt}.\n(This process can take over 10 minutes.)"
-echo -n "PRESS ANY KEY TO CONTINUE... "
-read -rn1
-echo
+case "${machine}" in
+    Linux*)
+        read -srn1 -p "PRESS ANY KEY TO CONTINUE... " && echo
+        ;;
+    macOS*)
+        read -srk "?PRESS ANY KEY TO CONTINUE... " && echo
+        ;;
+    MINGW*)
+        echo "Windows is not supported." && exit 0;;
+    *) echo "Unsupported OS: $(uname -s)" && exit 0
+esac
 
 ${flash_command}
 
