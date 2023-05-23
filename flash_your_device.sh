@@ -50,16 +50,11 @@ case "$(uname -s)" in
                 cmake_macos_url="https://github.com/Kitware/CMake/releases/download/v3.26.4/cmake-3.26.4-macos-universal.dmg"
                 cmake_macos_dmg="$(basename ${cmake_macos_url})"
                 echo -n "  Downloading CMake file ${cmake_macos_dmg}... "
-                wget --quiet -P "${HOME}/Downloads" "${cmake_macos_url}"
-                echo "ok."
-                echo
-                echo "******"
-                echo "ERROR: Automatic installation of CMake is not supported yet."
-                echo "You must manually install."
-                echo "Please open \"${cmake_macos_dmg}\" in your Downloads folder."
-                echo "******"
-                read -srk "?PRESS ANY KEY TO EXIT... " && echo
-                #exit 1
+                wget --quiet -P "${HOME}" "${cmake_macos_url}"
+                hdiutil attach -quiet -nobrowse "${HOME}"/"${cmake_macos_dmg}"
+                cp -r /Volumes/$(basename ${cmake_macos_dmg} .dmg)/CMake.app/ /Applications/CMake.app/
+                hdiutil detach $(basename "${cmake_macos_dmg}" .dmg)
+                rm "${HOME}"/"${cmake_macos_dmg}"
             fi
             PATH="/Applications/CMake.app/Contents/bin${PATH:+:${PATH}}"
         fi
