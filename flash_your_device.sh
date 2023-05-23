@@ -53,7 +53,7 @@ case "$(uname -s)" in
                 wget --quiet -P "${HOME}" "${cmake_macos_url}"
                 hdiutil attach -quiet -nobrowse "${HOME}"/"${cmake_macos_dmg}"
                 cp -r /Volumes/$(basename ${cmake_macos_dmg} .dmg)/CMake.app/ /Applications/CMake.app/
-                hdiutil detach /Volumes/$(basename "${cmake_macos_dmg}" .dmg)
+                hdiutil detach -quiet /Volumes/$(basename "${cmake_macos_dmg}" .dmg)
                 rm "${HOME}"/"${cmake_macos_dmg}"
             fi
             PATH="/Applications/CMake.app/Contents/bin${PATH:+:${PATH}}"
