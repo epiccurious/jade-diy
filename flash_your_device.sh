@@ -49,7 +49,7 @@ case "$(uname -s)" in
                 #cp -r "${cmake_macos_extract_dir}"/CMake.app/ /Applications/CMake.app/
                 cmake_macos_url="https://github.com/Kitware/CMake/releases/download/v3.26.4/cmake-3.26.4-macos-universal.dmg"
                 cmake_macos_dmg="$(basename ${cmake_macos_url})"
-                echo -n "  Downloading CMake file ${cmake_macos_dmg}... "
+                echo -ne "\n  Downloading CMake file ${cmake_macos_dmg}... "
                 wget --quiet -P "${HOME}" "${cmake_macos_url}"
                 hdiutil attach -quiet -nobrowse "${HOME}"/"${cmake_macos_dmg}"
                 cp -r /Volumes/$(basename ${cmake_macos_dmg} .dmg)/CMake.app/ /Applications/CMake.app/
