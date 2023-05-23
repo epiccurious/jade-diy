@@ -29,3 +29,5 @@ rm sdkconfig.defaults.bak
 
 sudo chmod a+rw /dev/ttyACM0
 idf.py flash
+
+echo -e "\nSUCCESS!\nJade is now installed on your ${device}."

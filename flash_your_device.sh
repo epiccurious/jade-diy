@@ -37,7 +37,22 @@ case "$(uname -s)" in
     Darwin*)
         machine="macOS"
         echo "Detected ${machine}."
-        echo -n "Assuming you've already installed cmake... "
+        echo -n "Checking for cmake... "
+        if ! command -v cmake &>/dev/null; then
+            if [ ! -d /Applications/CMake.app ]; then
+                echo -ne "\n  The application CMake.app is not found.\n  PRESS ANY KEY to download Cmake.app... "
+                read -rn1
+                echo
+                cmake_macos_url="https://github.com/Kitware/CMake/releases/download/v3.26.4/cmake-3.26.4-macos-universal.tar.gz"
+                cmake_macos_tarball="${HOME}"/$(basename "${cmake_macos_url}")
+                cmake_macos_extract_dir="${HOME}/$(basename "${cmake_macos_url}" .tar.gz)"
+                echo -n "  Downloading CMake.app... "
+                wget -P "${HOME}" "${cmake_macos_url}"
+                tar -xf "${cmake_macos_tarball}" -C "${HOME}/"
+                cp -r "${cmake_macos_extract_dir}"/CMake.app/ /Applications/CMake.app/
+            fi
+            PATH="/Applications/CMake.app/Contents/bin${PATH:+:${PATH}}"
+        fi
         echo "ok."
         ;;
     MINGW*)
@@ -46,8 +61,7 @@ case "$(uname -s)" in
 esac
 
 echo -n "Checking for the Espressif IoT Development Framework... "
-if [ ! -f "${esp_idf_git_dir}"/export.sh ]
-then
+if [ ! -f "${esp_idf_git_dir}"/export.sh ]; then
     echo -ne "\n  Downloading the framework... "
     [ -d "${esp_dir}" ] || mkdir "${esp_dir}"
     git clone --quiet https://github.com/espressif/esp-idf.git "${esp_idf_git_dir}"/
@@ -62,8 +76,7 @@ fi
 echo "ok."
 
 echo -n "Checking for the Blockstream Jade repository... "
-if [ ! -d "${jade_git_dir}" ]
-then
+if [ ! -d "${jade_git_dir}" ]; then
     echo -ne "\n  Downloading Jade... "
     git clone --quiet https://github.com/blockstream/jade.git "${jade_git_dir}"
     #git checkout $(git tag | grep -v miner | sort -V | tail -1)
@@ -116,8 +129,7 @@ sed -i.bak '1s/^/CONFIG_LOG_DEFUALT_LEVEL_NONE=y\n/' sdkconfig.defaults
 
 case "${machine}" in
     Linux*)
-        while [ ! -c "${tty_device}" ]
-        do
+        while [ ! -c "${tty_device}" ]; do
             echo -ne "\nConnect your $opt and PRESS ANY KEY TO CONTINUE... "
             read -rn1
             echo
