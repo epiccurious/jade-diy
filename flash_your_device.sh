@@ -160,10 +160,12 @@ case "${machine}" in
         sudo chmod o+rw "${tty_device}"
         ;;
     macOS*)
-        while [ ! -c "/dev/cu.usbserial-*" ]; do
-            echo "Connect your ${chosen_device}, click Allow on the popup,"
-            read -srn1 -p " and PRESS ANY KEY TO CONTINUE... " && echo
-        done
+        #while [ ! -c /dev/cu.usbserial-* ]; do
+        #    echo "Connect your ${chosen_device}, click Allow on the popup,"
+        #    read -srn1 -p " and PRESS ANY KEY TO CONTINUE... " && echo
+        #done
+        echo "Connect your ${chosen_device}, click Allow on the popup,"
+        read -srn1 -p " and PRESS ANY KEY TO CONTINUE... " && echo
         ;;
     *) echo "Unsupported OS: $(uname -s)" && exit 0
 esac
