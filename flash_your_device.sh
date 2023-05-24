@@ -160,7 +160,8 @@ case "${machine}" in
         sudo chmod o+rw "${tty_device}"
         ;;
     macOS*)
-        read -srn1 -p "?Connect your ${chosen_device}, click Allow on the popup, and PRESS ANY KEY TO CONTINUE... " && echo
+        echo "Connect your ${chosen_device}, click Allow on the popup, "
+        read -srn1 -p "and PRESS ANY KEY TO CONTINUE... " && echo
         ;;
     *) echo "Unsupported OS: $(uname -s)" && exit 0
 esac
