@@ -176,6 +176,9 @@ case "${machine}" in
     *) echo "Unsupported OS: $(uname -s)" && exit 0
 esac
 
+echo -ne "\nSTARTING the flash process in 5 seconds... "
+sleep 5
+echo
 ${flash_command}
 
-echo -e "\nSUCCESS!\nJade ${jade_version} is now installed on your ${chosen_device}."
+echo -e "\nSUCCESS! Jade ${jade_version} is now installed on your ${chosen_device}."
