@@ -51,14 +51,25 @@ case "$(uname -s)" in
                 cmake_macos_dmg="$(basename ${cmake_macos_url})"
                 cmake_macos_volume="/Volumes/$(basename ${cmake_macos_url} .dmg)"
                 echo -ne "\n  Downloading cmake... "
-                wget --quiet -P "${HOME}" "${cmake_macos_url}"
+                #wget --quiet -P "${HOME}" "${cmake_macos_url}"
+                wget --quiet -P "${HOME}/Downloads" "${cmake_macos_url}"
                 echo "ok."
-                echo -n "  Installing cmake..."
-                hdiutil attach -quiet -nobrowse "${HOME}"/"${cmake_macos_dmg}"
-                cp -r ${cmake_macos_volume}/CMake.app/ /Applications/CMake.app/
-                hdiutil detach -quiet ${cmake_macos_volume}
-                rm "${HOME}"/"${cmake_macos_dmg}"
-                echo "ok."
+
+                echo "************************************************************"
+                echo "ERROR: Automatic installation of CMake is not supported yet."
+                echo "Please manually install \"${cmake_macos_dmg}\"."
+                echo "Please open the file from your Downloads folder."
+                echo "************************************************************"
+                echo
+                read -srk "?PRESS ANY KEY TO EXIT... " && echo
+                exit 1
+                
+                #echo -n "  Installing cmake..."
+                #hdiutil attach -quiet -nobrowse "${HOME}"/"${cmake_macos_dmg}"
+                #cp -r ${cmake_macos_volume}/CMake.app/ /Applications/CMake.app/
+                #hdiutil detach -quiet ${cmake_macos_volume}
+                #rm "${HOME}"/"${cmake_macos_dmg}"
+                #echo "ok."
             fi
             PATH="/Applications/CMake.app/Contents/bin${PATH:+:${PATH}}"
         fi
