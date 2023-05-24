@@ -173,8 +173,6 @@ case "${machine}" in
     macOS*)
         read -srk "?PRESS ANY KEY TO CONTINUE... " && echo
         ;;
-    MINGW*)
-        echo "Windows is not supported." && exit 0;;
     *) echo "Unsupported OS: $(uname -s)" && exit 0
 esac
 
