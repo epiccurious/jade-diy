@@ -147,6 +147,7 @@ do
     esac
 done
 chosen_device="${choice}"
+echo
 
 [ -f sdkconfig ] && rm sdkconfig
 sed -i.bak '/CONFIG_DEBUG_MODE/d' ./sdkconfig.defaults
