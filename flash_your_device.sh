@@ -161,6 +161,7 @@ case "${machine}" in
         sudo chmod o+rw "${tty_device}"
         ;;
     macOS*)
+        #macos_usb_serial="$(ioreg -p IOUSB -n \"USB Single Serial\" | grep \"USB Serial Number\" | cut -c 34-43)"
         #while [ ! -c /dev/cu.usbserial-* ]; do
         #    echo "Connect your ${chosen_device}, click Allow on the popup,"
         #    read -srn1 -p " and PRESS ANY KEY TO CONTINUE... " && echo
