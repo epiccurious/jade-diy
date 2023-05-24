@@ -160,23 +160,13 @@ case "${machine}" in
         sudo chmod o+rw "${tty_device}"
         ;;
     macOS*)
-        read -srk "?Connect your ${chosen_device}, click Allow on the popup, and PRESS ANY KEY TO CONTINUE... " && echo
+        read -srn1 -p "?Connect your ${chosen_device}, click Allow on the popup, and PRESS ANY KEY TO CONTINUE... " && echo
         ;;
-    MINGW*)
-        echo "Windows is not supported." && exit 0;;
     *) echo "Unsupported OS: $(uname -s)" && exit 0
 esac
 
 echo -e "\nReady to install Jade ${jade_version} on your ${chosen_device}.\n(This process can take over 10 minutes.)"
-case "${machine}" in
-    Linux*)
-        read -srn1 -p "PRESS ANY KEY TO CONTINUE... " && echo
-        ;;
-    macOS*)
-        read -srk "?PRESS ANY KEY TO CONTINUE... " && echo
-        ;;
-    *) echo "Unsupported OS: $(uname -s)" && exit 0
-esac
+read -srn1 -p "PRESS ANY KEY TO CONTINUE... " && echo
 
 echo -ne "\nSTARTING the flash process in 5 seconds... "
 sleep 5
