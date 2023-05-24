@@ -49,19 +49,21 @@ case "$(uname -s)" in
                 #cp -r "${cmake_macos_extract_dir}"/CMake.app/ /Applications/CMake.app/
                 cmake_macos_url="https://github.com/Kitware/CMake/releases/download/v3.26.4/cmake-3.26.4-macos-universal.dmg"
                 cmake_macos_dmg="$(basename ${cmake_macos_url})"
-                cmake_macos_volume="/Volumes/$(basename ${cmake_macos_url} .dmg)"
-                echo -ne "\n  Downloading cmake... "
-                #wget --quiet -P "${HOME}" "${cmake_macos_url}"
-                wget --quiet -P "${HOME}/Downloads" "${cmake_macos_url}"
-                echo "ok."
+                #cmake_macos_volume="/Volumes/$(basename ${cmake_macos_url} .dmg)"
+                
+                if [ ! -f ${HOME}/Downloads/${cmake_macos_dmg} ]
+                then
+                    echo -ne "\n  Downloading cmake... "
+                    #wget --quiet -P "${HOME}" "${cmake_macos_url}"
+                    wget --quiet -P "${HOME}/Downloads" "${cmake_macos_url}"
+                    echo "ok."
+                fi
 
-                echo "************************************************************"
+                echo -e "\n************************************************************"
                 echo "ERROR: Automatic installation of CMake is not supported yet."
                 echo "Please manually install \"${cmake_macos_dmg}\"."
                 echo "Please open the file from your Downloads folder."
-                echo "************************************************************"
-                echo
-                read -srk "?PRESS ANY KEY TO EXIT... " && echo
+                echo -e "************************************************************\n"
                 exit 1
                 
                 #echo -n "  Installing cmake..."
