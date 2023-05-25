@@ -16,7 +16,7 @@ The firmware that runs Jade can also run other ESP32-based devices, which are li
 
 3. You're a normie who can't be bothered to learn how to operate a computer through the command line. We will be using the Terminal console, which some people find scary. It's not not hard, I promise.
 
-4. You you're not willing to [use Linux](https://ubuntu.com/tutorials/install-ubuntu-desktop). (This guide only supports Linux Ubuntu for now but planning to add macOS support soon once I iron out the brew dependencies.)
+4. You you're not willing to [use Linux](https://ubuntu.com/tutorials/install-ubuntu-desktop) or macOS. (This guide only supports Debian Linux and macOS for now but planning to eventually add support for other Linux distributions.)
 
 ## Why Should I Follow This Guide?
 
@@ -182,4 +182,6 @@ After the build and flash process completes, you should see the Jade initializat
 
 ## Acknowledgements
 
-Inspiration for this project came from the Blockstream Jade team ([link to contributors](https://github.com/Blockstream/Jade/graphs/contributors)) and Crypto Guide ([link to YouTube](https://youtube.com/CryptoGuide), [Twitter](https://twitter.com/YTCryptoGuide)).
+Inspiration for this project came from:
+- the Blockstream Jade team ([link to contributors](https://github.com/Blockstream/Jade/graphs/contributors))
+- [@YTCryptoGuide](https://twitter.com/YTCryptoGuidelink) ([Link to his YouTube](https://youtube.com/CryptoGuide)).
