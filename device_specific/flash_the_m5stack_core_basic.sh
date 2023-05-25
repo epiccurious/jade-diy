@@ -1,18 +1,26 @@
 #!/bin/bash
 set -e
 
+esp_dir="${HOME}/esp"
+esp_idf_git_dir="${esp_dir}/esp-idf"
+esp_idf_git_tag="v5.0.1"
+jade_git_dir="${HOME}/jade"
+
+device="M5Stack Core Basic"
+echo "LINUX ONLY. Flashing the ${device}..."
+
 sudo apt -qq update
 sudo apt -qq install -y cmake git python3-pip python3-venv
 
-[ -d ${HOME}/esp ] || mkdir ${HOME}/esp
-git clone -b v5.0.1 --recursive https://github.com/espressif/esp-idf.git ${HOME}/esp/esp-idf/
-cd ${HOME}/esp/esp-idf
+[ -d "${esp_dir}" ] || mkdir "${esp_dir}"/
+git clone -b "${esp_idf_git_tag}" --recursive https://github.com/espressif/esp-idf.git "${esp_idf_git_dir}"/
+cd "${esp_idf_git_dir}"
 git checkout a4afa44435ef4488d018399e1de50ad2ee964be8
 ./install.sh esp32
-. $HOME/esp/esp-idf/export.sh
+. "${esp_idf_git_dir}"/export.sh
 
-git clone --recursive https://github.com/blockstream/jade ${HOME}/jade/
-cd ${HOME}/jade/
+git clone --recursive https://github.com/blockstream/jade "${jade_git_dir}"/
+cd "${jade_git_dir}"/
 cp configs/sdkconfig_display_m5blackgray.defaults sdkconfig.defaults
 
 sed -i.bak '/CONFIG_DEBUG_MODE/d' ./sdkconfig.defaults
@@ -21,3 +29,5 @@ rm sdkconfig.defaults.bak
 
 sudo chmod a+rw /dev/ttyACM0
 idf.py flash
+
+echo -e "\nSUCCESS! Your ${opt} is now running Jade."
