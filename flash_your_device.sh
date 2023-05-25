@@ -167,12 +167,12 @@ case "${machine}" in
         
         #while [ -z "${macos_usb_serial}" ]
         #do
-        #    echo "Connect your ${chosen_device}, click Allow on the popup,"
+        #    echo -e "Connect your ${chosen_device} with a USB-C cable,\n  click \"Allow\" if you see a macOS security popup,"
         #    sleep 5
         #    macos_usb_serial=$(ioreg -p IOUSB -n "USB Single Serial" | grep "USB Serial Number" | cut -c 34-43)
 
         #done
-        echo -e "Connect your ${chosen_device},\n  click \"Allow\" if you see a macOS security popup,"
+        echo -e "Connect your ${chosen_device} with a USB-C cable,\n  click \"Allow\" if you see a macOS security popup,"
         read -srn1 -p "  and PRESS ANY KEY to continue... " && echo
         ;;
     *) echo "Unsupported OS: $(uname -s)" && exit 0
