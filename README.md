@@ -74,7 +74,7 @@ There are three options for flashing your device:
 
 This option is recommended for the average user who doesn't know how to read and write bash.
 
-1. Open the Terminal by pressing `Ctrl+Alt+T`.
+1. Open the Terminal. On Linux, press `Ctrl+Alt+T`. On macOS, press `Command+Space`, type terminal, and press `return`.
 
 2. Clone (download) this repository and start the scipt. Run the following in Terminal:
     ```bash
@@ -87,7 +87,7 @@ After the script completes, you should see the Jade initialization screen on you
 
 ### Install with a Device-Specific Script
 
-1. Open the Terminal by pressing `Ctrl+Alt+T`.
+1. Open the Terminal. On Linux, press `Ctrl+Alt+T`. On macOS, press `Command+Space`, type terminal, and press `return`.
 
 2. Clone (download) this repository and changie to the directory. Run the following in Terminal:
     ```bash
@@ -120,7 +120,7 @@ After the script completes, you should see the Jade initialization screen on you
 
 This options is provided for people who want to run the commands themselves.
 
-1. Open the Terminal by pressing `Ctrl+Alt+T`.
+1. Open the Terminal. On Linux, press `Ctrl+Alt+T`. On macOS, press `Command+Space`, type terminal, and press `return`.
 
 2. Install the required software packages. On a slow computer, this step can take over 20 minutes. Copy-and-paste the following lines into Terminal:
     ```bash
