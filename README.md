@@ -46,7 +46,7 @@ You are better off buying the hardware directly from the hardware vendor than th
 
         ![M5Stack M5StickC PLUS](img/M5Stack-M5StickC-PLUS.jpg)
 
-- $40 [M5Stack Core Basic](https://shop.m5stack.com/products/esp32-basic-core-iot-development-kit-v2-6)
+- $40 [M5Stack Core Basic](https://shop.m5stack.com/products/esp32-basic-core-lot-development-kit-v2-7)
     - Nice 3-button design
     - If ordering direct, use code: TAKE5
 
