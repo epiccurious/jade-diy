@@ -56,7 +56,7 @@ case "$(uname -s)" in
                     echo -ne "\n  Downloading cmake... "
                     #wget --quiet -P "${HOME}" "${cmake_macos_url}"
                     #wget --quiet -P "${HOME}/Downloads" "${cmake_macos_url}"
-                    curl -s "${cmake_macos_url}" --output "${HOME}"/Downloads/"${cmake_macos_dmg}"
+                    curl -sL "${cmake_macos_url}" --output "${HOME}"/Downloads/"${cmake_macos_dmg}"
                     echo "ok."
                 fi
 
