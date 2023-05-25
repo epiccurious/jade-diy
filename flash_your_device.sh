@@ -156,26 +156,32 @@ sed -i.bak '1s/^/CONFIG_LOG_DEFUALT_LEVEL_NONE=y\n/' sdkconfig.defaults
 case "${machine}" in
     Linux*)
         while [ ! -c "${tty_device}" ]; do
-            read -srn1 -p "Connect your ${chosen_device} and PRESS ANY KEY TO CONTINUE... " && echo
+            read -srn1 -p "Connect your ${chosen_device} and PRESS ANY KEY to continue... " && echo
         done
         sudo chmod o+rw "${tty_device}"
         ;;
     macOS*)
-        #macos_usb_serial="$(ioreg -p IOUSB -n \"USB Single Serial\" | grep \"USB Serial Number\" | cut -c 34-43)"
-        #while [ ! -c /dev/cu.usbserial-* ]; do
+        #macos_usb_serial=$(ioreg -p IOUSB -n "USB Single Serial" | grep "USB Serial Number" | cut -c 34-43)
+        
+        #[ -z "${macos_usb_serial}" ] && echo "serial does not exist"
+        
+        #while [ -z "${macos_usb_serial}" ]
+        #do
         #    echo "Connect your ${chosen_device}, click Allow on the popup,"
-        #    read -srn1 -p " and PRESS ANY KEY TO CONTINUE... " && echo
+        #    sleep 5
+        #    macos_usb_serial=$(ioreg -p IOUSB -n "USB Single Serial" | grep "USB Serial Number" | cut -c 34-43)
+
         #done
-        echo "Connect your ${chosen_device}, click Allow on the popup,"
-        read -srn1 -p " and PRESS ANY KEY TO CONTINUE... " && echo
+        echo -e "Connect your ${chosen_device},\n  click \"Allow\" if you see a macOS security popup,"
+        read -srn1 -p "  and PRESS ANY KEY to continue... " && echo
         ;;
     *) echo "Unsupported OS: $(uname -s)" && exit 0
 esac
 
-echo -e "\nReady to install Jade ${jade_version} on your ${chosen_device}.\n(This process can take over 10 minutes.)"
-read -srn1 -p "PRESS ANY KEY TO CONTINUE... " && echo
+echo -e "\nReady to install Jade ${jade_version} on your ${chosen_device}.\n  (This process can take over 10 minutes.)"
+read -srn1 -p "  PRESS ANY KEY to continue... " && echo
 
-echo -ne "\nPLEASE WAIT... Starting the flash process in 5 seconds."
+echo -ne "\nPlease wait 5 seconds to start the flash process... "
 sleep 5
 echo
 ${flash_command}
