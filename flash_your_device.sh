@@ -181,8 +181,8 @@ esac
 echo -e "\nReady to install Jade ${jade_version} on your ${chosen_device}.\n  (This process can take over 10 minutes.)"
 read -srn1 -p "  PRESS ANY KEY to continue... " && echo
 
-echo -ne "\nPlease wait 5 seconds to start the flash process... "
-sleep 5
+echo -ne "\nPlease wait 10 seconds or press Ctrl+C to cancel... "
+sleep 10
 echo
 ${flash_command}
 
