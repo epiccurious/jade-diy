@@ -88,7 +88,7 @@ if [ ! -f "${esp_idf_git_dir}"/export.sh ]; then
     echo -ne "\n  Downloading the framework... "
     [ -d "${esp_dir}" ] || mkdir "${esp_dir}"
     git clone --quiet https://github.com/espressif/esp-idf.git "${esp_idf_git_dir}"/
-    cd "${esp_dir}"/esp-idf
+    cd "${esp_idf_git_dir}"/
     git checkout --quiet "${esp_idf_git_tag}"
     git submodule update --quiet --init --recursive
     echo "ok."

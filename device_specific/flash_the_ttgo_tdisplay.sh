@@ -9,20 +9,28 @@ jade_git_dir="${HOME}/jade"
 device="TTGO T-Display"
 echo "LINUX ONLY. Flashing the ${device}..."
 
-sudo apt -qq update
-sudo apt -qq install -y cmake git python3-pip python3-venv
+sudo apt-get -qq update
+sudo apt-get -qq install -y cmake git python3-pip python3-venv
 
-[ -d "${esp_dir}" ] || mkdir "${esp_dir}"/
-git clone -b "${esp_idf_git_tag}" --recursive https://github.com/espressif/esp-idf.git "${esp_idf_git_dir}"/
-cd "${esp_idf_git_dir}"
-git checkout a4afa44435ef4488d018399e1de50ad2ee964be8
-./install.sh esp32
-. "${esp_idf_git_dir}"/export.sh
+if [ ! -f "${esp_idf_git_dir}"/export.sh ]; then
+    [ -d "${esp_dir}" ] || mkdir "${esp_dir}"
+    git clone --quiet https://github.com/espressif/esp-idf.git "${esp_idf_git_dir}"/
+    cd "${esp_idf_git_dir}"/
+    git checkout --quiet "${esp_idf_git_tag}"
+    git submodule update --quiet --init --recursive
+    ./install.sh esp32 1>/dev/null
+fi
+. "${esp_idf_git_dir}"/export.sh 1>/dev/null
 
-git clone --recursive https://github.com/blockstream/jade "${jade_git_dir}"/
-cd "${jade_git_dir}"/
+if [ ! -d "${jade_git_dir}" ]; then
+    git clone --quiet https://github.com/blockstream/jade.git "${jade_git_dir}"
+    cd "${jade_git_dir}"
+    git checkout --quiet $(git tag | grep -v miner | sort -V | tail -1)
+    git submodule update --quiet --init --recursive
+fi
+cd "${jade_git_dir}"
+
 cp configs/sdkconfig_display_ttgo_tdisplay.defaults sdkconfig.defaults
-
 sed -i.bak '/CONFIG_DEBUG_MODE/d' ./sdkconfig.defaults
 sed -i.bak '1s/^/CONFIG_LOG_DEFUALT_LEVEL_NONE=y\n/' sdkconfig.defaults
 rm sdkconfig.defaults.bak
