@@ -14,8 +14,8 @@ jade_git_dir="${HOME}/jade"
 device="M5Stack M5StickC PLUS"
 echo "LINUX ONLY. Flashing the ${device}..."
 
-sudo apt-get -qq update
-sudo apt-get -qq install -y cmake git python3-pip python3-venv
+apt-get -qq update
+apt-get -qq install -y cmake git python3-pip python3-venv
 
 if [ ! -f "${esp_idf_git_dir}"/export.sh ]; then
     [ -d "${esp_dir}" ] || mkdir "${esp_dir}"
