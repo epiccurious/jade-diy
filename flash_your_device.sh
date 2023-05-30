@@ -35,7 +35,7 @@ case "$(uname -s)" in
         echo "Detected ${machine}."
         echo -n "Checking for cmake, git, pip, and venv... "
         apt-get -qq update
-        apt-get -qq install -y cmake git python3-pip python3-venv
+        apt-get -qq install -y -o=Dpkg::Use-Pty=0 cmake git python3-pip python3-venv &> /dev/null
         echo "ok."
         ;;
     Darwin*)
