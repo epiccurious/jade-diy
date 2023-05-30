@@ -40,7 +40,7 @@ sed -i.bak '/CONFIG_DEBUG_MODE/d' ./sdkconfig.defaults
 sed -i.bak '1s/^/CONFIG_LOG_DEFUALT_LEVEL_NONE=y\n/' sdkconfig.defaults
 rm sdkconfig.defaults.bak
 
-sudo chmod a+rw /dev/ttyUSB0
+chmod a+rw /dev/ttyUSB0
 idf.py -b 115200 flash
 
 echo -e "\nSUCCESS! Your ${opt} is now running Jade."
