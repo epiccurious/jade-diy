@@ -2,7 +2,7 @@
 set -e
 
 if [ `whoami` != root ]; then
-    echo -e "ERROR: Please run the script with elevated permissions like this:\n  sudo ./jade-diy/flash_your_device.sh"
+    echo -e "ERROR: Please run the script with elevated permissions like this:\n  sudo ~/jade-diy/flash_your_device.sh"
     exit 1
 fi
 
@@ -33,11 +33,9 @@ case "$(uname -s)" in
     Linux*)
         machine="Linux"
         echo "Detected ${machine}."
-        echo "Checking for sudo permission... "
-        sudo echo -n
         echo -n "Checking for cmake, git, pip, and venv... "
-        sudo apt-get -qq update
-        sudo apt-get -qq install -y cmake git python3-pip python3-venv
+        apt-get -qq update
+        apt-get -qq install -y cmake git python3-pip python3-venv
         echo "ok."
         ;;
     Darwin*)
@@ -165,7 +163,7 @@ case "${machine}" in
         while [ ! -c "${tty_device}" ]; do
             read -srn1 -p "Connect your ${chosen_device} and PRESS ANY KEY to continue... " && echo
         done
-        sudo chmod o+rw "${tty_device}"
+        chmod o+rw "${tty_device}"
         ;;
     macOS*)
         #macos_usb_serial=$(ioreg -p IOUSB -n "USB Single Serial" | grep "USB Serial Number" | cut -c 34-43)
