@@ -31,7 +31,7 @@ case "$(uname -s)" in
         sudo echo -n
         echo -n "Checking for cmake, git, pip, and venv... "
         sudo apt-get -qq update
-        sudo apt-get -qq install -y cmake git python3-pip python3-venv
+        sudo apt-get -qq install -y -o=Dpkg::Use-Pty=0 cmake git python3-pip python3-venv &> /dev/null
         echo "ok."
         ;;
     Darwin*)

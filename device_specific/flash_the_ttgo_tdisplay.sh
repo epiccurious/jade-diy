@@ -10,7 +10,7 @@ device="TTGO T-Display"
 echo "LINUX ONLY. Flashing the ${device}..."
 
 sudo apt-get -qq update
-sudo apt-get -qq install -y cmake git python3-pip python3-venv
+sudo apt-get -qq install -y -o=Dpkg::Use-Pty=0 cmake git python3-pip python3-venv &> /dev/null
 
 if [ ! -f "${esp_idf_git_dir}"/export.sh ]; then
     [ -d "${esp_dir}" ] || mkdir "${esp_dir}"
