@@ -1,6 +1,11 @@
 #!/bin/bash
 set -e
 
+if [ `whoami` != root ]; then
+    echo -e "ERROR: Please run the script with elevated permissions like this:\n  sudo ~/jade-diy/device_specific/flash_the_ttgo_tdisplay.sh"
+    exit 1
+fi
+
 esp_dir="${HOME}/esp"
 esp_idf_git_dir="${esp_dir}/esp-idf"
 esp_idf_git_tag="v5.0.1"
@@ -9,8 +14,8 @@ jade_git_dir="${HOME}/jade"
 device="TTGO T-Display"
 echo "LINUX ONLY. Flashing the ${device}..."
 
-sudo apt-get -qq update
-sudo apt-get -qq install -y cmake git python3-pip python3-venv
+apt-get -qq update
+apt-get -qq install -y cmake git python3-pip python3-venv
 
 if [ ! -f "${esp_idf_git_dir}"/export.sh ]; then
     [ -d "${esp_dir}" ] || mkdir "${esp_dir}"
@@ -35,7 +40,7 @@ sed -i.bak '/CONFIG_DEBUG_MODE/d' ./sdkconfig.defaults
 sed -i.bak '1s/^/CONFIG_LOG_DEFUALT_LEVEL_NONE=y\n/' sdkconfig.defaults
 rm sdkconfig.defaults.bak
 
-sudo chmod a+rw /dev/ttyACM0
+chmod a+rw /dev/ttyACM0
 idf.py flash
 
 echo -e "\nSUCCESS! Your ${opt} is now running Jade."
