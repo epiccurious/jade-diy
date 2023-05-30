@@ -1,6 +1,11 @@
 #!/bin/bash
 set -e
 
+if [ `whoami` != root ]; then
+    echo -e "ERROR: Please run the script with elevated permissions like this:\n  sudo ~/jade-diy/device_specific/flash_the_m5stack_m5stickc_plus.sh"
+    exit 1
+fi
+
 esp_dir="${HOME}/esp"
 esp_idf_git_dir="${esp_dir}/esp-idf"
 esp_idf_git_tag="v5.0.1"
