@@ -78,7 +78,7 @@ This option is recommended for the average user who doesn't know how to read and
 
 2. Clone (download) this repository and start the scipt. Run the following in Terminal:
     ```bash
-    git clone --quiet https://github.com/epiccurious/jade-diy "${HOME}"/jade-diy && "${HOME}"/jade-diy/flash_your_device.sh
+    git clone --quiet https://github.com/epiccurious/jade-diy "${HOME}"/jade-diy && sudo "${HOME}"/jade-diy/flash_your_device.sh
     ```
 
 3. When the script asks, choose your device (#1-#4).
@@ -99,19 +99,19 @@ After the script completes, you should see the Jade initialization screen on you
 4. Run the device-specific script corresponding to the hardware you're using. This process can take up to 30 minutes on a slow computer.
     - If you're using the TTGO T-Dispay, run:
         ```
-        device_specific/flash_the_ttgo_tdisplay.sh
+        sudo device_specific/flash_the_ttgo_tdisplay.sh
         ```
     - If you're using the M5Stack M5StickC PLUS, run:
         ```
-        device_specific/flash_the_m5stack_m5stickc_plus.sh
+        sudo device_specific/flash_the_m5stack_m5stickc_plus.sh
         ```
     - If you're using the M5Stack Core Basic, run:
         ```
-        device_specific/flash_the_m5stack_core_basic.sh
+        sudo device_specific/flash_the_m5stack_core_basic.sh
         ```
     - If you're using the M5Stack FIRE, run:
         ```
-        device_specific/flash_the_m5stack_fire.sh
+        sudo device_specific/flash_the_m5stack_fire.sh
         ```
 
 After the script completes, you should see the Jade initialization screen on your device.
@@ -128,7 +128,7 @@ This options is provided for people who want to run the commands themselves.
     sudo apt install -y cmake git python3-pip python3-venv
     [ -d ${HOME}/esp ] || mkdir ${HOME}/esp
     git clone -b v5.0.1 --recursive https://github.com/espressif/esp-idf.git ${HOME}/esp/esp-idf/
-    cd ${HOME}/esp/esp-idf
+    cd "${HOME}"/esp/esp-idf
     git checkout a4afa44435ef4488d018399e1de50ad2ee964be8
     ./install.sh esp32
     . $HOME/esp/esp-idf/export.sh
@@ -136,8 +136,8 @@ This options is provided for people who want to run the commands themselves.
   
 3. Download the Jade source code. Copy-and-paste the following lines into Terminal:
     ```bash
-    git clone --recursive https://github.com/blockstream/jade ${HOME}/jade/
-    cd ${HOME}/jade/
+    git clone --recursive https://github.com/blockstream/jade "${HOME}"/jade/
+    cd "${HOME}"/jade/
     ```
   
 4. Load the pre-built configuration file for your DIY hardware.

@@ -1,5 +1,11 @@
 #!/bin/bash
 set -e
+
+if [ `whoami` != root ]; then
+    echo -e "ERROR: Please run the script with elevated permissions like this:\n  sudo ~/jade-diy/flash_your_device.sh"
+    exit 1
+fi
+
 clear
 
 esp_dir="${HOME}/esp"
@@ -27,11 +33,9 @@ case "$(uname -s)" in
     Linux*)
         machine="Linux"
         echo "Detected ${machine}."
-        echo "Checking for sudo permission... "
-        sudo echo -n
         echo -n "Checking for cmake, git, pip, and venv... "
-        sudo apt-get -qq update
-        sudo apt-get -qq install -y -o=Dpkg::Use-Pty=0 cmake git python3-pip python3-venv &> /dev/null
+        apt-get -qq update
+        apt-get -qq install -y -o=Dpkg::Use-Pty=0 cmake git python3-pip python3-venv &> /dev/null
         echo "ok."
         ;;
     Darwin*)
@@ -53,7 +57,7 @@ case "$(uname -s)" in
                 
                 if [ ! -f ${HOME}/Downloads/${cmake_macos_dmg} ]
                 then
-                    echo -ne "\n  Downloading cmake... "
+                    echo -ne "\n  Downloading CMake... "
                     #wget --quiet -P "${HOME}" "${cmake_macos_url}"
                     #wget --quiet -P "${HOME}/Downloads" "${cmake_macos_url}"
                     curl -sL "${cmake_macos_url}" --output "${HOME}"/Downloads/"${cmake_macos_dmg}"
@@ -159,7 +163,7 @@ case "${machine}" in
         while [ ! -c "${tty_device}" ]; do
             read -srn1 -p "Connect your ${chosen_device} and PRESS ANY KEY to continue... " && echo
         done
-        sudo chmod o+rw "${tty_device}"
+        chmod o+rw "${tty_device}"
         ;;
     macOS*)
         #macos_usb_serial=$(ioreg -p IOUSB -n "USB Single Serial" | grep "USB Serial Number" | cut -c 34-43)
