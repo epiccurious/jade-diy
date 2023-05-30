@@ -1,5 +1,11 @@
 #!/bin/bash
 set -e
+
+if [ `whoami` != root ]; then
+    echo -e "ERROR: Please run the script like this:\n  sudo ./jade-diy/flash_your_device.sh"
+    exit 1
+fi
+
 clear
 
 esp_dir="${HOME}/esp"
