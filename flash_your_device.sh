@@ -59,7 +59,7 @@ case "$(uname -s)" in
                 
                 if [ ! -f ${HOME}/Downloads/${cmake_macos_dmg} ]
                 then
-                    echo -ne "\n  Downloading cmake... "
+                    echo -ne "\n  Downloading CMake... "
                     #wget --quiet -P "${HOME}" "${cmake_macos_url}"
                     #wget --quiet -P "${HOME}/Downloads" "${cmake_macos_url}"
                     curl -sL "${cmake_macos_url}" --output "${HOME}"/Downloads/"${cmake_macos_dmg}"
