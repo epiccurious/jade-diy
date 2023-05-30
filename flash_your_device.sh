@@ -2,7 +2,7 @@
 set -e
 
 if [ `whoami` != root ]; then
-    echo -e "ERROR: Please run the script like this:\n  sudo ./jade-diy/flash_your_device.sh"
+    echo -e "ERROR: Please run the script with elevated permissions like this:\n  sudo ./jade-diy/flash_your_device.sh"
     exit 1
 fi
 
