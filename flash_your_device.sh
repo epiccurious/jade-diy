@@ -34,7 +34,7 @@ case "$(uname -s)" in
         machine="Linux"
         echo "Detected ${machine}."
         echo -n "Checking for cmake, git, pip, and venv... "
-        [ -f /var/lib/apt/lists/lock ] && echo "ERROR: `apt` is locked. Are you installing system updates?" && exit 1
+        #[ -f /var/lib/apt/lists/lock ] && echo "ERROR: `apt` is locked. Are you installing system updates?" && exit 1
         apt-get -qq update
         apt-get -qq install -y -o=Dpkg::Use-Pty=0 cmake git python3-pip python3-venv &> /dev/null
         echo "ok."
