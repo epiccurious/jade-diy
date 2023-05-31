@@ -50,26 +50,43 @@ case "$(uname -s)" in
             debian)
                 echo "found ${os_id}"
                 echo "${os_prettyname}"
+                apt-get -qq update
+                apt-get -qq install -y -o=Dpkg::Use-Pty=0 cmake git python3-pip python3-venv &> /dev/null
                 ;;
             ubuntu)
                 echo "found ${os_id}"
                 echo "${os_prettyname}"
+                apt-get -qq update
+                apt-get -qq install -y -o=Dpkg::Use-Pty=0 cmake git python3-pip python3-venv &> /dev/null
                 ;;
             linuxmint)
                 echo "found ${os_id}"
                 echo "${os_prettyname}"
+                apt-get -qq update
+                apt-get -qq install -y -o=Dpkg::Use-Pty=0 cmake git python3-pip python3-venv &> /dev/null
                 ;;
             zorin)
                 echo "found ${os_id}"
                 echo "${os_prettyname}"
+                apt-get -qq update
+                apt-get -qq install -y -o=Dpkg::Use-Pty=0 cmake git python3-pip python3-venv &> /dev/null
                 ;;
             "centos")
                 echo "found ${os_id}"
                 echo "${os_prettyname}"
+                yum -y -q -e 0 install cmake git make
                 ;;
             freebsd)
                 echo "found ${os_id}"
                 echo "${os_prettyname}"
+                tce-load -wil bash.tcz cmake.tcz gcc.tcz git.tcz make.tcz python3.6-pip.tcz usb-serial-6.1.2-tinycore.tcz
+                wget https://www.python.org/ftp/python/3.10.9/Python-3.10.9.tgz
+                tar -xvzf Python-3.10.9.tgz
+                cd Python-3.10.9/
+                ./configure --enable-optimizations
+                make
+                make install
+                pip3 install virtualenv
                 ;;
             tinycore)
                 echo "found ${os_id}"
@@ -78,22 +95,53 @@ case "$(uname -s)" in
             gentoo)
                 echo "found ${os_id}"
                 echo "${os_prettyname}"
+                emerge --quiet --sync
+                emerge --quiet dev-python/pip dev-python/virtualenv
                 ;;
             fedora)
                 echo "found ${os_id}"
                 echo "${os_prettyname}"
+                dnf -qy install cmake git python3-pip python3-virtualenv
                 ;;
             manjaro)
                 echo "found ${os_id}"
                 echo "${os_prettyname}"
+                pacman --noconfirm -Sy cmake git make python-pip python-virtualenv
+                ;;
+            opensuse)
+                echo "found ${os_id}"
+                echo "${os_prettyname}"
+                ;;
+            opensuse-leap)
+                echo "found ${os_id}"
+                echo "${os_prettyname}"
+                sudo zypper -qn si -d python3
+                wget https://www.python.org/ftp/python/3.10.9/Python-3.10.9.tgz
+                wget --no-check-certificate https://www.python.org/ftp/python/3.10.9/Python-3.10.9.tgz
+                tar -xvzf Python-*.tgz 
+                cd Python-*/
+                ./configure --prefix=/usr/local/python/ --with-openssl=/usr/local/openssl --enable-optimizations
+                make
+                sudo make install
+                echo "$(which python3)"
+                sudo mv /usr/bin/python3 /usr/bin/python3.backup
+                #sudo mv /usr/bin/pip3 /usr/bin/pip3.backup
+                #ln -s /usr/local/python/bin/python3 /usr/bin/python3
+                #ln -s /usr/local/python/bin/pip3 /usr/bin/pip3
+                #which python3
+                #sudo ln -s /usr/local/python/lib64/python3.10/lib-dynload/ /usr/local/python/lib/python3.10/lib-dynload
+                #pip3 install virtualenv
+                #export PATH="/home/${USER}/.local/bin:$PATH"
                 ;;
             endeavoros)
                 echo "found ${os_id}"
                 echo "${os_prettyname}"
+                pacman --noconfirm -Sy cmake git python-pip python-virtualenv
                 ;;
             arch)
                 echo "found ${os_id}"
                 echo "${os_prettyname}"
+                pacman --noconfirm -Sy cmake git python-pip python-virtualenv
                 ;;
             *)
                 echo "UNKNOWN LINUX"
@@ -104,8 +152,6 @@ case "$(uname -s)" in
 
         echo -n "Checking for cmake, git, pip, and venv... "
         #[ -f /var/lib/apt/lists/lock ] && echo "ERROR: `apt` is locked. Are you installing system updates?" && exit 1
-        apt-get -qq update
-        apt-get -qq install -y -o=Dpkg::Use-Pty=0 cmake git python3-pip python3-venv &> /dev/null
         echo "ok."
         ;;
     Darwin*)
