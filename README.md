@@ -16,7 +16,7 @@ The firmware that runs Jade can also run other ESP32-based devices, which are li
 
 3. You're a normie who can't be bothered to learn how to operate a computer through the command line. We will be using the Terminal console, which some people find scary. It's not hard, I promise.
 
-4. You aren't not willing to [use Linux](https://ubuntu.com/tutorials/install-ubuntu-desktop) or macOS. (This guide only supports Debian Linux and macOS for now but planning to eventually add support for other Linux distributions.)
+4. You aren't willing to [use Linux](https://ubuntu.com/tutorials/install-ubuntu-desktop) or macOS. (This guide only supports Debian Linux and macOS for now but planning to eventually add support for other Linux distributions.)
 
 ## Why Should I Follow This Guide?
 
