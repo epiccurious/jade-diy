@@ -37,7 +37,7 @@ case "$(uname -s)" in
         if [ -f /etc/os-release ]; then
             os_id=$(grep "^ID=" /etc/os-release | cut -c 4-)
             os_name=$(grep "^NAME=" /etc/os-release | cut -c 7- | sed 's/.$//')
-            os_prettyname=$(grep "^PRETTY_NAME=" /etc/os-release | cut 14- | sed 's/.$//')
+            os_prettyname=$(grep "^PRETTY_NAME=" /etc/os-release | cut -c 14- | sed 's/.$//')
             echo "Found ID ${os_id}"
             echo "Found name${os_name}"
             echo "Found prettyname ${os_prettyname}"
