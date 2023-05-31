@@ -16,19 +16,19 @@ The firmware that runs Jade can also run other ESP32-based devices, which are li
 
 3. You're a normie who can't be bothered to learn how to operate a computer through the command line. We will be using the Terminal console, which some people find scary. It's not hard, I promise.
 
-4. You you're not willing to [use Linux](https://ubuntu.com/tutorials/install-ubuntu-desktop) or macOS. (This guide only supports Debian Linux and macOS for now but planning to eventually add support for other Linux distributions.)
+4. You aren't not willing to [use Linux](https://ubuntu.com/tutorials/install-ubuntu-desktop) or macOS. (This guide only supports Debian Linux and macOS for now but planning to eventually add support for other Linux distributions.)
 
 ## Why Should I Follow This Guide?
 
 Three words: **supply chain attacks**.
 
-You understand that the person who sells you hardware for your bitcoin should have zero idea that you use it to store bitcoin.
+You understand that the person who sells you hardware for your bitcoin shouldn't know you use it for bitcoin.
 
-You're looking to secure less than $100,000 (in 2023 prices) worth of bitcoin.
+You're looking to secure **less** than $100,000 (in 2023 prices) worth of bitcoin.
 
-**WARNING:** Do not hold more than $100,000 (in 2023 prices) on a hardware wallet.
+**WARNING:** Do not hold **more** than $100,000 (in 2023 prices) on a hardware wallet running specialized firmware. For large amounts, install a grneral-purpose Linux OS yourself on a general-purpose laptop instead.
 
-## What Hardware Should I Buy?
+## Overview of Hardware Options
 
 You are better off buying the hardware directly from the hardware vendor than through a third-party channel like Amazon or Alibaba. In many cases, it's cheaper to buy direct too.
 
