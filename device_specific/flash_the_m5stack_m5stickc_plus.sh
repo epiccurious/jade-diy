@@ -14,7 +14,7 @@ jade_git_dir="${HOME}/jade"
 device="M5Stack M5StickC PLUS"
 echo "LINUX ONLY. Flashing the ${device}..."
 
-[ -f /var/lib/apt/lists/lock ] && echo "ERROR: `apt` is locked. Are you installing system updates?" && exit 1
+#[ -f /var/lib/apt/lists/lock ] && echo "ERROR: `apt` is locked. Are you installing system updates?" && exit 1
 apt-get -qq update
 apt-get -qq install -y -o=Dpkg::Use-Pty=0 cmake git python3-pip python3-venv &> /dev/null
 
