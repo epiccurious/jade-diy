@@ -33,6 +33,75 @@ case "$(uname -s)" in
     Linux*)
         machine="Linux"
         echo "Detected ${machine}."
+
+        if [ -f /etc/os-release ]; then
+            os_id=$(grep "^ID=" /etc/os-release | cut -c 4-)
+            os_name=$(grep "^NAME=" /etc/os-release | cut -c 7- | sed 's/.$//')
+            os_prettyname=$(grep "^PRETTY_NAME=" /etc/os-release | cut 14- | sed 's/.$//')
+            echo "Found ID ${os_id}"
+            echo "Found name${os_name}"
+            echo "Found prettyname ${os_prettyname}"
+        else
+            echo "ERROR: Unknown Linux distro. Please report this error"
+            exit 1
+        fi
+        
+        case $os_id in
+            debian)
+                echo "found ${os_id}"
+                echo "${os_prettyname}"
+                ;;
+            ubuntu)
+                echo "found ${os_id}"
+                echo "${os_prettyname}"
+                ;;
+            linuxmint)
+                echo "found ${os_id}"
+                echo "${os_prettyname}"
+                ;;
+            zorin)
+                echo "found ${os_id}"
+                echo "${os_prettyname}"
+                ;;
+            "centos")
+                echo "found ${os_id}"
+                echo "${os_prettyname}"
+                ;;
+            freebsd)
+                echo "found ${os_id}"
+                echo "${os_prettyname}"
+                ;;
+            tinycore)
+                echo "found ${os_id}"
+                echo "${os_prettyname}"
+                ;;
+            gentoo)
+                echo "found ${os_id}"
+                echo "${os_prettyname}"
+                ;;
+            fedora)
+                echo "found ${os_id}"
+                echo "${os_prettyname}"
+                ;;
+            manjaro)
+                echo "found ${os_id}"
+                echo "${os_prettyname}"
+                ;;
+            endeavoros)
+                echo "found ${os_id}"
+                echo "${os_prettyname}"
+                ;;
+            arch)
+                echo "found ${os_id}"
+                echo "${os_prettyname}"
+                ;;
+            *)
+                echo "UNKNOWN LINUX"
+                ls -l /etc/*release
+                exit 1
+                ;;
+        esac
+
         echo -n "Checking for cmake, git, pip, and venv... "
         #[ -f /var/lib/apt/lists/lock ] && echo "ERROR: `apt` is locked. Are you installing system updates?" && exit 1
         apt-get -qq update
