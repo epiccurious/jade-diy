@@ -14,7 +14,7 @@ The firmware that runs Jade can also run other ESP32-based devices, which are li
 
 2. You want to learn how to use the Jade hardware wallet. Refer to [the Jade's help center documentation](https://help.blockstream.com/hc/en-us/categories/900000061906-Blockstream-Jade) or [contact Blockstream](https://help.blockstream.com/hc/en-us/requests/new) for software support.
 
-3. You're a normie who can't be bothered to learn how to operate a computer through the command line. We will be using the Terminal console, which some people find scary. It's not not hard, I promise.
+3. You're a normie who can't be bothered to learn how to operate a computer through the command line. We will be using the Terminal console, which some people find scary. It's not hard, I promise.
 
 4. You you're not willing to [use Linux](https://ubuntu.com/tutorials/install-ubuntu-desktop) or macOS. (This guide only supports Debian Linux and macOS for now but planning to eventually add support for other Linux distributions.)
 
