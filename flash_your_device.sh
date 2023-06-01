@@ -77,7 +77,7 @@ case "$(uname -s)" in
                 subscription-manager register
                 subscription-manager refresh
                 subscription-manager list --available
-                subscription-manager attach --pool=<Pool-ID>
+                subscription-manager attach --pool=Pool-ID
                 ;;
             arch)
                 echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
