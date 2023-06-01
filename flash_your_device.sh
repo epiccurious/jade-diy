@@ -123,6 +123,13 @@ case "$(uname -s)" in
                 yes | pip3 install virtualenv -q
                 exit 1
                 ;;
+            alpine)
+                echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
+                #setup-interfaces
+                #ip link set dev eth0 up
+                #/etc/init.d/networking --quiet start &
+                #ping 1.1.1.1
+                exit 1
             freebsd)
                 echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
                 exit 1
@@ -137,7 +144,10 @@ case "$(uname -s)" in
                     #echo "${os_id_like}"  | head -n1 | cut -d "_" -f1
                     os_first_id_like=$(echo ${os_id_like} | cut -d " " -f1)
                     echo "Trying again with ${os_first_id_like}"
-                    os_id=${os_first_id_like}
+                    if [ "${os_first_id_like}" = "debian" ] || [ "${os_first_id_like}" = "ubuntu" ]; then
+                        apt-get -qq update
+                        apt-get -qq install -y -o=Dpkg::Use-Pty=0 cmake git python3-pip python3-venv &> /dev/null
+                    fi
                 else
                     echo "Error: Unknowon Linux distribution '${o_id}'."
                     [ -f /etc/os-release ] && cat /etc/os-release
