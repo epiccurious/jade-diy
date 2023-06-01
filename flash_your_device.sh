@@ -69,11 +69,8 @@ case "$(uname -s)" in
                 echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
                 pacman --noconfirm -Sy cmake git python-pip python-virtualenv
                 ;;
-            manjaro)
+            manjaro|endeavouros)
                 pacman --noconfirm -Sy cmake git make python-pip python-virtualenv &>/dev/null
-                ;;
-            endeavouros)
-                pacman --noconfirm -Sy cmake git python-pip python-virtualenv > /dev/null
                 ;;
             opensuse)
                 echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
@@ -110,10 +107,18 @@ case "$(uname -s)" in
                 exit 1
                 ;;
             *)
-                echo "UNKNOWN LINUX"
+                if [ -n "${os_id_like}" ]; then
+                    echo "ID_LIKE: ${os_id_like}"
+                    echo "DEVELOPER TO-DO: Check for delimeters, pull out first word, and run commands for that distro."
+                    #echo "${os_id_like}"  | head -n1 | cut -d " " -f1
+                    #echo "${os_id_like}"  | head -n1 | cut -d "-" -f1
+                    #echo "${os_id_like}"  | head -n1 | cut -d "_" -f1
+                fi
+                echo "Error: Unknowon Linux distribution '${o_id}'."
                 [ -f /etc/os-release ] && cat /etc/os-release
                 uname -a
                 ls -l /etc/*release
+                echo "Please report this error."
                 exit 1
                 ;;
         esac
