@@ -102,6 +102,13 @@ case "$(uname -s)" in
                 python3 -m ensurepip
                 pip3 install virtualenv
                 ;;
+            solus)
+                echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
+                eopkg update-repo
+                eopkg install -y cmake git &> /dev/null
+                yes | pip3 install virtualenv -q
+                exit 1
+                ;;
             freebsd)
                 echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
                 exit 1
