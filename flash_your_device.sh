@@ -32,20 +32,20 @@ echo
 case "$(uname -s)" in
     Linux*)
         machine="Linux"
-        echo "Detected ${machine}."
 
         if [ -f /etc/os-release ]; then
             os_id=$(grep "^ID=" /etc/os-release | cut -c 4-)
             os_id_like=$(grep "^ID_LIKE=" /etc/os-release | cut -c 9-)
             os_name=$(grep "^NAME=" /etc/os-release | cut -c 7- | sed 's/.$//')
-            os_prettyname=$(grep "^PRETTY_NAME=" /etc/os-release | cut -c 14- | sed 's/.$//')
-            echo "Found ID ${os_id}"
-            echo "Found name${os_name}"
-            echo "Found prettyname ${os_prettyname}"
+            os_prettyname=$(grep "^PRETTY_NAME=" /etc/os-release | cut -c 13- )
         else
-            echo "ERROR: Unknown Linux distro. Please report this error"
+            echo "ERROR: Unknown ${machineee} distro. Please report this error."
+            uname -a
+            ls -l /etc/*release
             exit 1
         fi
+        
+        echo "Detected ${machine} ${os_id} (${os_prettyname})."
         
         echo "Checking for cmake, git, pip, and venv... "
         case $os_id in
@@ -110,6 +110,7 @@ case "$(uname -s)" in
             *)
                 echo "UNKNOWN LINUX"
                 [ -f /etc/os-release ] && cat /etc/os-release
+                uname -a
                 ls -l /etc/*release
                 exit 1
                 ;;
