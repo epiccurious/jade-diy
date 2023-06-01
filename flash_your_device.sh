@@ -60,7 +60,13 @@ case "$(uname -s)" in
                 ;;
             *centos*)
                 echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
-                yum -y -q -e 0 install cmake git make
+                yum -y -q -e 0 install cmake gcc git make
+                curl -O https://www.python.org/ftp/python/3.8.1/Python-3.8.1.tgz
+                tar -xzf Python-3.8.1.tgz
+                cd Python-3.8.1/
+                ./configure --enable-optimizations
+                make
+                
                 ;;
             fedora)
                 dnf -qy install cmake git python3-pip python3-virtualenv &> /dev/null
