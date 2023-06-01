@@ -145,8 +145,8 @@ case "$(uname -s)" in
                     ls -l /etc/*release
                     echo "Please report this error."
                     exit 1
-                    ;;
                 fi
+                ;;
         esac
         echo "ok."
         ;;
