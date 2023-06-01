@@ -49,7 +49,7 @@ case "$(uname -s)" in
         
         echo -n "Checking for cmake, git, pip, and venv... "
         case $os_id in
-            debian|ubuntu|linuxmint|zorin|neon|pop)
+            debian|?ubuntu|linuxmint|zorin|neon|pop)
                 apt-get -qq update
                 apt-get -qq install -y -o=Dpkg::Use-Pty=0 cmake git python3-pip python3-venv &> /dev/null
                 ;;
@@ -136,19 +136,17 @@ case "$(uname -s)" in
                 exit 1
                 ;;
             *)
-                echo "The ID_LIKE is: ${os_id_like}"
                 if [ -n "${os_id_like}" ]; then
-                    echo "ID_LIKE: ${os_id_like}"
-                    echo "DEVELOPER TO-DO: Check for delimeters, pull out first word, and run commands for that distro."
-                    #echo "${os_id_like}"  | head -n1 | cut -d " " -f1
-                    #echo "${os_id_like}"  | head -n1 | cut -d "-" -f1
-                    #echo "${os_id_like}"  | head -n1 | cut -d "_" -f1
+                    echo -e "\nOS ID_LIKE: ${os_id_like}"
+                    echo "DEV TO-DO:  Check for delimeters, pull out first word, and run commands for that distro."
+                    echo "DEV TO-DO:  needs to remove the first double quote eg ubuntu, not \"ubuntu"
                     os_first_id_like=$(echo ${os_id_like} | cut -d " " -f1)
                     echo "Trying again with ${os_first_id_like}"
-                    if [ "${os_first_id_like}" = "debian" ] || [ "${os_first_id_like}" = "ubuntu" ]; then
-                        apt-get -qq update
-                        apt-get -qq install -y -o=Dpkg::Use-Pty=0 cmake git python3-pip python3-venv &> /dev/null
-                    fi
+                    os_id="${os_first_id_like}"
+                    #if [ "${os_first_id_like}" = "debian" ] || [ "${os_first_id_like}" = "ubuntu" ]; then
+                    #    apt-get -qq update
+                    #    apt-get -qq install -y -o=Dpkg::Use-Pty=0 cmake git python3-pip python3-venv &> /dev/null
+                    #fi
                 else
                     echo "Error: Unknowon Linux distribution '${o_id}'."
                     [ -f /etc/os-release ] && cat /etc/os-release
