@@ -49,19 +49,7 @@ case "$(uname -s)" in
         
         echo "Checking for cmake, git, pip, and venv... "
         case $os_id in
-            debian)
-                apt-get -qq update
-                apt-get -qq install -y -o=Dpkg::Use-Pty=0 cmake git python3-pip python3-venv &> /dev/null
-                ;;
-            ubuntu)
-                apt-get -qq update
-                apt-get -qq install -y -o=Dpkg::Use-Pty=0 cmake git python3-pip python3-venv &> /dev/null
-                ;;
-            linuxmint)
-                apt-get -qq update
-                apt-get -qq install -y -o=Dpkg::Use-Pty=0 cmake git python3-pip python3-venv &> /dev/null
-                ;;
-            zorin)
+            debian|ubuntu|linuxmint|zorin)
                 apt-get -qq update
                 apt-get -qq install -y -o=Dpkg::Use-Pty=0 cmake git python3-pip python3-venv &> /dev/null
                 ;;
