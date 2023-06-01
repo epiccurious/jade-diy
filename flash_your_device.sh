@@ -36,6 +36,7 @@ case "$(uname -s)" in
 
         if [ -f /etc/os-release ]; then
             os_id=$(grep "^ID=" /etc/os-release | cut -c 4-)
+            os_id_like=$(grep "^ID_LIKE=" /etc/os-release | cut -c 9-)
             os_name=$(grep "^NAME=" /etc/os-release | cut -c 7- | sed 's/.$//')
             os_prettyname=$(grep "^PRETTY_NAME=" /etc/os-release | cut -c 14- | sed 's/.$//')
             echo "Found ID ${os_id}"
@@ -49,22 +50,18 @@ case "$(uname -s)" in
         echo "Checking for cmake, git, pip, and venv... "
         case $os_id in
             debian)
-                echo "Detected ${os_id} (${os_prettyname})"
                 apt-get -qq update
                 apt-get -qq install -y -o=Dpkg::Use-Pty=0 cmake git python3-pip python3-venv &> /dev/null
                 ;;
             ubuntu)
-                echo "Detected ${os_id} (${os_prettyname})"
                 apt-get -qq update
                 apt-get -qq install -y -o=Dpkg::Use-Pty=0 cmake git python3-pip python3-venv &> /dev/null
                 ;;
             linuxmint)
-                echo "Detected ${os_id} (${os_prettyname})"
                 apt-get -qq update
                 apt-get -qq install -y -o=Dpkg::Use-Pty=0 cmake git python3-pip python3-venv &> /dev/null
                 ;;
             zorin)
-                echo "Detected ${os_id} (${os_prettyname})"
                 apt-get -qq update
                 apt-get -qq install -y -o=Dpkg::Use-Pty=0 cmake git python3-pip python3-venv &> /dev/null
                 ;;
@@ -75,12 +72,6 @@ case "$(uname -s)" in
             freebsd)
                 echo "Detected ${os_id} (${os_prettyname})"
                 ;;
-            tinycore)
-                echo "Detected ${os_id} (${os_prettyname})"
-                sudo -u "tc" tce-load -wil bash.tcz cmake.tcz git.tcz make.tcz python3.9.tcz usb-serial-6.1.2-tinycore.tcz
-                python3 -m ensurepip
-                pip3 install virtualenv
-                ;;
             gentoo)
                 echo "Detected ${os_id} (${os_prettyname})"
                 emerge --quiet --sync
@@ -90,9 +81,16 @@ case "$(uname -s)" in
                 echo "Detected ${os_id} (${os_prettyname})"
                 dnf -qy install cmake git python3-pip python3-virtualenv > /dev/null
                 ;;
-            manjaro)
+            arch)
                 echo "Detected ${os_id} (${os_prettyname})"
+                pacman --noconfirm -Sy cmake git python-pip python-virtualenv
+                ;;
+            manjaro)
                 pacman --noconfirm -Sy cmake git make python-pip python-virtualenv &>/dev/null
+                ;;
+            endeavoros)
+                echo "Detected ${os_id} (${os_prettyname})"
+                pacman --noconfirm -Sy cmake git python-pip python-virtualenv > /dev/null
                 ;;
             opensuse)
                 echo "Detected ${os_id} (${os_prettyname})"
@@ -117,13 +115,11 @@ case "$(uname -s)" in
                 #pip3 install virtualenv
                 #export PATH="/home/${USER}/.local/bin:$PATH"
                 ;;
-            endeavoros)
+            tinycore)
                 echo "Detected ${os_id} (${os_prettyname})"
-                pacman --noconfirm -Sy cmake git python-pip python-virtualenv
-                ;;
-            arch)
-                echo "Detected ${os_id} (${os_prettyname})"
-                pacman --noconfirm -Sy cmake git python-pip python-virtualenv
+                sudo -u "tc" tce-load -wil bash.tcz cmake.tcz git.tcz make.tcz python3.9.tcz usb-serial-6.1.2-tinycore.tcz
+                python3 -m ensurepip
+                pip3 install virtualenv
                 ;;
             *)
                 echo "UNKNOWN LINUX"
