@@ -88,7 +88,7 @@ case "$(uname -s)" in
             manjaro)
                 pacman --noconfirm -Sy cmake git make python-pip python-virtualenv &>/dev/null
                 ;;
-            endeavoros)
+            endeavouros)
                 echo "Detected ${os_id} (${os_prettyname})"
                 pacman --noconfirm -Sy cmake git python-pip python-virtualenv > /dev/null
                 ;;
