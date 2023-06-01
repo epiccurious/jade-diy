@@ -34,12 +34,12 @@ case "$(uname -s)" in
         machine="Linux"
 
         if [ -f /etc/os-release ]; then
-            os_id=$(grep "^ID=" /etc/os-release | cut -c 4-)
-            os_id_like=$(grep "^ID_LIKE=" /etc/os-release | cut -c 9-)
-            os_name=$(grep "^NAME=" /etc/os-release | cut -c 7- | sed 's/.$//')
-            os_prettyname=$(grep "^PRETTY_NAME=" /etc/os-release | cut -c 13- )
+            os_id=$(grep "^ID=" /etc/os-release | cut -c 4- | tr -d '"')
+            os_id_like=$(grep "^ID_LIKE=" /etc/os-release | cut -c 9- | tr -d '"')
+            os_name=$(grep "^NAME=" /etc/os-release | cut -c 6- | tr -d '"')
+            os_prettyname=$(grep "^PRETTY_NAME=" /etc/os-release | cut -c 13- | tr -d '"')
         else
-            echo "ERROR: Unknown ${machineee} distro. Please report this error."
+            echo "ERROR: Unable to detect ${machine} distro. Please report this error."
             uname -a
             ls -l /etc/*release
             exit 1
