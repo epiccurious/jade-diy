@@ -46,75 +46,59 @@ case "$(uname -s)" in
             exit 1
         fi
         
+        echo "Checking for cmake, git, pip, and venv... "
         case $os_id in
             debian)
-                echo "found ${os_id}"
-                echo "${os_prettyname}"
+                echo "Detected ${os_id} (${os_prettyname})"
                 apt-get -qq update
                 apt-get -qq install -y -o=Dpkg::Use-Pty=0 cmake git python3-pip python3-venv &> /dev/null
                 ;;
             ubuntu)
-                echo "found ${os_id}"
-                echo "${os_prettyname}"
+                echo "Detected ${os_id} (${os_prettyname})"
                 apt-get -qq update
                 apt-get -qq install -y -o=Dpkg::Use-Pty=0 cmake git python3-pip python3-venv &> /dev/null
                 ;;
             linuxmint)
-                echo "found ${os_id}"
-                echo "${os_prettyname}"
+                echo "Detected ${os_id} (${os_prettyname})"
                 apt-get -qq update
                 apt-get -qq install -y -o=Dpkg::Use-Pty=0 cmake git python3-pip python3-venv &> /dev/null
                 ;;
             zorin)
-                echo "found ${os_id}"
-                echo "${os_prettyname}"
+                echo "Detected ${os_id} (${os_prettyname})"
                 apt-get -qq update
                 apt-get -qq install -y -o=Dpkg::Use-Pty=0 cmake git python3-pip python3-venv &> /dev/null
                 ;;
             "centos")
-                echo "found ${os_id}"
-                echo "${os_prettyname}"
+                echo "Detected ${os_id} (${os_prettyname})"
                 yum -y -q -e 0 install cmake git make
                 ;;
             freebsd)
-                echo "found ${os_id}"
-                echo "${os_prettyname}"
+                echo "Detected ${os_id} (${os_prettyname})"
                 ;;
             tinycore)
-                echo "found ${os_id}"
-                echo "${os_prettyname}"
-                tce-load -wil bash.tcz cmake.tcz gcc.tcz git.tcz make.tcz python3.6-pip.tcz usb-serial-6.1.2-tinycore.tcz
-                wget https://www.python.org/ftp/python/3.10.9/Python-3.10.9.tgz
-                tar -xvzf Python-3.10.9.tgz
-                cd Python-3.10.9/
-                ./configure --enable-optimizations
-                make
-                make install
+                echo "Detected ${os_id} (${os_prettyname})"
+                sudo -u "tc" tce-load -wil bash.tcz cmake.tcz git.tcz make.tcz python3.9.tcz usb-serial-6.1.2-tinycore.tcz
+                python3 -m ensurepip
                 pip3 install virtualenv
                 ;;
             gentoo)
-                echo "found ${os_id}"
-                echo "${os_prettyname}"
+                echo "Detected ${os_id} (${os_prettyname})"
                 emerge --quiet --sync
                 emerge --quiet dev-python/pip dev-python/virtualenv
                 ;;
             fedora)
-                echo "found ${os_id}"
-                echo "${os_prettyname}"
-                dnf -qy install cmake git python3-pip python3-virtualenv
+                echo "Detected ${os_id} (${os_prettyname})"
+                dnf -qy install cmake git python3-pip python3-virtualenv > /dev/null
                 ;;
             manjaro)
-                echo "found ${os_id}"
-                echo "${os_prettyname}"
+                echo "Detected ${os_id} (${os_prettyname})"
                 pacman --noconfirm -Sy cmake git make python-pip python-virtualenv
                 ;;
             opensuse)
-                echo "found ${os_id}"
-                echo "${os_prettyname}"
+                echo "Detected ${os_id} (${os_prettyname})"
                 ;;
             opensuse-leap)
-                echo "found ${os_id}"
-                echo "${os_prettyname}"
+                echo "Detected ${os_id} (${os_prettyname})"
                 sudo zypper -qn si -d python3
                 wget https://www.python.org/ftp/python/3.10.9/Python-3.10.9.tgz
                 wget --no-check-certificate https://www.python.org/ftp/python/3.10.9/Python-3.10.9.tgz
@@ -134,31 +118,28 @@ case "$(uname -s)" in
                 #export PATH="/home/${USER}/.local/bin:$PATH"
                 ;;
             endeavoros)
-                echo "found ${os_id}"
-                echo "${os_prettyname}"
+                echo "Detected ${os_id} (${os_prettyname})"
                 pacman --noconfirm -Sy cmake git python-pip python-virtualenv
                 ;;
             arch)
-                echo "found ${os_id}"
-                echo "${os_prettyname}"
+                echo "Detected ${os_id} (${os_prettyname})"
                 pacman --noconfirm -Sy cmake git python-pip python-virtualenv
                 ;;
             *)
                 echo "UNKNOWN LINUX"
+                [ -f /etc/os-release ] && cat /etc/os-release
                 ls -l /etc/*release
                 exit 1
                 ;;
         esac
-
-        echo -n "Checking for cmake, git, pip, and venv... "
-        #[ -f /var/lib/apt/lists/lock ] && echo "ERROR: `apt` is locked. Are you installing system updates?" && exit 1
         echo "ok."
         ;;
+
     Darwin*)
         machine="macOS"
         echo "Detected ${machine}."
         echo -n "Checking for cmake... "
-        if ! command -v cmake &>/dev/null; then
+        if ! command -v cmake &> /dev/null; then
             if [ ! -d /Applications/CMake.app ]; then
                 #read -srk "?  CMake is not found in your Applications directory.\n  PRESS ANY KEY to download CMake... " && echo
                 #cmake_macos_url="https://github.com/Kitware/CMake/releases/download/v3.26.4/cmake-3.26.4-macos-universal.tar.gz"
@@ -213,9 +194,9 @@ if [ ! -f "${esp_idf_git_dir}"/export.sh ]; then
     git submodule update --quiet --init --recursive
     echo "ok."
     echo -n "  Installing the framework... "
-    ./install.sh esp32 1>/dev/null
+    ./install.sh esp32 > /dev/null
 fi
-. "${esp_idf_git_dir}"/export.sh 1>/dev/null
+. "${esp_idf_git_dir}"/export.sh > /dev/null
 echo "ok."
 
 echo -n "Checking for the Blockstream Jade repository... "
