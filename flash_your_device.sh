@@ -45,7 +45,7 @@ case "$(uname -s)" in
             exit 1
         fi
         
-        echo "Detected ${machine} distribution '${os_id}' (${os_prettyname})."
+        echo "Detected ${machine} distribution ${os_id}, ${os_prettyname}."
         
         echo -n "Checking for cmake, git, pip, and venv... "
         case $os_id in
@@ -71,11 +71,20 @@ case "$(uname -s)" in
             fedora)
                 dnf -qy install cmake git python3-pip python3-virtualenv &> /dev/null
                 ;;
+            rhel)
+                subscription-manager remove --all
+                subscription-manager unregister
+                subscription-manager clean
+                subscription-manager register
+                subscription-manager refresh
+                subscription-manager list --available
+                subscription-manager attach --pool=<Pool-ID>
+                ;;
             arch)
                 echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
                 pacman --noconfirm -Sy cmake git python-pip python-virtualenv
                 ;;
-            manjaro|endeavouros)
+            manjaro|endeavouros|garuda)
                 pacman --noconfirm -Sy cmake git make python-pip python-virtualenv &>/dev/null
                 ;;
             opensuse)
