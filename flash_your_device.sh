@@ -79,6 +79,10 @@ case "$(uname -s)" in
             freebsd)
                 echo "found ${os_id}"
                 echo "${os_prettyname}"
+                ;;
+            tinycore)
+                echo "found ${os_id}"
+                echo "${os_prettyname}"
                 tce-load -wil bash.tcz cmake.tcz gcc.tcz git.tcz make.tcz python3.6-pip.tcz usb-serial-6.1.2-tinycore.tcz
                 wget https://www.python.org/ftp/python/3.10.9/Python-3.10.9.tgz
                 tar -xvzf Python-3.10.9.tgz
@@ -87,10 +91,6 @@ case "$(uname -s)" in
                 make
                 make install
                 pip3 install virtualenv
-                ;;
-            tinycore)
-                echo "found ${os_id}"
-                echo "${os_prettyname}"
                 ;;
             gentoo)
                 echo "found ${os_id}"
