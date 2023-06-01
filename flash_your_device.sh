@@ -70,7 +70,7 @@ case "$(uname -s)" in
                 emerge --quiet --sync
                 emerge --quiet dev-python/pip dev-python/virtualenv
                 ;;
-            "centos")
+            *centos*)
                 echo "Detected ${os_id} (${os_prettyname})"
                 yum -y -q -e 0 install cmake git make
                 ;;
