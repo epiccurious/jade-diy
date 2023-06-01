@@ -92,7 +92,7 @@ case "$(uname -s)" in
                 ;;
             manjaro)
                 echo "Detected ${os_id} (${os_prettyname})"
-                pacman --noconfirm -Sy cmake git make python-pip python-virtualenv
+                pacman --noconfirm -Sy cmake git make python-pip python-virtualenv &>/dev/null
                 ;;
             opensuse)
                 echo "Detected ${os_id} (${os_prettyname})"
