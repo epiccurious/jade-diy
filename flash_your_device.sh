@@ -130,6 +130,7 @@ case "$(uname -s)" in
                 #/etc/init.d/networking --quiet start &
                 #ping 1.1.1.1
                 exit 1
+                ;;
             freebsd)
                 echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
                 exit 1
