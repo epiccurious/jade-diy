@@ -45,28 +45,28 @@ case "$(uname -s)" in
             exit 1
         fi
         
-        echo "Detected ${machine} ${os_id} (${os_prettyname})."
+        echo "Detected ${machine} distribution '${os_id}' (${os_prettyname})."
         
-        echo "Checking for cmake, git, pip, and venv... "
+        echo -n "Checking for cmake, git, pip, and venv... "
         case $os_id in
             debian|ubuntu|linuxmint|zorin)
                 apt-get -qq update
                 apt-get -qq install -y -o=Dpkg::Use-Pty=0 cmake git python3-pip python3-venv &> /dev/null
                 ;;
             gentoo)
-                echo "Detected ${os_id} (${os_prettyname})"
+                echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
                 emerge --quiet --sync
                 emerge --quiet dev-python/pip dev-python/virtualenv
                 ;;
             *centos*)
-                echo "Detected ${os_id} (${os_prettyname})"
+                echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
                 yum -y -q -e 0 install cmake git make
                 ;;
             fedora)
                 dnf -qy install cmake git python3-pip python3-virtualenv &> /dev/null
                 ;;
             arch)
-                echo "Detected ${os_id} (${os_prettyname})"
+                echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
                 pacman --noconfirm -Sy cmake git python-pip python-virtualenv
                 ;;
             manjaro)
@@ -76,13 +76,14 @@ case "$(uname -s)" in
                 pacman --noconfirm -Sy cmake git python-pip python-virtualenv > /dev/null
                 ;;
             opensuse)
-                echo "Detected ${os_id} (${os_prettyname})"
+                echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
+                exit 1
                 ;;
             opensuse-leap)
-                echo "Detected ${os_id} (${os_prettyname})"
-                sudo zypper -qn si -d python3
+                echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
+                zypper -qn si -d python3
                 wget https://www.python.org/ftp/python/3.10.9/Python-3.10.9.tgz
-                wget --no-check-certificate https://www.python.org/ftp/python/3.10.9/Python-3.10.9.tgz
+                #wget --no-check-certificate https://www.python.org/ftp/python/3.10.9/Python-3.10.9.tgz
                 tar -xvzf Python-*.tgz 
                 cd Python-*/
                 ./configure --prefix=/usr/local/python/ --with-openssl=/usr/local/openssl --enable-optimizations
@@ -99,13 +100,14 @@ case "$(uname -s)" in
                 #export PATH="/home/${USER}/.local/bin:$PATH"
                 ;;
             tinycore)
-                echo "Detected ${os_id} (${os_prettyname})"
+                echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
                 sudo -u "tc" tce-load -wil bash.tcz cmake.tcz git.tcz make.tcz python3.9.tcz usb-serial-6.1.2-tinycore.tcz
                 python3 -m ensurepip
                 pip3 install virtualenv
                 ;;
             freebsd)
-                echo "Detected ${os_id} (${os_prettyname})"
+                echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
+                exit 1
                 ;;
             *)
                 echo "UNKNOWN LINUX"
