@@ -65,21 +65,17 @@ case "$(uname -s)" in
                 apt-get -qq update
                 apt-get -qq install -y -o=Dpkg::Use-Pty=0 cmake git python3-pip python3-venv &> /dev/null
                 ;;
-            "centos")
-                echo "Detected ${os_id} (${os_prettyname})"
-                yum -y -q -e 0 install cmake git make
-                ;;
-            freebsd)
-                echo "Detected ${os_id} (${os_prettyname})"
-                ;;
             gentoo)
                 echo "Detected ${os_id} (${os_prettyname})"
                 emerge --quiet --sync
                 emerge --quiet dev-python/pip dev-python/virtualenv
                 ;;
-            fedora)
+            "centos")
                 echo "Detected ${os_id} (${os_prettyname})"
-                dnf -qy install cmake git python3-pip python3-virtualenv > /dev/null
+                yum -y -q -e 0 install cmake git make
+                ;;
+            fedora)
+                dnf -qy install cmake git python3-pip python3-virtualenv &> /dev/null
                 ;;
             arch)
                 echo "Detected ${os_id} (${os_prettyname})"
@@ -89,7 +85,6 @@ case "$(uname -s)" in
                 pacman --noconfirm -Sy cmake git make python-pip python-virtualenv &>/dev/null
                 ;;
             endeavouros)
-                echo "Detected ${os_id} (${os_prettyname})"
                 pacman --noconfirm -Sy cmake git python-pip python-virtualenv > /dev/null
                 ;;
             opensuse)
@@ -120,6 +115,9 @@ case "$(uname -s)" in
                 sudo -u "tc" tce-load -wil bash.tcz cmake.tcz git.tcz make.tcz python3.9.tcz usb-serial-6.1.2-tinycore.tcz
                 python3 -m ensurepip
                 pip3 install virtualenv
+                ;;
+            freebsd)
+                echo "Detected ${os_id} (${os_prettyname})"
                 ;;
             *)
                 echo "UNKNOWN LINUX"
