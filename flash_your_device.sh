@@ -32,18 +32,168 @@ echo
 case "$(uname -s)" in
     Linux*)
         machine="Linux"
-        echo "Detected ${machine}."
+
+        if [ -f /etc/os-release ]; then
+            os_id=$(grep "^ID=" /etc/os-release | cut -c 4- | tr -d '"')
+            os_id_like=$(grep "^ID_LIKE=" /etc/os-release | cut -c 9- | tr -d '"')
+            os_name=$(grep "^NAME=" /etc/os-release | cut -c 6- | tr -d '"')
+            os_prettyname=$(grep "^PRETTY_NAME=" /etc/os-release | cut -c 13- | tr -d '"')
+        else
+            echo "ERROR: Unable to detect ${machine} distro. Please report this error."
+            uname -a
+            ls -l /etc/*release
+            exit 1
+        fi
+        
+        echo "Detected ${machine} distribution ${os_id}, ${os_prettyname}."
+        
         echo -n "Checking for cmake, git, pip, and venv... "
-        #[ -f /var/lib/apt/lists/lock ] && echo "ERROR: `apt` is locked. Are you installing system updates?" && exit 1
-        apt-get -qq update
-        apt-get -qq install -y -o=Dpkg::Use-Pty=0 cmake git python3-pip python3-venv &> /dev/null
+        case $os_id in
+            debian|?ubuntu|linuxmint|zorin|neon|pop|devuan)
+                apt-get -qq update
+                apt-get -qq install -y -o=Dpkg::Use-Pty=0 cmake git python3-pip python3-venv &> /dev/null
+                ;;
+            gentoo)
+                echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
+                emerge --quiet --sync
+                emerge --quiet dev-python/pip dev-python/virtualenv
+                ;;
+            centos)
+                echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
+                #nmcli connection up eth0
+                #ping 1.1.1.1
+                yum --quiet --assumeyes --errorlevel=0 install bzip2-devel cmake gcc git libffi-devel libusb-devel make openssl-devel zlib-devel
+                yum --quiet --assumeyes install epel-release
+                rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
+                yum --quiet --assumeyes update
+                #sudo dnf -y install dnf-plugins-core
+                cd "${HOME}"
+                wget http://ftp.gnu.org/gnu/bash/bash-4.4.18.tar.gz
+                tar xf bash-4.4.18.tar.gz
+                cd bash-4.4.18/
+                ./configure
+                make
+                make install
+                bash --version
+                cd "${HOME}"
+                curl -O https://www.python.org/ftp/python/3.8.1/Python-3.8.1.tgz
+                tar -xzf Python-3.8.1.tgz
+                cd Python-3.8.1/
+                ./configure
+                make
+                make install
+                alias python=python3
+                python3 --version
+                python3 -m ensurepip
+                pip3 install virtualenv -q
+                ;;
+            fedora)
+                dnf -qy install cmake git python3-pip python3-virtualenv &> /dev/null
+                ;;
+            rhel)
+                subscription-manager remove --all
+                subscription-manager unregister
+                subscription-manager clean
+                subscription-manager register
+                subscription-manager refresh
+                subscription-manager list --available
+                subscription-manager attach --pool=Pool-ID
+                ;;
+            arch)
+                echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
+                pacman --noconfirm -Sy cmake git python-pip python-virtualenv
+                #pacman-key --init
+                #pacman-key --populate archlinux
+                #pacman -Sy archlinux-keyring && pacman -Su
+                ;;
+            manjaro|endeavouros|garuda)
+                pacman --noconfirm -Sy cmake git make python-pip python-virtualenv &>/dev/null
+                ;;
+            opensuse)
+                echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
+                exit 1
+                ;;
+            opensuse-leap)
+                echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
+                zypper -qn si -d python3
+                wget https://www.python.org/ftp/python/3.10.9/Python-3.10.9.tgz
+                #wget --no-check-certificate https://www.python.org/ftp/python/3.10.9/Python-3.10.9.tgz
+                tar -xvzf Python-*.tgz 
+                cd Python-*/
+                ./configure --prefix=/usr/local/python/ --with-openssl=/usr/local/openssl --enable-optimizations
+                make
+                sudo make install
+                echo "$(which python3)"
+                sudo mv /usr/bin/python3 /usr/bin/python3.backup
+                #sudo mv /usr/bin/pip3 /usr/bin/pip3.backup
+                #ln -s /usr/local/python/bin/python3 /usr/bin/python3
+                #ln -s /usr/local/python/bin/pip3 /usr/bin/pip3
+                #which python3
+                #sudo ln -s /usr/local/python/lib64/python3.10/lib-dynload/ /usr/local/python/lib/python3.10/lib-dynload
+                #pip3 install virtualenv
+                #export PATH="/home/${USER}/.local/bin:$PATH"
+                ;;
+            tinycore)
+                echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
+                sudo -u "tc" tce-load -wil bash.tcz cmake.tcz git.tcz make.tcz python3.9.tcz usb-serial-6.1.2-tinycore.tcz
+                python3 -m ensurepip
+                pip3 install virtualenv -q
+                ;;
+            solus)
+                echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
+                eopkg update-repo
+                eopkg install -y cmake git &> /dev/null
+                pip3 install virtualenv -q
+                #exit 1
+                ;;
+            alpine)
+                echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
+                #setup-interfaces
+                #ip link set dev eth0 up
+                #/etc/init.d/networking --quiet start &
+                #ping 1.1.1.1
+                apk update
+                #apk upgrade
+                exit 1
+                ;;
+            freebsd)
+                echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
+                #ifconfig
+                #dhclient interface
+                pkg install cmake git python3
+                exit 1
+                ;;
+            *)
+                if [ -n "${os_id_like}" ]; then
+                    echo -e "\nOS ID_LIKE: ${os_id_like}"
+                    echo "DEV TO-DO:  Check for delimeters, pull out first word, and run commands for that distro."
+                    os_first_id_like=$(echo ${os_id_like} | cut -d " " -f1 | tr -d '"')
+                    #os_first_id_like="${os_first_id_like:1}"
+                    echo "Trying again with ${os_first_id_like}"
+                    os_id="${os_first_id_like}"
+                    
+                    #if [ "${os_first_id_like}" = "debian" ] || [ "${os_first_id_like}" = "ubuntu" ]; then
+                    #    apt-get -qq update
+                    #    apt-get -qq install -y -o=Dpkg::Use-Pty=0 cmake git python3-pip python3-venv &> /dev/null
+                    #fi
+                else
+                    echo "Error: Unknowon Linux distribution '${o_id}'."
+                    [ -f /etc/os-release ] && cat /etc/os-release
+                    uname -a
+                    ls -l /etc/*release
+                    echo "Please report this error."
+                    exit 1
+                fi
+                ;;
+        esac
         echo "ok."
         ;;
+
     Darwin*)
         machine="macOS"
         echo "Detected ${machine}."
         echo -n "Checking for cmake... "
-        if ! command -v cmake &>/dev/null; then
+        if ! command -v cmake &> /dev/null; then
             if [ ! -d /Applications/CMake.app ]; then
                 #read -srk "?  CMake is not found in your Applications directory.\n  PRESS ANY KEY to download CMake... " && echo
                 #cmake_macos_url="https://github.com/Kitware/CMake/releases/download/v3.26.4/cmake-3.26.4-macos-universal.tar.gz"
@@ -98,9 +248,9 @@ if [ ! -f "${esp_idf_git_dir}"/export.sh ]; then
     git submodule update --quiet --init --recursive
     echo "ok."
     echo -n "  Installing the framework... "
-    ./install.sh esp32 1>/dev/null
+    ./install.sh esp32 > /dev/null
 fi
-. "${esp_idf_git_dir}"/export.sh 1>/dev/null
+. "${esp_idf_git_dir}"/export.sh > /dev/null
 echo "ok."
 
 echo -n "Checking for the Blockstream Jade repository... "
