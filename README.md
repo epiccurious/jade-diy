@@ -1,32 +1,30 @@
 # Jade Do-It-Yourself Hardware Guide
 
-This guide is designed for the general user who is not incompetant with computers.
+This guide is designed for the general user who is not incompetant with computers and is looking to secure **less** than $100,000 (in 2023 prices) worth of bitcoin.
 
 ## What is a Jade?
 
-Jade is a bitcoin-only hardware wallet that runs 100% on Open Source code.
+[The Blockstream Jade](https://blockstream.com/jade) is a bitcoin-only hardware wallet that runs 100% on Open Source code.
 
-The firmware that runs Jade can also run other ESP32-based devices, which are listed below.
+The firmware that runs Jade can also run other general purpose hardware that shares the same ESP32 microcontroller.
 
-## Who Should NOT Follow This Guide?
-
-1. You want to secure more than $100,000 (in 2023 dollars) worth of bitcoin. For large amounts, use multisig with Bitcoin Core on a cheap, dedicated laptop. The recommended guide is [the Yeti Level 3 Wallet](https://yeticold.com).
-
-2. You want to learn how to use the Jade hardware wallet. Refer to [the Jade's help center documentation](https://help.blockstream.com/hc/en-us/categories/900000061906-Blockstream-Jade) or [contact Blockstream](https://help.blockstream.com/hc/en-us/requests/new) for software support.
-
-3. You're a normie who can't be bothered to learn how to operate a computer through the command line. We will be using the Terminal console, which some people find scary. It's not hard, I promise.
-
-4. You aren't willing to [use Linux](https://ubuntu.com/tutorials/install-ubuntu-desktop) or macOS. (This guide only supports Debian Linux and macOS for now but planning to eventually add support for other Linux distributions.)
-
-## Why Should I Follow This Guide?
+## Motivation (Why Should I Follow This Guide?)
 
 Three words: **supply chain attacks**.
 
 You understand that the person who sells you hardware for your bitcoin shouldn't know you use it for bitcoin.
 
-You're looking to secure **less** than $100,000 (in 2023 prices) worth of bitcoin.
+**WARNING:** Do not hold **more** than $100,000 (in 2023 prices) on **any** hardware wallet including the Jade. For large amounts, refer to the "Who Should NOT Follow This Guide?" section.
 
-**WARNING:** Do not hold **more** than $100,000 (in 2023 prices) on a hardware wallet running specialized firmware. For large amounts, install a grneral-purpose Linux OS yourself on a general-purpose laptop instead.
+## Who Should NOT Follow This Guide?
+
+1. You want to secure more than $100,000 (in 2023 dollars) worth of bitcoin. For large amounts, install Linux yourself on dedicated laptops and use multisig on Bitcoin Core following [a best-practices self-custody guide](https://yeticold.com).
+
+2. You want to learn how to use the Jade hardware wallet. Refer to [the Jade's help center documentation](https://help.blockstream.com/hc/en-us/categories/900000061906-Blockstream-Jade) or [contact Blockstream](https://help.blockstream.com/hc/en-us/requests/new) for software support.
+
+3. You're a normie who can't be bothered to learn how to operate a computer through the command line. We will be using the Terminal console, which some people find scary. It's not hard, I promise.
+
+4. You aren't willing to use macOS or [Linux](https://ubuntu.com/tutorials/install-ubuntu-desktop). (This guide only supports macOS and Debian Linux for now but will eventually add support for other Linux distributions.)
 
 ## Overview of Hardware Options
 
