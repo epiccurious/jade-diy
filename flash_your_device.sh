@@ -58,14 +58,19 @@ case "$(uname -s)" in
                 emerge --quiet --sync
                 emerge --quiet dev-python/pip dev-python/virtualenv
                 ;;
-            *centos*)
+            centos)
                 echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
+                #nmcli connection up eth0
+                #ping 1.1.1.1
                 yum -y -q -e 0 install cmake gcc git make
                 curl -O https://www.python.org/ftp/python/3.8.1/Python-3.8.1.tgz
                 tar -xzf Python-3.8.1.tgz
                 cd Python-3.8.1/
-                ./configure --enable-optimizations
+                ./configure
                 make
+                make install
+                #python3 -m ensurepip
+                #pip3 install virtualenv -q
                 ;;
             fedora)
                 dnf -qy install cmake git python3-pip python3-virtualenv &> /dev/null
@@ -114,14 +119,14 @@ case "$(uname -s)" in
                 echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
                 sudo -u "tc" tce-load -wil bash.tcz cmake.tcz git.tcz make.tcz python3.9.tcz usb-serial-6.1.2-tinycore.tcz
                 python3 -m ensurepip
-                pip3 install virtualenv
+                pip3 install virtualenv -q
                 ;;
             solus)
                 echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
                 eopkg update-repo
                 eopkg install -y cmake git &> /dev/null
-                yes | pip3 install virtualenv -q
-                exit 1
+                pip3 install virtualenv -q
+                #exit 1
                 ;;
             alpine)
                 echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
@@ -133,6 +138,9 @@ case "$(uname -s)" in
                 ;;
             freebsd)
                 echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
+                #ifconfig
+                #dhclient interface
+                pkg install cmake git python3
                 exit 1
                 ;;
             *)
