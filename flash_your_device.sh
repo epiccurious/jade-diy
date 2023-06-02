@@ -62,12 +62,12 @@ case "$(uname -s)" in
                 echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
                 #nmcli connection up eth0
                 #ping 1.1.1.1
-                yum --quiet -assumeyes --errorlevel=0 install cmake gcc git make
-                sudo yum install gcc openssl-devel bzip2-devel libffi-devel zlib-devel
-                #sudo yum -y install epel-release
-                #rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
-                #sudo yum -y update
+                yum --quiet --assumeyes --errorlevel=0 install bzip2-devel cmake gcc git libffi-devel make openssl-devel zlib-devel
+                yum --quiet --assumeyes install epel-release
+                rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
+                yum --quiet --assumeyes update
                 #sudo dnf -y install dnf-plugins-core
+                cd "${HOME}"
                 curl -O https://www.python.org/ftp/python/3.8.1/Python-3.8.1.tgz
                 tar -xzf Python-3.8.1.tgz
                 cd Python-3.8.1/
