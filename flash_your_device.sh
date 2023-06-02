@@ -62,11 +62,19 @@ case "$(uname -s)" in
                 echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
                 #nmcli connection up eth0
                 #ping 1.1.1.1
-                yum --quiet --assumeyes --errorlevel=0 install bzip2-devel cmake gcc git libffi-devel make openssl-devel zlib-devel
+                yum --quiet --assumeyes --errorlevel=0 install bzip2-devel cmake gcc git libffi-devel libusb-devel make openssl-devel zlib-devel
                 yum --quiet --assumeyes install epel-release
                 rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
                 yum --quiet --assumeyes update
                 #sudo dnf -y install dnf-plugins-core
+                cd "${HOME}"
+                wget http://ftp.gnu.org/gnu/bash/bash-4.4.18.tar.gz
+                tar xf bash-4.4.18.tar.gz
+                cd bash-4.4.18/
+                ./configure
+                make
+                make install
+                bash --version
                 cd "${HOME}"
                 curl -O https://www.python.org/ftp/python/3.8.1/Python-3.8.1.tgz
                 tar -xzf Python-3.8.1.tgz
@@ -74,8 +82,10 @@ case "$(uname -s)" in
                 ./configure
                 make
                 make install
-                #python3 -m ensurepip
-                #pip3 install virtualenv -q
+                alias python=python3
+                python3 --version
+                python3 -m ensurepip
+                pip3 install virtualenv -q
                 ;;
             fedora)
                 dnf -qy install cmake git python3-pip python3-virtualenv &> /dev/null
