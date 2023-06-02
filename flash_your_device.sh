@@ -62,7 +62,7 @@ case "$(uname -s)" in
                 echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
                 #nmcli connection up eth0
                 #ping 1.1.1.1
-                yum -y -q -e 0 install cmake gcc git make
+                yum --quiet -assumeyes --errorlevel=0 install cmake gcc git make
                 sudo yum install gcc openssl-devel bzip2-devel libffi-devel zlib-devel
                 #sudo yum -y install epel-release
                 #rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
@@ -92,6 +92,9 @@ case "$(uname -s)" in
             arch)
                 echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
                 pacman --noconfirm -Sy cmake git python-pip python-virtualenv
+                #pacman-key --init
+                #pacman-key --populate archlinux
+                #pacman -Sy archlinux-keyring && pacman -Su
                 ;;
             manjaro|endeavouros|garuda)
                 pacman --noconfirm -Sy cmake git make python-pip python-virtualenv &>/dev/null
@@ -139,6 +142,8 @@ case "$(uname -s)" in
                 #ip link set dev eth0 up
                 #/etc/init.d/networking --quiet start &
                 #ping 1.1.1.1
+                apk update
+                #apk upgrade
                 exit 1
                 ;;
             freebsd)
