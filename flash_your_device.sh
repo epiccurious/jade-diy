@@ -63,6 +63,11 @@ case "$(uname -s)" in
                 #nmcli connection up eth0
                 #ping 1.1.1.1
                 yum -y -q -e 0 install cmake gcc git make
+                sudo yum install gcc openssl-devel bzip2-devel libffi-devel zlib-devel
+                #sudo yum -y install epel-release
+                #rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
+                #sudo yum -y update
+                #sudo dnf -y install dnf-plugins-core
                 curl -O https://www.python.org/ftp/python/3.8.1/Python-3.8.1.tgz
                 tar -xzf Python-3.8.1.tgz
                 cd Python-3.8.1/
