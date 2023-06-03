@@ -87,8 +87,9 @@ case "$(uname -s)" in
                 python3 -m ensurepip
                 pip3 install virtualenv -q
                 ;;
-            fedora)
-                dnf -qy install cmake git python3-pip python3-virtualenv &> /dev/null
+            fedora|almalinux)
+                dnf -qy install cmake git python3-pip &> /dev/null
+                pip3 install virtualenv -q
                 ;;
             rhel)
                 subscription-manager remove --all
