@@ -157,10 +157,10 @@ case "$(uname -s)" in
                 ;;
             alpine)
                 echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
-                apk update
-                apk add cmake git make python3
-                python3 -m ensurepip
-                pip3 install virtualenv
+                apk update --quiet
+                apk add --quiet cmake git make python3
+                [ command -v pip3 ] || python3 -qm ensurepip &> /dev/null
+                pip3 --quiet install --disable-pip-verison-check --root-user-action=ignore --user virtualenv
                 ;;
             freebsd)
                 echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
