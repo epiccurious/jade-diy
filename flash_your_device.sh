@@ -157,13 +157,10 @@ case "$(uname -s)" in
                 ;;
             alpine)
                 echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
-                #setup-interfaces
-                #ip link set dev eth0 up
-                #/etc/init.d/networking --quiet start &
-                #ping 1.1.1.1
                 apk update
-                #apk upgrade
-                exit 1
+                apk add cmake git make python3
+                python3 -m ensurepip
+                pip3 install virtualenv
                 ;;
             freebsd)
                 echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
