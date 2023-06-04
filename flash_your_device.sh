@@ -109,6 +109,7 @@ case "$(uname -s)" in
                 ;;
             manjaro|endeavouros|garuda)
                 pacman --noconfirm -Sy cmake git make python-pip python-virtualenv &>/dev/null
+                #pacman --noconfirm -Sy upd72020x-fw
                 ;;
             opensuse)
                 echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
@@ -133,6 +134,13 @@ case "$(uname -s)" in
                 #sudo ln -s /usr/local/python/lib64/python3.10/lib-dynload/ /usr/local/python/lib/python3.10/lib-dynload
                 #pip3 install virtualenv
                 #export PATH="/home/${USER}/.local/bin:$PATH"
+                ;;
+            slackware)
+                echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
+                git clone https://github.com/kitware/cmake
+                cd cmake && ./configure && make && make install
+                cd ../ && rm -rf cmake
+                pip3 install virtualenv -q
                 ;;
             tinycore)
                 echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
