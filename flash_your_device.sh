@@ -89,7 +89,7 @@ case "$(uname -s)" in
                 ;;
             fedora|rhel|almalinux)
                 dnf -qy install cmake git python3-pip &> /dev/null
-                pip3 install virtualenv -q
+                command -v virtualenv &>/dev/null || pip3 --quiet install --disable-pip-version-check --root-user-action=ignore --user virtualenv
                 ;;
             arch)
                 echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
@@ -111,7 +111,7 @@ case "$(uname -s)" in
                 zypper --quiet refresh
                 zypper --quiet --non-interactive install cmake git-core > /dev/null
                 command -v pip3 &>/dev/null || python3 -qm ensurepip &> /dev/null
-                command -v virtualenv &>/dev/null || pip3 -q install --user virtualenv
+                command -v virtualenv &>/dev/null || pip3 --quiet install --disable-pip-version-check --root-user-action=ignore --user virtualenv
                 ;;
             opensuse-leap)
                 echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
@@ -140,20 +140,20 @@ case "$(uname -s)" in
                 ./configure && make && make install
                 cd ../ && rm -rf cmake
                 command -v pip3 &>/dev/null || python3 -qm ensurepip &> /dev/null
-                command -v virtualenv &>/dev/null || pip3 --quiet install --disable-pip-verison-check --root-user-action=ignore --user virtualenv
+                command -v virtualenv &>/dev/null || pip3 --quiet install --disable-pip-version-check --root-user-action=ignore --user virtualenv
                 ;;
             tinycore)
                 echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
                 sudo -u "tc" tce-load -wil bash.tcz cmake.tcz git.tcz make.tcz python3.9.tcz usb-serial-6.1.2-tinycore.tcz
                 command -v pip3 &>/dev/null || python3 -qm ensurepip &> /dev/null
-                command -v virtualenv &>/dev/null || pip3 --quiet install --disable-pip-verison-check --root-user-action=ignore --user virtualenv
+                command -v virtualenv &>/dev/null || pip3 --quiet install --disable-pip-version-check --root-user-action=ignore --user virtualenv
                 ;;
             solus)
                 echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
                 eopkg update-repo
                 eopkg install -y cmake git &> /dev/null
                 command -v pip3 &>/dev/null || python3 -qm ensurepip &> /dev/null
-                command -v virtualenv &>/dev/null || pip3 --quiet install --disable-pip-verison-check --root-user-action=ignore --user virtualenv
+                command -v virtualenv &>/dev/null || pip3 --quiet install --disable-pip-version-check --root-user-action=ignore --user virtualenv
                 #exit 1
                 ;;
             alpine)
