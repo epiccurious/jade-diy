@@ -45,7 +45,7 @@ case "$(uname -s)" in
             exit 1
         fi
         
-        echo "Detected ${machine} distribution ${os_id}, ${os_prettyname}."
+        echo "Detected ${os_id}."
         
         echo -n "Checking for cmake, git, pip, and venv... "
         case $os_id in
@@ -119,6 +119,7 @@ case "$(uname -s)" in
                 echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
                 zypper --quiet refresh
                 zypper --quiet --non-interactive install cmake git-core > /dev/null
+                command -v pip3 &>/dev/null || python3 -qm ensurepip &> /dev/null
                 command -v virtualenv &>/dev/null || pip3 -q install --user virtualenv
                 ;;
             opensuse-leap)
@@ -144,29 +145,32 @@ case "$(uname -s)" in
             slackware)
                 echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
                 git clone https://github.com/kitware/cmake
-                cd cmake && ./configure && make && make install
+                cd cmake
+                ./configure && make && make install
                 cd ../ && rm -rf cmake
-                pip3 install virtualenv -q
+                command -v pip3 &>/dev/null || python3 -qm ensurepip &> /dev/null
+                command -v virtualenv &>/dev/null || pip3 --quiet install --disable-pip-verison-check --root-user-action=ignore --user virtualenv
                 ;;
             tinycore)
                 echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
                 sudo -u "tc" tce-load -wil bash.tcz cmake.tcz git.tcz make.tcz python3.9.tcz usb-serial-6.1.2-tinycore.tcz
-                python3 -m ensurepip
-                pip3 install virtualenv -q
+                command -v pip3 &>/dev/null || python3 -qm ensurepip &> /dev/null
+                command -v virtualenv &>/dev/null || pip3 --quiet install --disable-pip-verison-check --root-user-action=ignore --user virtualenv
                 ;;
             solus)
                 echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
                 eopkg update-repo
                 eopkg install -y cmake git &> /dev/null
-                pip3 install virtualenv -q
+                command -v pip3 &>/dev/null || python3 -qm ensurepip &> /dev/null
+                command -v virtualenv &>/dev/null || pip3 --quiet install --disable-pip-verison-check --root-user-action=ignore --user virtualenv
                 #exit 1
                 ;;
             alpine)
                 echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
                 apk update --quiet
-                apk add --quiet cmake git make python3
-                [ command -v pip3 ] || python3 -qm ensurepip &> /dev/null
-                pip3 --quiet install --disable-pip-verison-check --root-user-action=ignore --user virtualenv
+                apk add --quiet bash cmake git make python3
+                command -v pip3 &>/dev/null || python3 -qm ensurepip &> /dev/null
+                command -v virtualenv &>/dev/null || pip3 --quiet install --disable-pip-verison-check --root-user-action=ignore --user virtualenv
                 ;;
             freebsd)
                 echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
