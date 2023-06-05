@@ -170,7 +170,7 @@ case "$(uname -s)" in
                 apk update --quiet
                 apk add --quiet bash cmake git make python3
                 command -v pip3 &>/dev/null || python3 -qm ensurepip &> /dev/null
-                command -v virtualenv &>/dev/null || pip3 --quiet install --disable-pip-verison-check --root-user-action=ignore --user virtualenv
+                command -v virtualenv &>/dev/null || pip3 --quiet install --disable-pip-version-check --root-user-action=ignore --user virtualenv
                 ;;
             freebsd)
                 echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
