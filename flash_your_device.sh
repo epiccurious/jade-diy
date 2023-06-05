@@ -2,7 +2,9 @@
 set -e
 
 if [[ $(uname -m) == "i686" ]] ; then
-    echo "ERROR: Espressif IDF requires a 64-bit Operating System."
+    echo "ERROR: You are using an incompatible 32-bit Operating System."
+    echo -e "       Please re-run this script on a modern 64-bit Operating System"
+    echo -e "       such as macOS or Ubuntu Linux.\n"
     read -srn1 -p "       PRESS ANY KEY to exit... " && echo
     exit 1
 fi
