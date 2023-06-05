@@ -115,6 +115,11 @@ case "$(uname -s)" in
                 echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
                 exit 1
                 ;;
+            opensuse-tumbleweed)
+                echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
+                zypper --quiet --non-interactive source-install cmake git-core
+                pip3 -q install virtualenv
+                ;;
             opensuse-leap)
                 echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
                 zypper -qn si -d python3
