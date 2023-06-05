@@ -1,8 +1,15 @@
 #!/bin/bash
 set -e
 
-if [ `whoami` != root ]; then
+if [[ $(uname -m) == "i686" ]] ; then
+    echo "ERROR: Espressif IDF requires a 64-bit Operating System."
+    read -srn1 -p "  PRESS ANY KEY to exit... " && echo
+    exit 1
+fi
+
+if [ $(whoami) != "root" ]; then
     echo -e "ERROR: Please run the script with elevated permissions like this:\n  sudo ~/jade-diy/flash_your_device.sh"
+    read -srn1 -p "  PRESS ANY KEY to exit... " && echo
     exit 1
 fi
 
