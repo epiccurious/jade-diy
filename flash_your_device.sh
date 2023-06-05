@@ -4,7 +4,7 @@ set -e
 if [[ $(uname -m) == "i686" ]] ; then
     echo "ERROR: You are using an incompatible 32-bit Operating System."
     echo -e "       Please re-run this script on a modern 64-bit Operating System"
-    echo -e "       such as macOS or Ubuntu Linux.\n"
+    echo -e "       like macOS or Ubuntu Linux.\n"
     read -srn1 -p "       PRESS ANY KEY to exit... " && echo
     exit 1
 fi
@@ -153,7 +153,7 @@ case "$(uname -s)" in
                 ;;
             tinycore)
                 echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
-                sudo -u "tc" tce-load -wil bash.tcz cmake.tcz git.tcz make.tcz python3.9.tcz usb-serial-6.1.2-tinycore.tcz > /dev/null
+                sudo -u "tc" tce-load -wil bash.tcz cmake.tcz git.tcz make.tcz python3.9.tcz usb-serial-6.1.2-tinycore64.tcz > /dev/null
                 command -v pip3 &>/dev/null || python3 -qm ensurepip &> /dev/null
                 command -v virtualenv &>/dev/null || pip3 --quiet install --disable-pip-version-check --user virtualenv
                 ;;
