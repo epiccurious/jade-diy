@@ -87,18 +87,9 @@ case "$(uname -s)" in
                 python3 -m ensurepip
                 pip3 install virtualenv -q
                 ;;
-            fedora|almalinux)
+            fedora|rhel|almalinux)
                 dnf -qy install cmake git python3-pip &> /dev/null
                 pip3 install virtualenv -q
-                ;;
-            rhel)
-                subscription-manager remove --all
-                subscription-manager unregister
-                subscription-manager clean
-                subscription-manager register
-                subscription-manager refresh
-                subscription-manager list --available
-                subscription-manager attach --pool=Pool-ID
                 ;;
             arch)
                 echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
