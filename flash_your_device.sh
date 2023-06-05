@@ -144,9 +144,9 @@ case "$(uname -s)" in
                 ;;
             tinycore)
                 echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
-                sudo -u "tc" tce-load -wil bash.tcz cmake.tcz git.tcz make.tcz python3.9.tcz usb-serial-6.1.2-tinycore.tcz
+                sudo -u "tc" tce-load -wil bash.tcz cmake.tcz git.tcz make.tcz python3.9.tcz usb-serial-6.1.2-tinycore.tcz > /dev/null
                 command -v pip3 &>/dev/null || python3 -qm ensurepip &> /dev/null
-                command -v virtualenv &>/dev/null || pip3 --quiet install --disable-pip-version-check --root-user-action=ignore --user virtualenv
+                command -v virtualenv &>/dev/null || pip3 --quiet install --disable-pip-version-check --user virtualenv
                 ;;
             solus)
                 echo -e "\nNote: ${os_id} (${os_prettyname}) is under development"
