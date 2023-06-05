@@ -3,7 +3,7 @@ set -e
 
 if [[ $(uname -m) == "i686" ]] ; then
     echo "ERROR: Espressif IDF requires a 64-bit Operating System."
-    read -srn1 -p "  PRESS ANY KEY to exit... " && echo
+    read -srn1 -p "       PRESS ANY KEY to exit... " && echo
     exit 1
 fi
 
