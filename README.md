@@ -125,7 +125,7 @@ This options is provided for people who want to run the commands themselves.
     sudo apt update
     sudo apt install -y cmake git python3-pip python3-venv
     [ -d ${HOME}/esp ] || mkdir ${HOME}/esp
-    git clone -b v5.0.1 --recursive https://github.com/espressif/esp-idf.git ${HOME}/esp/esp-idf/
+    git clone -b v5.0.1 --recursive https://github.com/espressif/esp-idf.git ${HOME}/esp/esp-idf
     cd "${HOME}"/esp/esp-idf
     git checkout a4afa44435ef4488d018399e1de50ad2ee964be8
     ./install.sh esp32
@@ -134,7 +134,7 @@ This options is provided for people who want to run the commands themselves.
   
 3. Download the Jade source code. Copy-and-paste the following lines into Terminal:
     ```bash
-    git clone --recursive https://github.com/blockstream/jade "${HOME}"/jade/
+    git clone -Clone-recursive https://github.com/blockstream/jade "${HOME}"/jade
     cd "${HOME}"/jade/
     ```
   
