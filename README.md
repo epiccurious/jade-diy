@@ -40,19 +40,16 @@ You are better off buying the hardware directly from the hardware vendor than th
 - $20 [M5Stack M5StickC PLUS](https://shop.m5stack.com/products/m5stickc-plus-esp32-pico-mini-iot-development-kit)
     - Includes a built-in battery
     - DO NOT confuse this hardware with the older, cheaper M5StickC. The newer PLUS verison with a larger screen is the one to buy.
-    - If ordering direct, use code: TAKE5
 
         ![M5Stack M5StickC PLUS](img/M5Stack-M5StickC-PLUS.jpg)
 
 - $40 [M5Stack Core Basic](https://shop.m5stack.com/products/esp32-basic-core-lot-development-kit-v2-7)
     - Nice 3-button design
-    - If ordering direct, use code: TAKE5
 
         ![M5Stack Core Basic](img/M5Stack-Core-Basic.jpg)
 
 - $50 [M5Stack FIRE v2.6](https://shop.m5stack.com/products/m5stack-fire-iot-development-kit-psram-v2-6)
     - Nice 3-button design, a bigger battery, and a magnetic charging base
-    - If ordering direct, use code: TAKE5
 
         ![M5Stack FIRE](img/M5Stack-FIRE.jpg)
 
