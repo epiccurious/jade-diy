@@ -1,14 +1,14 @@
 #!/bin/bash
 set -e
 
-if [ `whoami` != root ]; then
+if [ "$(whoami)" != root ]; then
     echo -e "ERROR: Please run the script with elevated permissions like this:\n  sudo ~/jade-diy/device_specific/flash_the_m5stack_core_basic.sh"
     exit 1
 fi
 
 esp_dir="${HOME}/esp"
 esp_idf_git_dir="${esp_dir}/esp-idf"
-esp_idf_git_tag="v5.0.1"
+esp_idf_git_tag="v5.1.1"
 jade_git_dir="${HOME}/jade"
 
 device="M5Stack Core Basic"
@@ -31,7 +31,7 @@ fi
 if [ ! -d "${jade_git_dir}" ]; then
     git clone --quiet https://github.com/blockstream/jade.git "${jade_git_dir}"
     cd "${jade_git_dir}"
-    git checkout --quiet $(git tag | grep -v miner | sort -V | tail -1)
+    git checkout --quiet "$(git tag | grep -v miner | sort -V | tail -1)"
     git submodule update --quiet --init --recursive
 fi
 cd "${jade_git_dir}"
@@ -44,4 +44,5 @@ rm sdkconfig.defaults.bak
 chmod a+rw /dev/ttyACM0
 idf.py flash
 
+opt="M5Stack Core Basic"
 echo -e "\nSUCCESS! Your ${opt} is now running Jade."
