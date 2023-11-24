@@ -124,7 +124,6 @@ This options is provided for people who want to run the commands themselves.
     [ -d ${HOME}/esp ] || mkdir ${HOME}/esp
     git clone -b v5.1.1 --recursive https://github.com/espressif/esp-idf.git ${HOME}/esp/esp-idf/
     cd "${HOME}"/esp/esp-idf
-    git checkout a4afa44435ef4488d018399e1de50ad2ee964be8
     ./install.sh esp32
     . $HOME/esp/esp-idf/export.sh
     ```
@@ -133,6 +132,7 @@ This options is provided for people who want to run the commands themselves.
     ```bash
     git clone --recursive https://github.com/blockstream/jade "${HOME}"/jade/
     cd "${HOME}"/jade/
+    git checkout $(git tag | grep -v miner | sort -V | tail -1)
     ```
   
 4. Load the pre-built configuration file for your DIY hardware.
