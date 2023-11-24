@@ -6,10 +6,12 @@ if [ "$(whoami)" != root ]; then
     exit 1
 fi
 
-esp_dir="${HOME}/esp"
-esp_idf_git_dir="${esp_dir}/esp-idf"
+tmp_dir="$(mktemp -d)"
+trap 'rm -rf -- "${tmp_dir}"' EXIT
+esp_idf_git_dir="${tmp_dir}/esp-idf"
 esp_idf_git_tag="v5.1.1"
-jade_git_dir="${HOME}/jade"
+jade_git_dir="${tmp_dir}/jade"
+jade_git_tag="1.0.26"
 
 device1="TTGO T-Display"
 device2="M5Stack M5StickC PLUS"
@@ -90,7 +92,6 @@ esac
 echo -n "Checking for the Espressif IoT Development Framework... "
 if [ ! -f "${esp_idf_git_dir}"/export.sh ]; then
     echo -ne "\n  Downloading the framework... "
-    [ -d "${esp_dir}" ] || mkdir "${esp_dir}"
     git clone --quiet https://github.com/espressif/esp-idf.git "${esp_idf_git_dir}"/
     cd "${esp_idf_git_dir}"/
     git checkout --quiet "${esp_idf_git_tag}"
@@ -107,7 +108,7 @@ if [ ! -d "${jade_git_dir}" ]; then
     echo -ne "\n  Downloading Jade... "
     git clone --quiet https://github.com/blockstream/jade.git "${jade_git_dir}"
     cd "${jade_git_dir}"
-    git checkout --quiet "$(git tag | grep -v miner | sort -V | tail -1)"
+    git checkout --quiet "${jade_git_tag}"
     git submodule update --quiet --init --recursive
 fi
 cd "${jade_git_dir}"
@@ -183,7 +184,7 @@ case "${machine}" in
     *) echo "Unsupported OS: $(uname -s)" && exit 0
 esac
 
-echo -e "\nReady to install Jade ${jade_version} on your ${chosen_device}.\n  (This process can take over 10 minutes.)"
+echo -e "Ready to install Jade ${jade_version} on your ${chosen_device}.\n  (This process can take over 10 minutes.)"
 read -srn1 -p "  PRESS ANY KEY to continue... " && echo
 
 final_confirmation_sleep_time="10"
