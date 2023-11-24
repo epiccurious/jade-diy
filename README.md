@@ -77,7 +77,7 @@ This option is recommended for the average user who doesn't know how to read and
 
 2. Clone (download) this repository and start the scipt. Run the following in Terminal:
     ```bash
-    git clone --quiet https://github.com/epiccurious/jade-diy "${HOME}"/jade-diy && sudo "${HOME}"/jade-diy/flash_your_device.sh
+    git clone --quiet https://github.com/epiccurious/jade-diy "${HOME}"/jade-diy && sudo "${HOME}"/jade-diy/flash_your_device
     ```
 
 3. When the script asks, choose your device (#1-#4).
@@ -98,7 +98,7 @@ After the script completes, you should see the Jade initialization screen on you
 4. Run the device-specific script corresponding to the hardware you're using. This process can take up to 30 minutes on a slow computer.
     - If you're using the TTGO T-Dispay, run:
         ```
-        sudo device_specific/flash_the_ttgo_tdisplay.sh
+        sudo device_specific/flash_the_ttgo_tdisplay
         ```
     - If you're using the M5Stack M5StickC PLUS, run:
         ```
