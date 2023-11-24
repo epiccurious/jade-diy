@@ -77,7 +77,7 @@ This option is recommended for the average user who doesn't know how to read and
 
 2. Clone (download) this repository and start the scipt. Run the following in Terminal:
     ```bash
-    git clone --quiet https://github.com/epiccurious/jade-diy "${HOME}"/jade-diy && sudo "${HOME}"/jade-diy/flash_your_device
+    sudo /bin/bash -c "$(curl -sSL https://raw.githubusercontent.com/epiccurious/jade-diy/master/flash_your_device)"
     ```
 
 3. When the script asks, choose your device (#1-#4).
@@ -102,15 +102,15 @@ After the script completes, you should see the Jade initialization screen on you
         ```
     - If you're using the M5Stack M5StickC PLUS, run:
         ```
-        sudo device_specific/flash_the_m5stack_m5stickc_plus.sh
+        sudo device_specific/flash_the_m5stack_m5stickc_plus
         ```
     - If you're using the M5Stack Core Basic, run:
         ```
-        sudo device_specific/flash_the_m5stack_core_basic.sh
+        sudo device_specific/flash_the_m5stack_core_basic
         ```
     - If you're using the M5Stack FIRE, run:
         ```
-        sudo device_specific/flash_the_m5stack_fire.sh
+        sudo device_specific/flash_the_m5stack_fire
         ```
 
 After the script completes, you should see the Jade initialization screen on your device.
