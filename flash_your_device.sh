@@ -6,8 +6,6 @@ if [ "$(whoami)" != root ]; then
     exit 1
 fi
 
-clear
-
 esp_dir="${HOME}/esp"
 esp_idf_git_dir="${esp_dir}/esp-idf"
 esp_idf_git_tag="v5.1.1"
@@ -18,6 +16,7 @@ device2="M5Stack M5StickC PLUS"
 device3="M5Stack Core Basic"
 device4="M5Stack FIRE"
 
+clear
 echo "------------------------------------------------------------"
 echo "------------------------------------------------------------"
 echo "---                                                      ---"
