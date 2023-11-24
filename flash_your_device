@@ -92,7 +92,7 @@ esac
 echo -n "Checking for the Espressif IoT Development Framework... "
 if [ ! -f "${esp_idf_git_dir}"/export.sh ]; then
     echo -ne "\n  Downloading the framework... "
-    git clone --quiet https://github.com/espressif/esp-idf.git "${esp_idf_git_dir}"/
+    git clone --quiet https://github.com/espressif/esp-idf.git "${esp_idf_git_dir}"
     cd "${esp_idf_git_dir}"/
     git checkout --quiet "${esp_idf_git_tag}"
     git submodule update --quiet --init --recursive

@@ -20,7 +20,7 @@ apt-get -qq install -y -o=Dpkg::Use-Pty=0 cmake git python3-pip python3-venv &> 
 
 if [ ! -f "${esp_idf_git_dir}"/export.sh ]; then
     [ -d "${esp_dir}" ] || mkdir "${esp_dir}"
-    git clone --quiet https://github.com/espressif/esp-idf.git "${esp_idf_git_dir}"/
+    git clone --quiet https://github.com/espressif/esp-idf.git "${esp_idf_git_dir}"
     cd "${esp_idf_git_dir}"/
     git checkout --quiet "${esp_idf_git_tag}"
     git submodule update --quiet --init --recursive
