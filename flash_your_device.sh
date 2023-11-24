@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-if [ `whoami` != root ]; then
+if [ "$(whoami)" != root ]; then
     echo -e "ERROR: Please run the script with elevated permissions like this:\n  sudo ~/jade-diy/flash_your_device.sh"
     exit 1
 fi
@@ -56,7 +56,7 @@ case "$(uname -s)" in
                 cmake_macos_dmg="$(basename ${cmake_macos_url})"
                 #cmake_macos_volume="/Volumes/$(basename ${cmake_macos_url} .dmg)"
                 
-                if [ ! -f ${HOME}/Downloads/${cmake_macos_dmg} ]
+                if [ ! -f "${HOME}"/Downloads/"${cmake_macos_dmg}" ]
                 then
                     echo -ne "\n  Downloading CMake... "
                     #wget --quiet -P "${HOME}" "${cmake_macos_url}"
@@ -108,7 +108,7 @@ if [ ! -d "${jade_git_dir}" ]; then
     echo -ne "\n  Downloading Jade... "
     git clone --quiet https://github.com/blockstream/jade.git "${jade_git_dir}"
     cd "${jade_git_dir}"
-    git checkout --quiet $(git tag | grep -v miner | sort -V | tail -1)
+    git checkout --quiet "$(git tag | grep -v miner | sort -V | tail -1)"
     git submodule update --quiet --init --recursive
 fi
 cd "${jade_git_dir}"
