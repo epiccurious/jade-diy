@@ -61,15 +61,17 @@ You are better off buying the hardware directly from the hardware vendor than th
 ## Set Up Instructions
 
 There are three options for flashing your device:
-- **Install with a Semi-Automated Script** (easiest way)
-- **Install with a Device-Specific Script** (other easy way)
-- **Install by Running Each Line of Code** (harder way)
+- [**Install with the Semi-Automated Script**](#install-with-the-semi-automated-script) (easiest way)
+- [**Install with a Device-Specific Script**](#install-with-a-device-specific-script) (other easy way)
+- [**Install by Running the Code Manually**](#install-by-running-the-code-manually) (harder way)
 
-### Install with a Semi-Automated Script
+### Install with the Semi-Automated Script
 
 This option is recommended for the average user who doesn't know how to read and write bash.
 
-1. Open the Terminal. On Linux, press `Ctrl+Alt+T`. On macOS, press `Command+Space`, type terminal, and press `return`.
+1. Open the Terminal.
+    - On Linux, press `Ctrl+Alt+T`.
+    - On macOS, press `Command+Space`, type terminal, and press `return`.
 
 2. Clone (download) this repository and start the scipt. Run the following in Terminal:
     ```bash
@@ -111,7 +113,7 @@ After the script completes, you should see the Jade initialization screen on you
 
 After the script completes, you should see the Jade initialization screen on your device.
 
-### Install by Running Each Line of Code
+### Install by Running the Code Manually
 
 This options is provided for people who want to run the commands themselves.
 
@@ -125,7 +127,7 @@ This options is provided for people who want to run the commands themselves.
     git clone -b v5.1.1 --recursive https://github.com/espressif/esp-idf.git ${HOME}/esp/esp-idf/
     cd "${HOME}"/esp/esp-idf
     ./install.sh esp32
-    . $HOME/esp/esp-idf/export.sh
+    . ./export.sh
     ```
   
 3. Download the Jade source code. Copy-and-paste the following lines into Terminal:
