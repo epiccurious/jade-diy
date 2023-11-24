@@ -122,7 +122,7 @@ This options is provided for people who want to run the commands themselves.
     sudo apt update
     sudo apt install -y cmake git python3-pip python3-venv
     [ -d ${HOME}/esp ] || mkdir ${HOME}/esp
-    git clone -b v5.0.1 --recursive https://github.com/espressif/esp-idf.git ${HOME}/esp/esp-idf/
+    git clone -b v5.1.1 --recursive https://github.com/espressif/esp-idf.git ${HOME}/esp/esp-idf/
     cd "${HOME}"/esp/esp-idf
     git checkout a4afa44435ef4488d018399e1de50ad2ee964be8
     ./install.sh esp32

@@ -8,7 +8,7 @@ fi
 
 esp_dir="${HOME}/esp"
 esp_idf_git_dir="${esp_dir}/esp-idf"
-esp_idf_git_tag="v5.0.1"
+esp_idf_git_tag="v5.1.1"
 jade_git_dir="${HOME}/jade"
 
 device="M5Stack Core Basic"
