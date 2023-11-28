@@ -2,13 +2,32 @@
 
 This guide is designed for the general user who is not incompetant with computers and is looking to secure **less** than $100,000 (in 2023 prices) worth of bitcoin.
 
+## Table of Contents
+
+- [What is a Jade?](#what-is-a-jade)
+- [Motivation](#motivation)
+- [Who Should NOT Follow This Guide?](#who-should-not-follow-this-guide)
+- [Overview of Hardware Options](#overview-of-hardware-options)
+  - [TTGO T-Display](#ttgo-t-display)
+  - [M5Stack M5StickC PLUS](#m5stack-m5stickc-plus)
+  - [M5Stack Core Basic](#m5stack-core-basic)
+  - [M5Stack FIRE v2.6](#m5stack-fire-v2.6)
+- [Current Limitations of Third-Party DIY Hardware](#current-limitations-of-third-party-diy-hardware)
+- [Set Up Instructions](#set-up-instructions)
+  - [Use the Semi-Automated Script](#use-the-semi-automated-script)
+  - [Use a Device-Specific Script](#use-a-device-specific-script)
+  - [Run the Commands Manually](#run-the-commands-manually)
+- [Acknowledgements](#acknowledgements)
+
 ## What is a Jade?
 
 [The Blockstream Jade](https://blockstream.com/jade) is a bitcoin-only hardware wallet that runs 100% on Open Source code.
 
 The firmware that runs Jade can also run other general purpose hardware that shares the same ESP32 microcontroller.
 
-## Motivation (Why Should I Follow This Guide?)
+## Motivation
+
+Why Should I Follow This Guide?
 
 Three words: **supply chain attacks**.
 
@@ -57,8 +76,8 @@ You are better off buying the hardware directly from the hardware vendor than th
 
 ## Current Limitations of Third-Party DIY Hardware
 
-- No camera support... yet
-- Need to document how to perform firmware updates
+- No camera support. To build a DIY Jade with camera support, [please refer here](https://www.youtube.com/watch?v=V2yVKag2wlc).
+- Need a documented process for updating firmware.
 
 ## Set Up Instructions
 
@@ -67,7 +86,7 @@ There are three options for flashing your device:
 - [**Install with a Device-Specific Script**](#install-with-a-device-specific-script) (other easy way)
 - [**Install by Running the Code Manually**](#install-by-running-the-code-manually) (harder way)
 
-### Install with the Semi-Automated Script
+### Use the Semi-Automated Script
 
 This option is recommended for the average user who doesn't know how to read and write bash.
 
@@ -75,16 +94,16 @@ This option is recommended for the average user who doesn't know how to read and
     - On Linux, press `Ctrl+Alt+T`.
     - On macOS, press `Command+Space`, type terminal, and press `return`.
 
-2. Clone (download) this repository and start the scipt. Run the following in Terminal:
+2. Copy-paste the following full command in Terminal (you might have to scroll right):
     ```bash
-    sudo /bin/bash -c "$(curl -sSL https://raw.githubusercontent.com/epiccurious/jade-diy/master/flash_your_device)"
+    /bin/bash -c "$(curl -sSL https://github.com/epiccurious/jade-diy/raw/master/flash_your_device)"
     ```
 
 3. When the script asks, choose your device (#1-#4).
 
 After the script completes, you should see the Jade initialization screen on your device.
 
-### Install with a Device-Specific Script
+### Use a Device-Specific Script
 
 1. Open the Terminal. On Linux, press `Ctrl+Alt+T`. On macOS, press `Command+Space`, type terminal, and press `return`.
 
@@ -115,7 +134,7 @@ After the script completes, you should see the Jade initialization screen on you
 
 After the script completes, you should see the Jade initialization screen on your device.
 
-### Install by Running the Code Manually
+### Run the Commands Manually
 
 This options is provided for people who want to run the commands themselves.
 
@@ -131,6 +150,7 @@ This options is provided for people who want to run the commands themselves.
     ./install.sh esp32
     . ./export.sh
     ```
+TODO: Add instructions for installing macOS dependendies.
   
 3. Download the Jade source code. Copy-and-paste the following lines into Terminal:
     ```bash
@@ -171,6 +191,7 @@ This options is provided for people who want to run the commands themselves.
     [ -f /dev/ttyACM0 ] && sudo chmod o+rw /dev/ttyACM0
     [ -f /dev/ttyUSB0 ] && sudo chmod a+rw /dev/ttyUSB0
     ```
+TODO: Add macOS instructions.
 
 8. Flash (install) Jade onto your device. On a slow computer, this step can take over 10 minutes. Run the following command in Terminal:
     ```bash
@@ -182,5 +203,5 @@ After the build and flash process completes, you should see the Jade initializat
 ## Acknowledgements
 
 Inspiration for this project came from:
-- the Blockstream Jade team ([link to contributors](https://github.com/Blockstream/Jade/graphs/contributors))
-- [@YTCryptoGuide](https://twitter.com/YTCryptoGuidelink) ([Link to his YouTube](https://youtube.com/CryptoGuide)).
+- [Blockstream Jade](https://github.com/Blockstream/Jade/graphs/contributors)
+- [@YTCryptoGuide](https://twitter.com/YTCryptoGuidelink) ([YouTube](https://youtube.com/CryptoGuide)).
