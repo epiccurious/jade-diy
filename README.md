@@ -4,28 +4,31 @@ This guide is designed for the general user who is not incompetant with computer
 
 ## Table of Contents
 
-- [What is a Jade?](#what-is-a-jade)
-- [Motivation](#motivation)
-- [Who Should NOT Follow This Guide?](#who-should-not-follow-this-guide)
+- [Background](#background)
+  - [What is a Jade?](#what-is-a-jade)
+  - [Motivation](#motivation)
+  - [Who Should NOT Follow This Guide?](#who-should-not-follow-this-guide)
+  - [Current Limitations of Third-Party DIY Hardware](#current-limitations-of-third-party-diy-hardware)
 - [Overview of Hardware Options](#overview-of-hardware-options)
   - [TTGO T-Display](#ttgo-t-display)
   - [M5Stack M5StickC PLUS](#m5stack-m5stickc-plus)
   - [M5Stack Core Basic](#m5stack-core-basic)
-  - [M5Stack FIRE v2.6](#m5stack-fire-v2.6)
-- [Current Limitations of Third-Party DIY Hardware](#current-limitations-of-third-party-diy-hardware)
+  - [M5Stack FIRE v2.6](#m5stack-fire-v26)
 - [Set Up Instructions](#set-up-instructions)
   - [Use the Semi-Automated Script](#use-the-semi-automated-script)
   - [Use a Device-Specific Script](#use-a-device-specific-script)
   - [Run the Commands Manually](#run-the-commands-manually)
 - [Acknowledgements](#acknowledgements)
 
-## What is a Jade?
+## Background
+
+### What is a Jade?
 
 [The Blockstream Jade](https://blockstream.com/jade) is a bitcoin-only hardware wallet that runs 100% on Open Source code.
 
 The firmware that runs Jade can also run other general purpose hardware that shares the same ESP32 microcontroller.
 
-## Motivation
+### Motivation
 
 Why Should I Follow This Guide?
 
@@ -35,7 +38,7 @@ You understand that the person who sells you hardware for your bitcoin shouldn't
 
 **WARNING:** Do not hold **more** than $100,000 (in 2023 prices) on **any** hardware wallet including the Jade. For large amounts, refer to the "Who Should NOT Follow This Guide?" section.
 
-## Who Should NOT Follow This Guide?
+### Who Should NOT Follow This Guide?
 
 1. You want to secure more than $100,000 (in 2023 dollars) worth of bitcoin. For large amounts, install Linux yourself on dedicated laptops and use multisig on Bitcoin Core following [a best-practices self-custody guide](https://yeticold.com).
 
@@ -47,37 +50,47 @@ You understand that the person who sells you hardware for your bitcoin shouldn't
 
 4. You aren't willing to use macOS or [Linux](https://ubuntu.com/tutorials/install-ubuntu-desktop). (This guide only supports macOS and Debian Linux for now but will eventually add support for other Linux distributions.)
 
+### Current Limitations of Third-Party DIY Hardware
+
+- No camera support. To build a DIY Jade with camera support, [please refer here](https://www.youtube.com/watch?v=V2yVKag2wlc).
+- Need a documented process for updating firmware.
+
 ## Overview of Hardware Options
 
 You are better off buying the hardware directly from the hardware vendor than through a third-party channel like Amazon or Alibaba. In many cases, it's cheaper to buy direct too.
 
-- $8-$11 [TTGO T-Display](https://www.lilygo.cc/products/lilygo%C2%AE-ttgo-t-display-1-14-inch-lcd-esp32-control-board?variant=42720264683701), either the K164 or Q125 variant
-    - Does not include a battery. Either keep it plugged in or add a generic battery for a few dollars.
-    - DO NOT confuse this hardware with the more expensive T-Display S3 or T-Display AMOLED products.
-    - If ordering direct, use code: LILYGO5
+### TTGO T-Display
 
-        ![TTGO T-Display](img/TTGO-T-Display.jpg)
+![TTGO T-Display](img/TTGO-T-Display.jpg)
 
-- $20 [M5Stack M5StickC PLUS](https://shop.m5stack.com/products/m5stickc-plus-esp32-pico-mini-iot-development-kit)
-    - Includes a built-in battery
-    - DO NOT confuse this hardware with the older, cheaper M5StickC. The newer PLUS verison with a larger screen is the one to buy.
+- **MSRP: [$8-$11](https://www.lilygo.cc/products/lilygo%C2%AE-ttgo-t-display-1-14-inch-lcd-esp32-control-board?variant=42720264683701), either the K164 or Q125 variant**
+- Does not include a battery. Either keep it plugged in or add a generic battery for a few dollars.
+- DO NOT confuse this hardware with the more expensive T-Display S3 or T-Display AMOLED products.
 
-        ![M5Stack M5StickC PLUS](img/M5Stack-M5StickC-PLUS.jpg)
 
-- $40 [M5Stack Core Basic](https://shop.m5stack.com/products/esp32-basic-core-lot-development-kit-v2-7)
-    - Nice 3-button design
+### M5Stack M5StickC PLUS
 
-        ![M5Stack Core Basic](img/M5Stack-Core-Basic.jpg)
+![M5Stack M5StickC PLUS](img/M5Stack-M5StickC-PLUS.jpg)
 
-- $50 [M5Stack FIRE v2.6](https://shop.m5stack.com/products/m5stack-fire-iot-development-kit-psram-v2-6)
-    - Nice 3-button design, a bigger battery, and a magnetic charging base
+- **MSRP: [$20](https://shop.m5stack.com/products/m5stickc-plus-esp32-pico-mini-iot-development-kit)**
+- Includes a built-in battery
+- DO NOT confuse this hardware with the older, cheaper M5StickC. The newer PLUS verison with a larger screen is the one to buy.
 
-        ![M5Stack FIRE](img/M5Stack-FIRE.jpg)
 
-## Current Limitations of Third-Party DIY Hardware
+### M5Stack Core Basic
 
-- No camera support. To build a DIY Jade with camera support, [please refer here](https://www.youtube.com/watch?v=V2yVKag2wlc).
-- Need a documented process for updating firmware.
+![M5Stack Core Basic](img/M5Stack-Core-Basic.jpg)
+
+- **MSRP: [$40](https://shop.m5stack.com/products/esp32-basic-core-lot-development-kit-v2-7)**
+- Nice 3-button design
+
+
+### M5Stack FIRE v2.6
+
+![M5Stack FIRE](img/M5Stack-FIRE.jpg)
+
+- **MSRP: [$50](https://shop.m5stack.com/products/m5stack-fire-iot-development-kit-psram-v2-6)**
+- Nice 3-button design, a bigger battery, and a magnetic charging base
 
 ## Set Up Instructions
 
