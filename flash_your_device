@@ -186,7 +186,7 @@ case "${machine}" in
         while [ ! -c "${tty_device}" ]; do
             read -srn1 -p "Connect your ${chosen_device} and PRESS ANY KEY to continue... " && echo
         done
-        tty_device_permissions="$(stat -c '%a' ${tty_device})"
+        tty_device_permissions="$(stat -c '%a' "${tty_device}")"
         if [ "${tty_device_permissions:2}" -lt 6 ]; then
             echo -e "ERROR:\nYou need elevated permissions to write to the device.\nPlease update your device permissoins by running:\n\nsudo chmod o+rw ${tty_device}\n"
             exit 1
