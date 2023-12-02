@@ -6,15 +6,16 @@ This guide is designed for the general user who is not incompetant with computer
 
 - [Background](#background)
   - [What is a Jade?](#what-is-a-jade)
-  - [Motivation](#motivation)
+  - [Motivation (Who Should Follow This Guide?)](#motivation-who-should-follow-this-guide)
   - [Who Should NOT Follow This Guide?](#who-should-not-follow-this-guide)
+  - [Keep Your DIY Jade Secured](#keep-your-diy-jade-secured)
   - [Current Limitations of Third-Party DIY Hardware](#current-limitations-of-third-party-diy-hardware)
-- [Overview of Hardware Options](#overview-of-hardware-options)
+- [Hardware Options](#hardware-options)
   - [TTGO T-Display](#ttgo-t-display)
   - [M5Stack M5StickC PLUS](#m5stack-m5stickc-plus)
   - [M5Stack Core Basic](#m5stack-core-basic)
   - [M5Stack FIRE v2.6](#m5stack-fire-v26)
-- [Set Up Instructions](#set-up-instructions)
+- [Set-Up Instructions](#set-up-instructions)
   - [Use the Semi-Automated Script](#use-the-semi-automated-script)
   - [Use a Device-Specific Script](#use-a-device-specific-script)
   - [Run the Commands Manually](#run-the-commands-manually)
@@ -28,7 +29,7 @@ This guide is designed for the general user who is not incompetant with computer
 
 The firmware that runs Jade can also run other general purpose hardware that shares the same ESP32 microcontroller.
 
-### Motivation
+### Motivation (Who Should Follow This Guide)
 
 Why Should I Follow This Guide?
 
@@ -46,16 +47,24 @@ You understand that the person who sells you hardware for your bitcoin shouldn't
 2. You want to learn how to use the Jade hardware wallet. Refer to [the Jade's help center documentation](https://help.blockstream.com/hc/en-us/categories/900000061906-Blockstream-Jade/) or [contact Blockstream](https://help.blockstream.com/hc/en-us/requests/new) for software support.
 <!-- markdown-link-check-enable -->
 
-3. You're a normie who can't be bothered to learn how to operate a computer through the command line. We will be using the Terminal console, which some people find scary. It's not hard, I promise.
+3. You can't be bothered to operate a computer through the command line. We will be using the Terminal console, which some people find scary. It's not hard, I promise.
 
-4. You aren't willing to use macOS or [Linux](https://ubuntu.com/tutorials/install-ubuntu-desktop). (This guide only supports macOS and Debian Linux for now but will eventually add support for other Linux distributions.)
+4. You aren't willing to use [Linux](https://ubuntu.com/tutorials/install-ubuntu-desktop), macOS (running Arm-based hardware), or ChromeOS. This guide only supports Debian Linux, macOS, and ChromeOS for now but will eventually add support for other Linux distributions.
+
+### Keep Your DIY Jade Secured
+
+Evil maid attacks, such as [this one done by hackers for a competitor](https://www.ledger.com/blog/firmware-extraction-evil-maid-attacks-on-blockstream-jade-hardware-wallet), will become easier and cheaper to perform over time.
+
+As a countermeasure, keep your DIY Jade locked up with restricted access in a safe or lockbox. Don't let your house cleaner see it. **You need to control physical access** to your DIY Jade hardware wallet at all times.
 
 ### Current Limitations of Third-Party DIY Hardware
 
 - No camera support. To build a DIY Jade with camera support, [please refer here](https://www.youtube.com/watch?v=V2yVKag2wlc).
 - Need a documented process for updating firmware.
 
-## Overview of Hardware Options
+[[back to top]](#table-of-contents)
+
+## Hardware Options
 
 You are better off buying the hardware directly from the hardware vendor than through a third-party channel like Amazon or Alibaba. In many cases, it's cheaper to buy direct too.
 
@@ -92,7 +101,9 @@ You are better off buying the hardware directly from the hardware vendor than th
 - **MSRP: [$50](https://shop.m5stack.com/products/m5stack-fire-iot-development-kit-psram-v2-6)**
 - Nice 3-button design, a bigger battery, and a magnetic charging base
 
-## Set Up Instructions
+[[back to top]](#table-of-contents)
+
+## Set-Up Instructions
 
 There are three options for flashing your device:
 - [**Install with the Semi-Automated Script**](#install-with-the-semi-automated-script) (easiest way)
@@ -106,6 +117,7 @@ This option is recommended for the average user who doesn't know how to read and
 1. Open the Terminal.
     - On Linux, press `Ctrl+Alt+T`.
     - On macOS, press `Command+Space`, type terminal, and press `return`.
+    - on ChromeOS, install Linux under Settings -> Advanced -> Developers. Then press `search 🔍` on the keyboard, type terminal and press `enter`.
 
 2. Copy-paste the following full command in Terminal (you might have to scroll right):
     ```bash
@@ -207,6 +219,8 @@ TODO: Add macOS instructions.
     ```
 
 After the build and flash process completes, you should see the Jade initialization screen on your device.
+
+[[back to top]](#table-of-contents)
 
 ## Acknowledgements
 
