@@ -109,7 +109,7 @@ if [ ! -f "${esp_idf_save_directory}"/export.sh ]; then
     echo -ne "\n  Downloading the framework... "
     git -c advice.detachedHead=false clone --branch "${esp_idf_git_tag}" --single-branch --depth 1 --quiet "${esp_idf_repo_url}" "${esp_idf_temp_directory}"
     cd "${esp_idf_temp_directory}"/
-    git submodule update --depth 1 --quiet --init --recursive &> /dev/null
+    git submodule update --depth 1 --init --recursive --quiet &> /dev/null
     ./install.sh esp32 &>/dev/null
     # shellcheck source=/dev/null
     source ./export.sh 1>/dev/null
@@ -127,11 +127,11 @@ source ./export.sh 1>/dev/null
 echo "ok."
 
 echo -n "Checking for the Blockstream Jade repository... "
-if [ ! -d "${working_directory}"/jade ]; then
+if [ ! -d "${jade_save_directory}" ]; then
     echo -ne "\n  Downloading Jade... "
     git -c advice.detachedHead=false clone --branch "${jade_git_tag}" --single-branch --depth 1 --quiet "${jade_repo_url}" "${jade_save_directory}"
     cd "${jade_save_directory}"
-    git submodule update --depth 1 --quiet --init --recursive &> /dev/null
+    git submodule update --depth 1 --init --recursive --quiet &> /dev/null
 fi
 cd "${jade_save_directory}"
 jade_version="$(git describe --tags)"
@@ -186,7 +186,7 @@ case "${machine}" in
         while [ ! -c "${tty_device}" ]; do
             read -srn1 -p "Connect your ${chosen_device} and PRESS ANY KEY to continue... " && echo
         done
-        tty_device_permissions="$(stat -c '%a' /dev/ttyACM0)"
+        tty_device_permissions="$(stat -c '%a' "${tty_device}")"
         if [ "${tty_device_permissions:2}" -lt 6 ]; then
             echo -e "ERROR:\nYou need elevated permissions to write to the device.\nPlease update your device permissoins by running:\n\nsudo chmod o+rw ${tty_device}\n"
             exit 1

@@ -1,48 +1,87 @@
 #!/bin/bash
 set -e
 
-if [ "$(whoami)" != root ]; then
-    echo -e "ERROR: Please run the script with elevated permissions like this:\n  sudo ~/jade-diy/device_specific/flash_the_m5stack_fire.sh"
-    exit 1
-fi
+working_directory="${HOME}/Downloads/diy_jade"
+temp_directory="${working_directory}/temp"
+trap 'rm -rf -- "${temp_directory}"' EXIT
 
-esp_dir="${HOME}/esp"
-esp_idf_git_dir="${esp_dir}/esp-idf"
+jade_git_tag="1.0.26"
+jade_save_directory="${working_directory}/jade"
+jade_repo_url="https://github.com/blockstream/jade.git"
+
 esp_idf_git_tag="v5.1.1"
-jade_git_dir="${HOME}/jade"
+esp_idf_temp_directory="${temp_directory}/esp-idf"
+esp_idf_save_directory="${working_directory}/esp-idf"
+esp_idf_repo_url="https://github.com/espressif/esp-idf.git"
 
 device="M5Stack FIRE"
+tty_device="/dev/ttyACM0"
+
+clear
+echo "------------------------------------------------------------"
+echo "------------------------------------------------------------"
+echo "---                                                      ---"
+echo "---          Do-It-Yourself Jade Install Script          ---"
+echo "---                Written by Epic Curious               ---"
+echo "---                Twitter: @epic_curious                ---"
+echo "---                                                      ---"
+echo "------------------------------------------------------------"
+echo "------------------------------------------------------------"
+echo
+
+if [ "$(whoami)" = "root" ]; then
+  echo -e "ALERT: You're running the script as root/superuser.\nYou may notice PIP 'sudo -H' warnings.\n"
+fi
+
 echo "LINUX ONLY. Flashing the ${device}..."
 
-#[ -f /var/lib/apt/lists/lock ] && echo "ERROR: `apt` is locked. Are you installing system updates?" && exit 1
-apt-get -qq update
-apt-get -qq install -y -o=Dpkg::Use-Pty=0 cmake git python3-pip python3-venv &> /dev/null
-
-if [ ! -f "${esp_idf_git_dir}"/export.sh ]; then
-    [ -d "${esp_dir}" ] || mkdir "${esp_dir}"
-    git clone --quiet https://github.com/espressif/esp-idf.git "${esp_idf_git_dir}"
-    cd "${esp_idf_git_dir}"/
-    git checkout --quiet "${esp_idf_git_tag}"
-    git submodule update --quiet --init --recursive
-    ./install.sh esp32 1>/dev/null
+if ! command -v cmake &>/dev/null; then
+  echo -e "\nERROR:\ncmake was not found on your system.\nPlease install cmake by running:\n\nsudo apt update && sudo apt install -y cmake\n"
+  exit 1
+elif ! command -v git &>/dev/null; then
+  echo -e "\nERROR:\ngit was not found on your system.\nPlease install git by running:\n\nsudo apt update && sudo apt install -y git\n"
+  exit 1
+elif ! command -v pip &>/dev/null; then
+  echo -e "\n\RROR:\npip was not found on your system.\nPlease install pip by running:\n\nsudo apt update && sudo apt install -y python3-pip\n"
+  exit 1
+elif ! command -v virtualenv &>/dev/null; then
+  echo -e "\nERROR:\nvirtualenv was not found on your system.\nPlease install virtualenv by running:\n\nsudo apt update && sudo apt install -y python3-virtualenv\n"
+  exit 1
 fi
-. "${esp_idf_git_dir}"/export.sh 1>/dev/null
 
-if [ ! -d "${jade_git_dir}" ]; then
-    git clone --quiet https://github.com/blockstream/jade.git "${jade_git_dir}"
-    cd "${jade_git_dir}"
-    git checkout --quiet "$(git tag | grep -v miner | sort -V | tail -1)"
-    git submodule update --quiet --init --recursive
+if [ ! -f "${esp_idf_save_directory}"/export.sh ]; then
+  git clone --branch "${esp_idf_git_tag}" --single-branch --depth 1  "${esp_idf_repo_url}" "${esp_idf_temp_directory}"
+  cd "${esp_idf_temp_directory}"/
+  git submodule update --depth 1 --init --recursive 
+  ./install.sh esp32 &>/dev/null
+  source ./export.sh 1>/dev/null
+  mv "${esp_idf_temp_directory}" "${esp_idf_save_directory}"
 fi
-cd "${jade_git_dir}"
+cd "${esp_idf_save_directory}"/
+./install.sh esp32
+source ./export.sh
+
+if [ ! -d "${jade_save_directory}" ]; then
+  git clone --branch "${jade_git_tag}" --single-branch --depth 1  "${jade_repo_url}" "${jade_save_directory}"
+  cd "${jade_save_directory}"
+  git submodule update --depth 1 --init --recursive  &> /dev/null
+fi
+cd "${jade_save_directory}"
 
 cp configs/sdkconfig_display_m5fire.defaults sdkconfig.defaults
 sed -i.bak '/CONFIG_DEBUG_MODE/d' ./sdkconfig.defaults
 sed -i.bak '1s/^/CONFIG_LOG_DEFUALT_LEVEL_NONE=y\n/' sdkconfig.defaults
 rm sdkconfig.defaults.bak
 
-chmod a+rw /dev/ttyACM0
+while [ ! -c "${tty_device}" ]; do
+  read -srn1 -p "Connect your ${device} and PRESS ANY KEY to continue... " && echo
+done
+tty_device_permissions="$(stat -c '%a' ${tty_device})"
+if [ "${tty_device_permissions:2}" -lt 6 ]; then
+  echo -e "ERROR:\nYou need elevated permissions to write to the device.\nPlease update your device permissoins by running:\n\nsudo chmod o+rw ${tty_device}\n"
+  exit 1
+fi
+
 idf.py flash
 
-opt="M5Stack FIRE"
-echo -e "\nSUCCESS! Your ${opt} is now running Jade."
+echo -e "\nSUCCESS! Your ${device} is now running Jade."
