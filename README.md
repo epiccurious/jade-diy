@@ -120,29 +120,24 @@ After the script completes, you should see the Jade initialization screen on you
 
 1. Open the Terminal. On Linux, press `Ctrl+Alt+T`. On macOS, press `Command+Space`, type terminal, and press `return`.
 
-2. Clone (download) this repository and changie to the directory. Run the following in Terminal:
-    ```bash
-    git clone --quiet https://github.com/epiccurious/jade-diy "${HOME}"/jade-diy && cd "${HOME}"/jade-diy/
-    ```
+2. Connect your device to your computer via USB.
 
-3. Connect your device to your computer via USB.
-
-4. Run the device-specific script corresponding to the hardware you're using. This process can take up to 30 minutes on a slow computer.
+3. Run one of the following in Terminal:
     - If you're using the TTGO T-Dispay, run:
         ```
-        sudo device_specific/flash_the_ttgo_tdisplay
+        /bin/bash -c "$(curl -sSL https://github.com/epiccurious/jade-diy/raw/master/device_specific/flash_the_ttgo_tdisplay)"
         ```
     - If you're using the M5Stack M5StickC PLUS, run:
         ```
-        sudo device_specific/flash_the_m5stack_m5stickc_plus
+        /bin/bash -c "$(curl -sSL https://github.com/epiccurious/jade-diy/raw/master/device_specific/flash_the_m5stack_m5stickc_plus)"
         ```
     - If you're using the M5Stack Core Basic, run:
         ```
-        sudo device_specific/flash_the_m5stack_core_basic
+        /bin/bash -c "$(curl -sSL https://github.com/epiccurious/jade-diy/raw/master/device_specific/flash_the_m5stack_core_basic)"
         ```
     - If you're using the M5Stack FIRE, run:
         ```
-        sudo device_specific/flash_the_m5stack_fire
+        /bin/bash -c "$(curl -sSL https://github.com/epiccurious/jade-diy/raw/master/device_specific/flash_the_m5stack_fire)"
         ```
 
 After the script completes, you should see the Jade initialization screen on your device.
