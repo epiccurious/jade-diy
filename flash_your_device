@@ -39,18 +39,18 @@ case "$(uname -s)" in
     Linux*)
         machine="Linux"
         echo "Detected ${machine}."
-        echo -n "Checking for cmake, git, pip, and virtualenv... "
+        echo -n "Checking for dependencies... "
         if ! command -v cmake &>/dev/null; then
-            echo -e "\n\nERROR:\ncmake was not found on your system.\n\nPlease install cmake by running:\n\nsudo apt update && sudo apt install -y cmake\n"
+            echo -e "\n\nERROR:\ncmake was not found on your system.\nPlease install cmake by running:\n\nsudo apt update && sudo apt install -y cmake\n"
             exit 1
         elif ! command -v git &>/dev/null; then
-            echo -e "\n\nERROR:\ngit was not found on your system.\n\nPlease install git by running:\n\nsudo apt update && sudo apt install -y git\n"
+            echo -e "\n\nERROR:\ngit was not found on your system.\nPlease install git by running:\n\nsudo apt update && sudo apt install -y git\n"
             exit 1
         elif ! command -v pip &>/dev/null; then
-            echo -e "\n\nERROR:\npip was not found on your system.\n\nPlease install pip by running:\n\nsudo apt update && sudo apt install -y python3-pip\n"
+            echo -e "\n\nERROR:\npip was not found on your system.\nPlease install pip by running:\n\nsudo apt update && sudo apt install -y python3-pip\n"
             exit 1
         elif ! command -v virtualenv &>/dev/null; then
-            echo -e "\n\nERROR:\nvirtualenv was not found on your system.\n\nPlease install virtualenv by running:\n\nsudo apt update && sudo apt install -y python3-virtualenv\n"
+            echo -e "\n\nERROR:\nvirtualenv was not found on your system.\nPlease install virtualenv by running:\n\nsudo apt update && sudo apt install -y python3-virtualenv\n"
             exit 1
         fi
         echo "ok."
@@ -104,7 +104,7 @@ case "$(uname -s)" in
     *) echo "Unsupported OS: $(uname -s)" && exit 0
 esac
 
-echo -n "Checking for the ESP IoT Development Framework... "
+echo -n "Checking for the Espressif IoT Development Framework... "
 if [ ! -f "${esp_idf_save_directory}"/export.sh ]; then
     echo -ne "\n  Downloading the framework... "
     git -c advice.detachedHead=false clone --branch "${esp_idf_git_tag}" --single-branch --depth 1 --quiet "${esp_idf_repo_url}" "${esp_idf_temp_directory}"
@@ -220,4 +220,4 @@ echo
 
 ${flash_command}
 
-echo -e "\nSUCCESS! Jade ${jade_version} is now installed on your ${chosen_device}.\nYou can close this window now.\n"
+echo -e "\nSUCCESS! Jade ${jade_version} is now installed on your ${chosen_device}.\nYou can close this window.\n"
