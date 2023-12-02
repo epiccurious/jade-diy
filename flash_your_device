@@ -39,10 +39,20 @@ case "$(uname -s)" in
     Linux*)
         machine="Linux"
         echo "Detected ${machine}."
-        echo -n "Checking for cmake, git, pip, and venv... "
-        #[ -f /var/lib/apt/lists/lock ] && echo "ERROR: `apt` is locked. Are you installing system updates?" && exit 1
-        sudo apt-get -qq update
-        sudo apt-get -qq install -y -o=Dpkg::Use-Pty=0 cmake git python3-pip python3-venv &> /dev/null
+        echo -n "Checking for dependencies... "
+        if ! command -v cmake &>/dev/null; then
+            echo -e "\n\nERROR:\ncmake was not found on your system.\nPlease install cmake by running:\n\nsudo apt update && sudo apt install -y cmake\n"
+            exit 1
+        elif ! command -v git &>/dev/null; then
+            echo -e "\n\nERROR:\ngit was not found on your system.\nPlease install git by running:\n\nsudo apt update && sudo apt install -y git\n"
+            exit 1
+        elif ! command -v pip &>/dev/null; then
+            echo -e "\n\nERROR:\npip was not found on your system.\nPlease install pip by running:\n\nsudo apt update && sudo apt install -y python3-pip\n"
+            exit 1
+        elif ! command -v virtualenv &>/dev/null; then
+            echo -e "\n\nERROR:\nvirtualenv was not found on your system.\nPlease install virtualenv by running:\n\nsudo apt update && sudo apt install -y python3-virtualenv\n"
+            exit 1
+        fi
         echo "ok."
         ;;
     Darwin*)
@@ -176,7 +186,11 @@ case "${machine}" in
         while [ ! -c "${tty_device}" ]; do
             read -srn1 -p "Connect your ${chosen_device} and PRESS ANY KEY to continue... " && echo
         done
-        sudo chmod o+rw "${tty_device}"
+        tty_device_permissions="$(stat -c '%a' /dev/ttyACM0)"
+        if [ "${tty_device_permissions:2}" -lt 6 ]; then
+            echo -e "ERROR:\nYou need elevated permissions to write to the device.\nPlease update your device permissoins by running:\n\nsudo chmod o+rw ${tty_device}\n"
+            exit 1
+        fi
         ;;
     macOS*)
         #macos_usb_serial=$(ioreg -p IOUSB -n "USB Single Serial" | grep "USB Serial Number" | cut -c 34-43)
@@ -206,4 +220,4 @@ echo
 
 ${flash_command}
 
-echo -e "\nSUCCESS! Jade ${jade_version} is now installed on your ${chosen_device}.\nYou can close this window now.\n"
+echo -e "\nSUCCESS! Jade ${jade_version} is now installed on your ${chosen_device}.\nYou can close this window.\n"
