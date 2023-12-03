@@ -22,8 +22,9 @@ echo "------------------------------------------------------------"
 echo "------------------------------------------------------------"
 echo "---                                                      ---"
 echo "---          Do-It-Yourself Jade Install Script          ---"
-echo "---                Written by Epic Curious               ---"
-echo "---                Twitter: @epic_curious                ---"
+echo "---                                                      ---"
+echo "---                Code is available at:                 ---"
+echo "---        https://github.com/epiccurious/jade-diy       ---"
 echo "---                                                      ---"
 echo "------------------------------------------------------------"
 echo "------------------------------------------------------------"
@@ -47,8 +48,6 @@ elif ! command -v pip &> /dev/null; then
 elif ! command -v virtualenv &> /dev/null; then
   echo -e "\nERROR:\nvirtualenv was not found on your system.\nPlease install virtualenv by running:\n\nsudo apt update && sudo apt install -y python3-virtualenv\n"
   exit 1
-elif ! command -v esptool &> /dev/null; then
-  echo -e "\nERROR:\esptool was not found on your system.\nPlease install esptool by running:\n\nsudo apt update && sudo apt install -y esptool\n"
 fi
 
 if [ ! -f "${esp_idf_save_directory}"/export.sh ]; then
@@ -82,6 +81,7 @@ while [ ! -c "${tty_device}" ]; do
 done
 
 # TODO: Read the esptool arguments from jade/build/flasher_args.json like how esptool.py does, rather than hard-code
-sudo esptool --port "${tty_device}" write_flash --flash_mode dio --flash_size 4MB --flash_freq 40m 0x1000 build/bootloader/bootloader.bin 0x10000 build/jade.bin 0x9000 build/partition_table/partition-table.bin 0xe000 build/ota_data_initial.bin
+sudo pip3 install esptool 2> /dev/null
+sudo -H python3 -m esptool --port "${tty_device}" --baud 460800 --before=default_reset --after=hard_reset write_flash --flash_mode dio --flash_size 4MB --flash_freq 40m 0x1000 build/bootloader/bootloader.bin 0x10000 build/jade.bin 0x9000 build/partition_table/partition-table.bin 0xe000 build/ota_data_initial.bin
 
 echo -e "\nSUCCESS! Your ${device} is now running Jade."
