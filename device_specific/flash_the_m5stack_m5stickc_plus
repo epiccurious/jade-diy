@@ -1,5 +1,8 @@
 #!/bin/bash
-set -e
+set -ex
+
+echo "THIS SCRIPT IS CURRENTLY BROKEN"
+exit 0
 
 working_directory="${HOME}/Downloads/diy_jade"
 temp_directory="${working_directory}/temp"
@@ -22,8 +25,9 @@ echo "------------------------------------------------------------"
 echo "------------------------------------------------------------"
 echo "---                                                      ---"
 echo "---          Do-It-Yourself Jade Install Script          ---"
-echo "---                Written by Epic Curious               ---"
-echo "---                Twitter: @epic_curious                ---"
+echo "---                                                      ---"
+echo "---                Code is available at:                 ---"
+echo "---        https://github.com/epiccurious/jade-diy       ---"
 echo "---                                                      ---"
 echo "------------------------------------------------------------"
 echo "------------------------------------------------------------"
@@ -35,16 +39,16 @@ fi
 
 echo "LINUX ONLY. Flashing the ${device}..."
 
-if ! command -v cmake &>/dev/null; then
+if ! command -v cmake &> /dev/null; then
   echo -e "\nERROR:\ncmake was not found on your system.\nPlease install cmake by running:\n\nsudo apt update && sudo apt install -y cmake\n"
   exit 1
-elif ! command -v git &>/dev/null; then
+elif ! command -v git &> /dev/null; then
   echo -e "\nERROR:\ngit was not found on your system.\nPlease install git by running:\n\nsudo apt update && sudo apt install -y git\n"
   exit 1
-elif ! command -v pip &>/dev/null; then
+elif ! command -v pip &> /dev/null; then
   echo -e "\n\RROR:\npip was not found on your system.\nPlease install pip by running:\n\nsudo apt update && sudo apt install -y python3-pip\n"
   exit 1
-elif ! command -v virtualenv &>/dev/null; then
+elif ! command -v virtualenv &> /dev/null; then
   echo -e "\nERROR:\nvirtualenv was not found on your system.\nPlease install virtualenv by running:\n\nsudo apt update && sudo apt install -y python3-virtualenv\n"
   exit 1
 fi
@@ -73,15 +77,18 @@ sed -i.bak '/CONFIG_DEBUG_MODE/d' ./sdkconfig.defaults
 sed -i.bak '1s/^/CONFIG_LOG_DEFUALT_LEVEL_NONE=y\n/' sdkconfig.defaults
 rm sdkconfig.defaults.bak
 
+idf.py build
+
 while [ ! -c "${tty_device}" ]; do
   read -srn1 -p "Connect your ${device} and PRESS ANY KEY to continue... " && echo
 done
-tty_device_permissions="$(stat -c '%a' ${tty_device})"
-if [ "${tty_device_permissions:2}" -lt 6 ]; then
-  echo -e "ERROR:\nYou need elevated permissions to write to the device.\nPlease update your device permissoins by running:\n\nsudo chmod o+rw ${tty_device}\n"
-  exit 1
-fi
 
+# TODO: Read the esptool arguments from jade/build/flasher_args.json like how esptool.py does, rather than hard-code
+sudo chmod o+rw /dev/ttyUSB0
+#pip3 install esptool 2> /dev/null
+#python3 -m esptool erase_flash
 idf.py -b 115200 flash
+#sudo -H python3 -m esptool --chip esp32 --port "${tty_device}" --baud 115200 --before=default_reset --after=hard_reset write_flash --flash_mode dio --flash_freq 40m --flash_size 4MB 0x1000 build/bootloader/bootloader.bin 0x10000 build/jade.bin 0x9000 build/partition_table/partition-table.bin 0xe000 build/ota_data_initial.bin
+sudo chmod o-rw /dev/ttyUSB0
 
 echo -e "\nSUCCESS! Your ${device} is now running Jade."
