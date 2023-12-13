@@ -1,9 +1,16 @@
 #!/bin/bash
 set -e
 
+cleanup() {
+    rm -rf -- "${temp_directory}"
+    if [ "$(stat -c '%a' ${tty_device})" != "${initial_tty_device_permissions}" ]; then
+        sudo chmod "${initial_tty_device_permissions}" "${tty_device}"
+    fi
+}
+
 working_directory="${HOME}/Downloads/diy_jade"
 temp_directory="${working_directory}/temp"
-trap 'rm -rf -- "${temp_directory}"' EXIT
+trap cleanup EXIT
 
 jade_git_tag="1.0.26"
 jade_save_directory="${working_directory}/jade"
@@ -181,6 +188,10 @@ echo
 sed -i.bak '/CONFIG_DEBUG_MODE/d' ./sdkconfig.defaults
 sed -i.bak '1s/^/CONFIG_LOG_DEFUALT_LEVEL_NONE=y\n/' sdkconfig.defaults
 
+echo -n "Creating the Jade firmware... "
+idf.py build &> /dev/null
+echo "ok."
+
 case "${machine}" in
   Linux*)
     while [ ! -c "${tty_device}" ]; do
@@ -188,8 +199,9 @@ case "${machine}" in
     done
     tty_device_permissions="$(stat -c '%a' "${tty_device}")"
     if [ "${tty_device_permissions:2}" -lt 6 ]; then
-      echo -e "ERROR:\nYou need elevated permissions to write to the device.\nPlease update your device permissoins by running:\n\nsudo chmod o+rw ${tty_device}\n"
-      exit 1
+      echo -e "\nElevating write permissions for ${chosen_device}"
+      sudo chmod o+rw "${tty_device}"
+      echo
     fi
     ;;
   macOS*)
