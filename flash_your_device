@@ -68,22 +68,12 @@ case "$(uname -s)" in
     echo -n "Checking for cmake... "
     if ! command -v cmake &>/dev/null; then
       if [ ! -d /Applications/CMake.app ]; then
-        #read -srk "?  CMake is not found in your Applications directory.\n  PRESS ANY KEY to download CMake... " && echo
-        #cmake_macos_url="https://github.com/Kitware/CMake/releases/download/v3.26.4/cmake-3.26.4-macos-universal.tar.gz"
-        #cmake_macos_tarball="${HOME}"/$(basename "${cmake_macos_url}")
-        #cmake_macos_extract_dir="${HOME}/$(basename "${cmake_macos_url}" .tar.gz)"
-        #wget -P "${HOME}" "${cmake_macos_url}"
-        #tar -xf "${cmake_macos_tarball}" -C "${HOME}/"
-        #cp -r "${cmake_macos_extract_dir}"/CMake.app/ /Applications/CMake.app/
         cmake_macos_url="https://github.com/Kitware/CMake/releases/download/v3.26.4/cmake-3.26.4-macos-universal.dmg"
         cmake_macos_dmg="$(basename ${cmake_macos_url})"
-        #cmake_macos_volume="/Volumes/$(basename ${cmake_macos_url} .dmg)"
         
         if [ ! -f "${HOME}"/Downloads/"${cmake_macos_dmg}" ]
         then
           echo -ne "\n  Downloading CMake... "
-          #wget --quiet -P "${HOME}" "${cmake_macos_url}"
-          #wget --quiet -P "${HOME}/Downloads" "${cmake_macos_url}"
           curl -sL "${cmake_macos_url}" --output "${HOME}"/Downloads/"${cmake_macos_dmg}"
           echo "ok."
         fi
@@ -94,13 +84,6 @@ case "$(uname -s)" in
         echo "Please open the file from your Downloads folder."
         echo -e "************************************************************\n"
         exit 1
-        
-        #echo -n "  Installing cmake..."
-        #hdiutil attach -quiet -nobrowse "${HOME}"/"${cmake_macos_dmg}"
-        #cp -r ${cmake_macos_volume}/CMake.app/ /Applications/CMake.app/
-        #hdiutil detach -quiet ${cmake_macos_volume}
-        #rm "${HOME}"/"${cmake_macos_dmg}"
-        #echo "ok."
       fi
       PATH="/Applications/CMake.app/Contents/bin${PATH:+:${PATH}}"
     fi
