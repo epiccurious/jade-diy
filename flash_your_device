@@ -3,7 +3,7 @@ set -e
 
 cleanup() {
     rm -rf -- "${temp_directory}"
-    if [ "$(stat -c '%a' ${tty_device})" != "${initial_tty_device_permissions}" ]; then
+    if [ "$(stat -c '%a' "${tty_device}")" != "${initial_tty_device_permissions}" ]; then
         sudo chmod "${initial_tty_device_permissions}" "${tty_device}"
     fi
 }
@@ -197,8 +197,8 @@ case "${machine}" in
     while [ ! -c "${tty_device}" ]; do
       read -srn1 -p "Connect your ${chosen_device} and PRESS ANY KEY to continue... " && echo
     done
-    tty_device_permissions="$(stat -c '%a' "${tty_device}")"
-    if [ "${tty_device_permissions:2}" -lt 6 ]; then
+    initial_tty_device_permissions="$(stat -c '%a' "${tty_device}")"
+    if [ "${initial_tty_device_permissions:2}" -lt 6 ]; then
       echo -e "\nElevating write permissions for ${chosen_device}"
       sudo chmod o+rw "${tty_device}"
       echo
