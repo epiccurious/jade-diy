@@ -205,17 +205,6 @@ case "${machine}" in
     fi
     ;;
   macOS*)
-    #macos_usb_serial=$(ioreg -p IOUSB -n "USB Single Serial" | grep "USB Serial Number" | cut -c 34-43)
-    
-    #[ -z "${macos_usb_serial}" ] && echo "serial does not exist"
-    
-    #while [ -z "${macos_usb_serial}" ]
-    #do
-    #    echo -e "Connect your ${chosen_device} with a USB-C cable,\n  click \"Allow\" if you see a macOS security popup,"
-    #    sleep 5
-    #    macos_usb_serial=$(ioreg -p IOUSB -n "USB Single Serial" | grep "USB Serial Number" | cut -c 34-43)
-
-    #done
     echo -e "Connect your ${chosen_device} with a USB-C cable,\n  and click Allow if you see a security popup."
     read -srn1 -p "  PRESS ANY KEY to continue... " && echo && echo
     ;;
