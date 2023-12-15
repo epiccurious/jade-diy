@@ -73,6 +73,7 @@ if [ ! -d "${jade_save_directory}" ]; then
   git submodule update --depth 1 --init --recursive  &> /dev/null
 fi
 cd "${jade_save_directory}"
+jade_version="$(git describe --tags)"
 
 cp configs/sdkconfig_display_m5fire.defaults sdkconfig.defaults
 sed -i.bak '/CONFIG_DEBUG_MODE/d' ./sdkconfig.defaults
