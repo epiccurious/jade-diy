@@ -212,4 +212,4 @@ After the build and flash process completes, you should see the Jade initializat
 
 Inspiration for this project came from:
 - [Blockstream Jade](https://github.com/Blockstream/Jade/graphs/contributors)
-- [@YTCryptoGuide](https://twitter.com/YTCryptoGuidelink) ([YouTube](https://youtube.com/CryptoGuide)).
+- [@YTCryptoGuide](https://twitter.com/YTCryptoGuide) ([YouTube](https://youtube.com/CryptoGuide)).
