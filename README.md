@@ -96,7 +96,7 @@ You are better off buying the hardware directly from the hardware vendor than th
 
 There are three options for flashing your device:
 - [**Install with the Semi-Automated Script**](#install-with-the-semi-automated-script) (easiest way)
-- [**Install with a Device-Specific Script**](#install-with-a-device-specific-script) (other easy way)
+- [**Install with a Device-Specific Script**](#install-with-a-device-specific-script) (another easy way)
 - [**Install by Running the Code Manually**](#install-by-running-the-code-manually) (harder way)
 
 ### Use the Semi-Automated Script

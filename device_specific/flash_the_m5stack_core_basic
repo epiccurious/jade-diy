@@ -5,7 +5,7 @@ cleanup() {
   rm -rf -- "${temp_directory}"
   if [ -n "${initial_tty_device_permissions}" ] &&
     [ "$(stat -c '%a' "${tty_device}")" != "${initial_tty_device_permissions}" ]; then
-      sudo chmod "${initial_tty_device_permissions}" "${tty_device}"
+    sudo chmod "${initial_tty_device_permissions}" "${tty_device}"
   fi
 }
 
@@ -42,26 +42,26 @@ fi
 
 echo "LINUX ONLY. Flashing the ${chosen_device}..."
 
-if ! command -v cmake &>/dev/null; then
+if ! command -v cmake &> /dev/null; then
   echo -e "\nERROR:\ncmake was not found on your system.\nPlease install cmake by running:\n\nsudo apt update && sudo apt install -y cmake\n"
   exit 1
-elif ! command -v git &>/dev/null; then
+elif ! command -v git &> /dev/null; then
   echo -e "\nERROR:\ngit was not found on your system.\nPlease install git by running:\n\nsudo apt update && sudo apt install -y git\n"
   exit 1
-elif ! command -v pip &>/dev/null; then
+elif ! command -v pip &> /dev/null; then
   echo -e "\n\RROR:\npip was not found on your system.\nPlease install pip by running:\n\nsudo apt update && sudo apt install -y python3-pip\n"
   exit 1
-elif ! command -v virtualenv &>/dev/null; then
+elif ! command -v virtualenv &> /dev/null; then
   echo -e "\nERROR:\nvirtualenv was not found on your system.\nPlease install virtualenv by running:\n\nsudo apt update && sudo apt install -y python3-virtualenv\n"
   exit 1
 fi
 
 if [ ! -f "${esp_idf_save_directory}"/export.sh ]; then
-  git clone --branch "${esp_idf_git_tag}" --single-branch --depth 1  "${esp_idf_repo_url}" "${esp_idf_temp_directory}"
+  git clone --branch "${esp_idf_git_tag}" --single-branch --depth 1 "${esp_idf_repo_url}" "${esp_idf_temp_directory}"
   cd "${esp_idf_temp_directory}"/
-  git submodule update --depth 1 --init --recursive 
-  ./install.sh esp32 &>/dev/null
-  source ./export.sh 1>/dev/null
+  git submodule update --depth 1 --init --recursive
+  ./install.sh esp32 &> /dev/null
+  source ./export.sh 1> /dev/null
   mv "${esp_idf_temp_directory}" "${esp_idf_save_directory}"
 fi
 cd "${esp_idf_save_directory}"/
@@ -69,9 +69,9 @@ cd "${esp_idf_save_directory}"/
 source ./export.sh
 
 if [ ! -d "${jade_save_directory}" ]; then
-  git clone --branch "${jade_git_tag}" --single-branch --depth 1  "${jade_repo_url}" "${jade_save_directory}"
+  git clone --branch "${jade_git_tag}" --single-branch --depth 1 "${jade_repo_url}" "${jade_save_directory}"
   cd "${jade_save_directory}"
-  git submodule update --depth 1 --init --recursive  &> /dev/null
+  git submodule update --depth 1 --init --recursive &> /dev/null
 fi
 cd "${jade_save_directory}"
 jade_version="$(git describe --tags)"
