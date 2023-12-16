@@ -2,10 +2,12 @@
 set -e
 
 cleanup() {
-    rm -rf -- "${temp_directory}"
-    if [ "$(stat -c '%a' "${tty_device}")" != "${initial_tty_device_permissions}" ]; then
-        sudo chmod "${initial_tty_device_permissions}" "${tty_device}"
-    fi
+  rm -rf -- "${temp_directory}"
+  if [ "${machine}" == "Linux" ] &&
+    [ -n "${initial_tty_device_permissions}" ] &&
+    [ "$(stat -c '%a' "${tty_device}")" != "${initial_tty_device_permissions}" ]; then
+    sudo chmod "${initial_tty_device_permissions}" "${tty_device}"
+  fi
 }
 
 working_directory="${HOME}/Downloads/diy_jade"
