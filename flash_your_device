@@ -131,8 +131,7 @@ echo "ok."
 echo -e "\nWhich device do you want to flash?"
 PS3='Please enter the number for your device or QUIT: '
 options=("${device1}" "${device2}" "${device3}" "${device4}" "QUIT")
-select choice in "${options[@]}"
-do
+select choice in "${options[@]}"; do
   case "${choice}" in
   "${device1}")
     tty_device="/dev/ttyACM0"
