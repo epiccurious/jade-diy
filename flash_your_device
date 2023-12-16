@@ -48,16 +48,16 @@ case "$(uname -s)" in
     machine="Linux"
     echo "Detected ${machine}."
     echo -n "Checking for dependencies... "
-    if ! command -v cmake &>/dev/null; then
+    if ! command -v cmake &> /dev/null; then
       echo -e "\n\nERROR:\ncmake was not found on your system.\nPlease install cmake by running:\n\nsudo apt update && sudo apt install -y cmake\n"
       exit 1
-    elif ! command -v git &>/dev/null; then
+    elif ! command -v git &> /dev/null; then
       echo -e "\n\nERROR:\ngit was not found on your system.\nPlease install git by running:\n\nsudo apt update && sudo apt install -y git\n"
       exit 1
-    elif ! command -v pip &>/dev/null; then
+    elif ! command -v pip &> /dev/null; then
       echo -e "\n\nERROR:\npip was not found on your system.\nPlease install pip by running:\n\nsudo apt update && sudo apt install -y python3-pip\n"
       exit 1
-    elif ! command -v virtualenv &>/dev/null; then
+    elif ! command -v virtualenv &> /dev/null; then
       echo -e "\n\nERROR:\nvirtualenv was not found on your system.\nPlease install virtualenv by running:\n\nsudo apt update && sudo apt install -y python3-virtualenv\n"
       exit 1
     fi
@@ -67,7 +67,7 @@ case "$(uname -s)" in
     machine="macOS"
     echo "Detected ${machine}."
     echo -n "Checking for cmake... "
-    if ! command -v cmake &>/dev/null; then
+    if ! command -v cmake &> /dev/null; then
       if [ ! -d /Applications/CMake.app ]; then
         cmake_macos_url="https://github.com/Kitware/CMake/releases/download/v3.26.4/cmake-3.26.4-macos-universal.dmg"
         cmake_macos_dmg="$(basename ${cmake_macos_url})"
@@ -101,9 +101,9 @@ if [ ! -f "${esp_idf_save_directory}"/export.sh ]; then
   git -c advice.detachedHead=false clone --branch "${esp_idf_git_tag}" --single-branch --depth 1 --quiet "${esp_idf_repo_url}" "${esp_idf_temp_directory}"
   cd "${esp_idf_temp_directory}"/
   git submodule update --depth 1 --init --recursive --quiet &> /dev/null
-  ./install.sh esp32 &>/dev/null
+  ./install.sh esp32 &> /dev/null
   # shellcheck source=/dev/null
-  source ./export.sh 1>/dev/null
+  source ./export.sh 1> /dev/null
   mv "${esp_idf_temp_directory}" "${esp_idf_save_directory}"
   echo "ok."
 else
@@ -111,10 +111,10 @@ else
 fi
 cd "${esp_idf_save_directory}"
 echo -ne "  Installing the framework... "
-./install.sh esp32 1>/dev/null
+./install.sh esp32 1> /dev/null
 echo -ne "ok.\n  Exporting the framework... "
 # shellcheck source=/dev/null
-source ./export.sh 1>/dev/null
+source ./export.sh 1> /dev/null
 echo "ok."
 
 echo -n "Checking for the Blockstream Jade repository... "
