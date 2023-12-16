@@ -18,16 +18,14 @@ jobs:
         uses: ludeeus/action-shellcheck@master
         env:
           SHELLCHECK_OPTS: -e SC1091
-  #
-  # in case we want to use shfmt too
-  #shfmt-checker:
-  #  name: Validation with shfmt
-  #  runs-on: ubuntu-latest
-  #  steps:
-  #    - uses: actions/checkout@v3
-  #    - name: Run shfmt on jade-diy scripts
-  #      uses: luizm/action-sh-checker@master
-  #      env:
-  #        SHFMT_OPTS: -i 2 -sr
-  #      with:
-  #        sh_checker_shellcheck_disable: true
+  shfmt-checker:
+    name: Validation with shfmt
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run shfmt on jade-diy scripts
+        uses: luizm/action-sh-checker@master
+        env:
+          SHFMT_OPTS: -i 2 -sr
+        with:
+          sh_checker_shellcheck_disable: true
