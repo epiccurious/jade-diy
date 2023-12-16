@@ -44,55 +44,55 @@ if [ "$(whoami)" = "root" ]; then
 fi
 
 case "$(uname -s)" in
-  Linux*)
-    machine="Linux"
-    echo "Detected ${machine}."
-    echo -n "Checking for dependencies... "
-    if ! command -v cmake &> /dev/null; then
-      echo -e "\n\nERROR:\ncmake was not found on your system.\nPlease install cmake by running:\n\nsudo apt update && sudo apt install -y cmake\n"
-      exit 1
-    elif ! command -v git &> /dev/null; then
-      echo -e "\n\nERROR:\ngit was not found on your system.\nPlease install git by running:\n\nsudo apt update && sudo apt install -y git\n"
-      exit 1
-    elif ! command -v pip &> /dev/null; then
-      echo -e "\n\nERROR:\npip was not found on your system.\nPlease install pip by running:\n\nsudo apt update && sudo apt install -y python3-pip\n"
-      exit 1
-    elif ! command -v virtualenv &> /dev/null; then
-      echo -e "\n\nERROR:\nvirtualenv was not found on your system.\nPlease install virtualenv by running:\n\nsudo apt update && sudo apt install -y python3-virtualenv\n"
-      exit 1
-    fi
-    echo "ok."
-    ;;
-  Darwin*)
-    machine="macOS"
-    echo "Detected ${machine}."
-    echo -n "Checking for cmake... "
-    if ! command -v cmake &> /dev/null; then
-      if [ ! -d /Applications/CMake.app ]; then
-        cmake_macos_url="https://github.com/Kitware/CMake/releases/download/v3.26.4/cmake-3.26.4-macos-universal.dmg"
-        cmake_macos_dmg="$(basename ${cmake_macos_url})"
-        
-        if [ ! -f "${HOME}"/Downloads/"${cmake_macos_dmg}" ]
-        then
-          echo -ne "\n  Downloading CMake... "
-          curl -sL "${cmake_macos_url}" --output "${HOME}"/Downloads/"${cmake_macos_dmg}"
-          echo "ok."
-        fi
-
-        echo -e "\n************************************************************"
-        echo "ERROR: Automatic installation of CMake is not supported yet."
-        echo "Please manually install ${cmake_macos_dmg}."
-        echo "Please open the file from your Downloads folder."
-        echo -e "************************************************************\n"
-        exit 1
+Linux*)
+  machine="Linux"
+  echo "Detected ${machine}."
+  echo -n "Checking for dependencies... "
+  if ! command -v cmake &> /dev/null; then
+    echo -e "\n\nERROR:\ncmake was not found on your system.\nPlease install cmake by running:\n\nsudo apt update && sudo apt install -y cmake\n"
+    exit 1
+  elif ! command -v git &> /dev/null; then
+    echo -e "\n\nERROR:\ngit was not found on your system.\nPlease install git by running:\n\nsudo apt update && sudo apt install -y git\n"
+    exit 1
+  elif ! command -v pip &> /dev/null; then
+    echo -e "\n\nERROR:\npip was not found on your system.\nPlease install pip by running:\n\nsudo apt update && sudo apt install -y python3-pip\n"
+    exit 1
+  elif ! command -v virtualenv &> /dev/null; then
+    echo -e "\n\nERROR:\nvirtualenv was not found on your system.\nPlease install virtualenv by running:\n\nsudo apt update && sudo apt install -y python3-virtualenv\n"
+    exit 1
+  fi
+  echo "ok."
+  ;;
+Darwin*)
+  machine="macOS"
+  echo "Detected ${machine}."
+  echo -n "Checking for cmake... "
+  if ! command -v cmake &> /dev/null; then
+    if [ ! -d /Applications/CMake.app ]; then
+      cmake_macos_url="https://github.com/Kitware/CMake/releases/download/v3.26.4/cmake-3.26.4-macos-universal.dmg"
+      cmake_macos_dmg="$(basename ${cmake_macos_url})"
+      
+      if [ ! -f "${HOME}"/Downloads/"${cmake_macos_dmg}" ]
+      then
+        echo -ne "\n  Downloading CMake... "
+        curl -sL "${cmake_macos_url}" --output "${HOME}"/Downloads/"${cmake_macos_dmg}"
+        echo "ok."
       fi
-      PATH="/Applications/CMake.app/Contents/bin${PATH:+:${PATH}}"
+
+      echo -e "\n************************************************************"
+      echo "ERROR: Automatic installation of CMake is not supported yet."
+      echo "Please manually install ${cmake_macos_dmg}."
+      echo "Please open the file from your Downloads folder."
+      echo -e "************************************************************\n"
+      exit 1
     fi
-    echo "ok."
-    ;;
-  MINGW*)
-    echo "Windows is not supported. Please run in WSL (Windows Subsystem for Linux)." && exit 0;;
-  *) echo "Unsupported OS: $(uname -s)" && exit 0
+    PATH="/Applications/CMake.app/Contents/bin${PATH:+:${PATH}}"
+  fi
+  echo "ok."
+  ;;
+MINGW*)
+  echo "Windows is not supported. Please run in WSL (Windows Subsystem for Linux)." && exit 0;;
+*) echo "Unsupported OS: $(uname -s)" && exit 0
 esac
 
 echo -n "Checking for the Espressif IoT Development Framework... "
@@ -134,35 +134,35 @@ options=("${device1}" "${device2}" "${device3}" "${device4}" "QUIT")
 select choice in "${options[@]}"
 do
   case "${choice}" in
-    "${device1}")
-      tty_device="/dev/ttyACM0"
-      flash_command="idf.py flash"
-      cp configs/sdkconfig_display_ttgo_tdisplay.defaults sdkconfig.defaults
-      break
-      ;;
-    "${device2}")
-      tty_device="/dev/ttyUSB0"
-      flash_command="idf.py -b 115200 flash"
-      cp configs/sdkconfig_display_m5stickcplus.defaults sdkconfig.defaults
-      break
-      ;;
-    "${device3}")
-      tty_device="/dev/ttyACM0"
-      flash_command="idf.py flash"
-      cp configs/sdkconfig_display_m5blackgray.defaults sdkconfig.defaults
-      break
-      ;;
-    "${device4}")
-      tty_device="/dev/ttyACM0"
-      flash_command="idf.py flash"
-      cp configs/sdkconfig_display_m5fire.defaults sdkconfig.defaults
-      break
-      ;;
-    "QUIT")
-      echo "You chose to quit."
-      exit 0
-      ;;
-    *) echo "You entered ${REPLY}, which is invalid."
+  "${device1}")
+    tty_device="/dev/ttyACM0"
+    flash_command="idf.py flash"
+    cp configs/sdkconfig_display_ttgo_tdisplay.defaults sdkconfig.defaults
+    break
+    ;;
+  "${device2}")
+    tty_device="/dev/ttyUSB0"
+    flash_command="idf.py -b 115200 flash"
+    cp configs/sdkconfig_display_m5stickcplus.defaults sdkconfig.defaults
+    break
+    ;;
+  "${device3}")
+    tty_device="/dev/ttyACM0"
+    flash_command="idf.py flash"
+    cp configs/sdkconfig_display_m5blackgray.defaults sdkconfig.defaults
+    break
+    ;;
+  "${device4}")
+    tty_device="/dev/ttyACM0"
+    flash_command="idf.py flash"
+    cp configs/sdkconfig_display_m5fire.defaults sdkconfig.defaults
+    break
+    ;;
+  "QUIT")
+    echo "You chose to quit."
+    exit 0
+    ;;
+  *) echo "You entered ${REPLY}, which is invalid."
   esac
 done
 chosen_device="${choice}"
@@ -177,22 +177,22 @@ idf.py build &> /dev/null
 echo "ok."
 
 case "${machine}" in
-  Linux*)
-    while [ ! -c "${tty_device}" ]; do
-      read -srn1 -p "Connect your ${chosen_device} and PRESS ANY KEY to continue... " && echo
-    done
-    initial_tty_device_permissions="$(stat -c '%a' "${tty_device}")"
-    if [ "${initial_tty_device_permissions:2}" -lt 6 ]; then
-      echo -e "\nElevating write permissions for ${chosen_device}"
-      sudo chmod o+rw "${tty_device}"
-      echo
-    fi
-    ;;
-  macOS*)
-    echo -e "Connect your ${chosen_device} with a USB-C cable,\n  and click Allow if you see a security popup."
-    read -srn1 -p "  PRESS ANY KEY to continue... " && echo && echo
-    ;;
-  *) echo "Unsupported OS: $(uname -s)" && exit 0
+Linux*)
+  while [ ! -c "${tty_device}" ]; do
+    read -srn1 -p "Connect your ${chosen_device} and PRESS ANY KEY to continue... " && echo
+  done
+  initial_tty_device_permissions="$(stat -c '%a' "${tty_device}")"
+  if [ "${initial_tty_device_permissions:2}" -lt 6 ]; then
+    echo -e "\nElevating write permissions for ${chosen_device}"
+    sudo chmod o+rw "${tty_device}"
+    echo
+  fi
+  ;;
+macOS*)
+  echo -e "Connect your ${chosen_device} with a USB-C cable,\n  and click Allow if you see a security popup."
+  read -srn1 -p "  PRESS ANY KEY to continue... " && echo && echo
+  ;;
+*) echo "Unsupported OS: $(uname -s)" && exit 0
 esac
 
 echo -e "Ready to install Jade ${jade_version} on your ${chosen_device}.\n  (This process can take over 10 minutes.)"
