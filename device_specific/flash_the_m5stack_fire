@@ -1,9 +1,16 @@
 #!/bin/bash
 set -e
 
+cleanup() {
+    rm -rf -- "${temp_directory}"
+    if [ "$(stat -c '%a' "${tty_device}")" != "${initial_tty_device_permissions}" ]; then
+        sudo chmod "${initial_tty_device_permissions}" "${tty_device}"
+    fi
+}
+
 working_directory="${HOME}/Downloads/diy_jade"
 temp_directory="${working_directory}/temp"
-trap 'rm -rf -- "${temp_directory}"' EXIT
+trap cleanup EXIT
 
 jade_git_tag="1.0.26"
 jade_save_directory="${working_directory}/jade"
@@ -14,7 +21,7 @@ esp_idf_temp_directory="${temp_directory}/esp-idf"
 esp_idf_save_directory="${working_directory}/esp-idf"
 esp_idf_repo_url="https://github.com/espressif/esp-idf.git"
 
-device="M5Stack FIRE"
+chosen_device="M5Stack FIRE"
 tty_device="/dev/ttyACM0"
 
 clear
@@ -23,7 +30,6 @@ echo "------------------------------------------------------------"
 echo "---                                                      ---"
 echo "---          Do-It-Yourself Jade Install Script          ---"
 echo "---                Written by Epic Curious               ---"
-echo "---                Twitter: @epic_curious                ---"
 echo "---                                                      ---"
 echo "------------------------------------------------------------"
 echo "------------------------------------------------------------"
@@ -33,7 +39,7 @@ if [ "$(whoami)" = "root" ]; then
   echo -e "ALERT: You're running the script as root/superuser.\nYou may notice PIP 'sudo -H' warnings.\n"
 fi
 
-echo "LINUX ONLY. Flashing the ${device}..."
+echo "LINUX ONLY. Flashing the ${chosen_device}..."
 
 if ! command -v cmake &>/dev/null; then
   echo -e "\nERROR:\ncmake was not found on your system.\nPlease install cmake by running:\n\nsudo apt update && sudo apt install -y cmake\n"
@@ -67,21 +73,25 @@ if [ ! -d "${jade_save_directory}" ]; then
   git submodule update --depth 1 --init --recursive  &> /dev/null
 fi
 cd "${jade_save_directory}"
+jade_version="$(git describe --tags)"
 
 cp configs/sdkconfig_display_m5fire.defaults sdkconfig.defaults
 sed -i.bak '/CONFIG_DEBUG_MODE/d' ./sdkconfig.defaults
 sed -i.bak '1s/^/CONFIG_LOG_DEFUALT_LEVEL_NONE=y\n/' sdkconfig.defaults
 rm sdkconfig.defaults.bak
 
+idf.py build
+
 while [ ! -c "${tty_device}" ]; do
-  read -srn1 -p "Connect your ${device} and PRESS ANY KEY to continue... " && echo
+  read -srn1 -p "Connect your ${chosen_device} and PRESS ANY KEY to continue... " && echo
 done
-tty_device_permissions="$(stat -c '%a' ${tty_device})"
-if [ "${tty_device_permissions:2}" -lt 6 ]; then
-  echo -e "ERROR:\nYou need elevated permissions to write to the device.\nPlease update your device permissoins by running:\n\nsudo chmod o+rw ${tty_device}\n"
-  exit 1
+initial_tty_device_permissions="$(stat -c '%a' "${tty_device}")"
+if [ "${initial_tty_device_permissions:2}" -lt 6 ]; then
+  echo -e "\nElevating write permissions for ${chosen_device}"
+  sudo chmod o+rw "${tty_device}"
+  echo
 fi
 
 idf.py flash
 
-echo -e "\nSUCCESS! Your ${device} is now running Jade."
+echo -e "\nSUCCESS! Jade ${jade_version} is now installed on your ${chosen_device}.\nYou can close this window.\n"

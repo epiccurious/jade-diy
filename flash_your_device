@@ -1,9 +1,16 @@
 #!/bin/bash
 set -e
 
+cleanup() {
+    rm -rf -- "${temp_directory}"
+    if [ "$(stat -c '%a' "${tty_device}")" != "${initial_tty_device_permissions}" ]; then
+        sudo chmod "${initial_tty_device_permissions}" "${tty_device}"
+    fi
+}
+
 working_directory="${HOME}/Downloads/diy_jade"
 temp_directory="${working_directory}/temp"
-trap 'rm -rf -- "${temp_directory}"' EXIT
+trap cleanup EXIT
 
 jade_git_tag="1.0.26"
 jade_save_directory="${working_directory}/jade"
@@ -25,7 +32,6 @@ echo "------------------------------------------------------------"
 echo "---                                                      ---"
 echo "---          Do-It-Yourself Jade Install Script          ---"
 echo "---                Written by Epic Curious               ---"
-echo "---                Twitter: @epic_curious                ---"
 echo "---                                                      ---"
 echo "------------------------------------------------------------"
 echo "------------------------------------------------------------"
@@ -61,22 +67,12 @@ case "$(uname -s)" in
     echo -n "Checking for cmake... "
     if ! command -v cmake &>/dev/null; then
       if [ ! -d /Applications/CMake.app ]; then
-        #read -srk "?  CMake is not found in your Applications directory.\n  PRESS ANY KEY to download CMake... " && echo
-        #cmake_macos_url="https://github.com/Kitware/CMake/releases/download/v3.26.4/cmake-3.26.4-macos-universal.tar.gz"
-        #cmake_macos_tarball="${HOME}"/$(basename "${cmake_macos_url}")
-        #cmake_macos_extract_dir="${HOME}/$(basename "${cmake_macos_url}" .tar.gz)"
-        #wget -P "${HOME}" "${cmake_macos_url}"
-        #tar -xf "${cmake_macos_tarball}" -C "${HOME}/"
-        #cp -r "${cmake_macos_extract_dir}"/CMake.app/ /Applications/CMake.app/
         cmake_macos_url="https://github.com/Kitware/CMake/releases/download/v3.26.4/cmake-3.26.4-macos-universal.dmg"
         cmake_macos_dmg="$(basename ${cmake_macos_url})"
-        #cmake_macos_volume="/Volumes/$(basename ${cmake_macos_url} .dmg)"
         
         if [ ! -f "${HOME}"/Downloads/"${cmake_macos_dmg}" ]
         then
           echo -ne "\n  Downloading CMake... "
-          #wget --quiet -P "${HOME}" "${cmake_macos_url}"
-          #wget --quiet -P "${HOME}/Downloads" "${cmake_macos_url}"
           curl -sL "${cmake_macos_url}" --output "${HOME}"/Downloads/"${cmake_macos_dmg}"
           echo "ok."
         fi
@@ -87,13 +83,6 @@ case "$(uname -s)" in
         echo "Please open the file from your Downloads folder."
         echo -e "************************************************************\n"
         exit 1
-        
-        #echo -n "  Installing cmake..."
-        #hdiutil attach -quiet -nobrowse "${HOME}"/"${cmake_macos_dmg}"
-        #cp -r ${cmake_macos_volume}/CMake.app/ /Applications/CMake.app/
-        #hdiutil detach -quiet ${cmake_macos_volume}
-        #rm "${HOME}"/"${cmake_macos_dmg}"
-        #echo "ok."
       fi
       PATH="/Applications/CMake.app/Contents/bin${PATH:+:${PATH}}"
     fi
@@ -181,29 +170,23 @@ echo
 sed -i.bak '/CONFIG_DEBUG_MODE/d' ./sdkconfig.defaults
 sed -i.bak '1s/^/CONFIG_LOG_DEFUALT_LEVEL_NONE=y\n/' sdkconfig.defaults
 
+echo -n "Creating the Jade firmware... "
+idf.py build &> /dev/null
+echo "ok."
+
 case "${machine}" in
   Linux*)
     while [ ! -c "${tty_device}" ]; do
       read -srn1 -p "Connect your ${chosen_device} and PRESS ANY KEY to continue... " && echo
     done
-    tty_device_permissions="$(stat -c '%a' "${tty_device}")"
-    if [ "${tty_device_permissions:2}" -lt 6 ]; then
-      echo -e "ERROR:\nYou need elevated permissions to write to the device.\nPlease update your device permissoins by running:\n\nsudo chmod o+rw ${tty_device}\n"
-      exit 1
+    initial_tty_device_permissions="$(stat -c '%a' "${tty_device}")"
+    if [ "${initial_tty_device_permissions:2}" -lt 6 ]; then
+      echo -e "\nElevating write permissions for ${chosen_device}"
+      sudo chmod o+rw "${tty_device}"
+      echo
     fi
     ;;
   macOS*)
-    #macos_usb_serial=$(ioreg -p IOUSB -n "USB Single Serial" | grep "USB Serial Number" | cut -c 34-43)
-    
-    #[ -z "${macos_usb_serial}" ] && echo "serial does not exist"
-    
-    #while [ -z "${macos_usb_serial}" ]
-    #do
-    #    echo -e "Connect your ${chosen_device} with a USB-C cable,\n  click \"Allow\" if you see a macOS security popup,"
-    #    sleep 5
-    #    macos_usb_serial=$(ioreg -p IOUSB -n "USB Single Serial" | grep "USB Serial Number" | cut -c 34-43)
-
-    #done
     echo -e "Connect your ${chosen_device} with a USB-C cable,\n  and click Allow if you see a security popup."
     read -srn1 -p "  PRESS ANY KEY to continue... " && echo && echo
     ;;
