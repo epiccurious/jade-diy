@@ -49,7 +49,7 @@ You understand that the person who sells you hardware for your bitcoin shouldn't
 
 3. You can't be bothered to operate a computer through the command line. We will be using the Terminal console, which some people find scary. It's not hard, I promise.
 
-4. You aren't willing to use [Linux](https://ubuntu.com/tutorials/install-ubuntu-desktop), macOS (running Arm-based hardware), or ChromeOS. This guide only supports Debian Linux, macOS, and ChromeOS for now but will eventually add support for other Linux distributions.
+4. You aren't willing to use [Linux](https://ubuntu.com/tutorials/install-ubuntu-desktop), macOS (running modern Arm-based hardware), or ChromOS. (This guide only supports Debian-based Linux, macOS, and ChromeOS for now but will eventually add support for other Linux distributions.)
 
 ### Keep Your DIY Jade Secured
 
