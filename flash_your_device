@@ -90,8 +90,9 @@ Darwin*)
   echo "ok."
   ;;
 MINGW*)
-  echo "Windows is not supported. Please run in WSL (Windows Subsystem for Linux)." && exit 0;;
-*) echo "Unsupported OS: $(uname -s)" && exit 0
+  echo "Windows is not supported. Please run in WSL (Windows Subsystem for Linux)." && exit 0
+  ;;
+*) echo "Unsupported OS: $(uname -s)" && exit 0 ;;
 esac
 
 echo -n "Checking for the Espressif IoT Development Framework... "
@@ -161,7 +162,7 @@ do
     echo "You chose to quit."
     exit 0
     ;;
-  *) echo "You entered ${REPLY}, which is invalid."
+  *) echo "You entered ${REPLY}, which is invalid." ;;
   esac
 done
 chosen_device="${choice}"
@@ -191,7 +192,7 @@ macOS*)
   echo -e "Connect your ${chosen_device} with a USB-C cable,\n  and click Allow if you see a security popup."
   read -srn1 -p "  PRESS ANY KEY to continue... " && echo && echo
   ;;
-*) echo "Unsupported OS: $(uname -s)" && exit 0
+*) echo "Unsupported OS: $(uname -s)" && exit 0 ;;
 esac
 
 echo -e "Ready to install Jade ${jade_version} on your ${chosen_device}.\n  (This process can take over 10 minutes.)"
