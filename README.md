@@ -120,7 +120,7 @@ There are three options for flashing your device:
 
 This option is recommended for the average user who doesn't know how to read and write bash.
 
-1. Read [this section about physically securing your DIY Jade]([MUST READ: Keep Your DIY Jade Secured](#must-read-keep-your-diy-jade-secured)).
+1. Read [this section about physically securing your DIY Jade](#must-read-keep-your-diy-jade-secured).
 
 2. Open the Terminal.
     - On Linux, press `Ctrl+Alt+T`.
@@ -138,7 +138,7 @@ After the script completes, you should see the Jade initialization screen on you
 
 ### Use a Device-Specific Script
 
-1. Read [this section about physically securing your DIY Jade]([MUST READ: Keep Your DIY Jade Secured](#must-read-keep-your-diy-jade-secured)).
+1. Read [this section about physically securing your DIY Jade](#must-read-keep-your-diy-jade-secured).
 
 2. Open the Terminal.
     - On Linux, press `Ctrl+Alt+T`.
@@ -169,7 +169,7 @@ After the script completes, you should see the Jade initialization screen on you
 
 This options is provided for people who want to run the commands themselves.
 
-1. Read [this section about physically securing your DIY Jade]([MUST READ: Keep Your DIY Jade Secured](#must-read-keep-your-diy-jade-secured)).
+1. Read [this section about physically securing your DIY Jade](#must-read-keep-your-diy-jade-secured).
 
 2. Open the Terminal. On Linux, press `Ctrl+Alt+T`. On macOS, press `Command+Space`, type terminal, and press `return`.
 
