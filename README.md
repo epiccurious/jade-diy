@@ -55,7 +55,7 @@ You understand that the person who sells you hardware for your bitcoin shouldn't
 
 Evil maid attacks, such as [this one done by hackers for a competitor](https://www.ledger.com/blog/firmware-extraction-evil-maid-attacks-on-blockstream-jade-hardware-wallet), will become easier and cheaper to perform over time.
 
-It's not just a risk of someone hacking or altering YOUR device. An evil maid can also swap your device with a new malicious device ([[#1]](https://usa.kaspersky.com/blog/fake-trezor-hardware-crypto-wallet/28299/), [[#2]](https://media.ccc.de/v/35c3-9563-wallet_fail), [[#3]](https://blog.trezor.io/psa-non-genuine-trezor-devices-979b64e359a7), [[#4]](https://www.reddit.com/r/ledgerwallet/comments/o154gz/comment/h1zagmk/)).
+It's not just a risk of someone hacking or altering YOUR device. An evil maid can also swap your device with a new malicious device ([[#1]](https://usa.kaspersky.com/blog/fake-trezor-hardware-crypto-wallet/28299/), [[#2]](https://media.ccc.de/v/35c3-9563-wallet_fail), [[#3]](https://blog.trezor.io/psa-non-genuine-trezor-devices-979b64e359a7), [[#4]](https://web.archive.org/web/20220820031918/https://www.reddit.com/r/ledgerwallet/comments/o154gz/comment/h1zagmk/)).
 
 As a countermeasure to evil maid attacks, **you need to control physical access** to your DIY Jade hardware wallet at all times. Keep your DIY Jade locked up in a safe, lockbox, or some other method of restricting access. Don't let your house cleaner see it. 
 
