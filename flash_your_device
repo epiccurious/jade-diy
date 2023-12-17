@@ -48,19 +48,17 @@ Linux*)
   machine="Linux"
   echo "Detected ${machine}."
   echo -n "Checking for dependencies... "
-  if ! command -v cmake &> /dev/null; then
-    echo -e "\n\nERROR:\ncmake was not found on your system.\nPlease install cmake by running:\n\nsudo apt update && sudo apt install -y cmake\n"
-    exit 1
-  elif ! command -v git &> /dev/null; then
-    echo -e "\n\nERROR:\ngit was not found on your system.\nPlease install git by running:\n\nsudo apt update && sudo apt install -y git\n"
-    exit 1
-  elif ! command -v pip &> /dev/null; then
-    echo -e "\n\nERROR:\npip was not found on your system.\nPlease install pip by running:\n\nsudo apt update && sudo apt install -y python3-pip\n"
-    exit 1
-  elif ! command -v virtualenv &> /dev/null; then
-    echo -e "\n\nERROR:\nvirtualenv was not found on your system.\nPlease install virtualenv by running:\n\nsudo apt update && sudo apt install -y python3-virtualenv\n"
-    exit 1
-  fi
+  while read -r dependency; do
+    if ! command -v "${dependency}" &> /dev/null; then
+      echo -en "\n\nERROR:\n${dependency} was not found on your system.\nPlease install ${dependency} by running:\n\n"
+      if [ "${dependency}" == "pip" ] || [ "${dependency}" == "virtualenv" ]; then
+        echo -en "sudo apt update && sudo apt install -y python3-${dependency}\n\n"
+      else
+        echo -en "sudo apt update && sudo apt install -y ${dependency}\n\n"
+      fi
+      exit 1
+    fi
+  done < <(curl -fsSL https://github.com/epiccurious/jade-diy/raw/master/depends.txt)
   echo "ok."
   ;;
 Darwin*)
