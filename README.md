@@ -8,7 +8,7 @@ This guide is designed for the general user who is not incompetant with computer
   - [What is a Jade?](#what-is-a-jade)
   - [Motivation (Who Should Follow This Guide?)](#motivation-who-should-follow-this-guide)
   - [Who Should NOT Follow This Guide?](#who-should-not-follow-this-guide)
-  - [Keep Your DIY Jade Secured](#must-read-keep-your-diy-jade-secured)
+  - [MUST READ: Keep Your DIY Jade Secured](#must-read-keep-your-diy-jade-secured)
   - [Current Limitations of Third-Party DIY Hardware](#current-limitations-of-third-party-diy-hardware)
 - [Hardware Options](#hardware-options)
   - [TTGO T-Display](#ttgo-t-display)
@@ -118,40 +118,45 @@ There are three options for flashing your device:
 
 This option is recommended for the average user who doesn't know how to read and write bash.
 
-1. Open the Terminal.
+1. Read [this section about physically securing your DIY Jade]([MUST READ: Keep Your DIY Jade Secured](#must-read-keep-your-diy-jade-secured)).
+
+2. Open the Terminal.
     - On Linux, press `Ctrl+Alt+T`.
     - On macOS, press `Command+Space`, type terminal, and press `return`.
     - on ChromeOS, install Linux under Settings -> Advanced -> Developers. Then press `🔍 (search)` on the keyboard, type terminal and press `enter`.
 
-2. Copy-paste the following full command in Terminal (you might have to scroll right):
+3. Run the following command (via copy-paste) in Terminal.
     ```bash
     /bin/bash -c "$(curl -sSL https://github.com/epiccurious/jade-diy/raw/master/flash_your_device)"
     ```
 
-3. When the script asks, choose your device (#1-#4).
+4. When the script asks, choose your device (#1-#4).
 
 After the script completes, you should see the Jade initialization screen on your device.
 
 ### Use a Device-Specific Script
 
-1. Open the Terminal. On Linux, press `Ctrl+Alt+T`. On macOS, press `Command+Space`, type terminal, and press `return`.
+1. Read [this section about physically securing your DIY Jade]([MUST READ: Keep Your DIY Jade Secured](#must-read-keep-your-diy-jade-secured)).
 
-2. Connect your device to your computer via USB.
+2. Open the Terminal.
+    - On Linux, press `Ctrl+Alt+T`.
+    - On macOS, press `Command+Space`, type terminal, and press `return`.
+    - on ChromeOS, install Linux under Settings -> Advanced -> Developers. Then press `🔍 (search)` on the keyboard, type terminal and press `enter`.
 
-3. Run one of the following in Terminal:
-    - If you're using the TTGO T-Dispay, run:
+3. Run one of the following commands (via copy-paste) in Terminal.
+    - For the TTGO T-Dispay:
         ```
         /bin/bash -c "$(curl -sSL https://github.com/epiccurious/jade-diy/raw/master/device_specific/flash_the_ttgo_tdisplay)"
         ```
-    - If you're using the M5Stack M5StickC PLUS, run:
+    - For the M5Stack M5StickC PLUS:
         ```
         /bin/bash -c "$(curl -sSL https://github.com/epiccurious/jade-diy/raw/master/device_specific/flash_the_m5stack_m5stickc_plus)"
         ```
-    - If you're using the M5Stack Core Basic, run:
+    - For the M5Stack Core Basic:
         ```
         /bin/bash -c "$(curl -sSL https://github.com/epiccurious/jade-diy/raw/master/device_specific/flash_the_m5stack_core_basic)"
         ```
-    - If you're using the M5Stack FIRE, run:
+    - For the M5Stack FIRE:
         ```
         /bin/bash -c "$(curl -sSL https://github.com/epiccurious/jade-diy/raw/master/device_specific/flash_the_m5stack_fire)"
         ```
@@ -162,9 +167,11 @@ After the script completes, you should see the Jade initialization screen on you
 
 This options is provided for people who want to run the commands themselves.
 
-1. Open the Terminal. On Linux, press `Ctrl+Alt+T`. On macOS, press `Command+Space`, type terminal, and press `return`.
+1. Read [this section about physically securing your DIY Jade]([MUST READ: Keep Your DIY Jade Secured](#must-read-keep-your-diy-jade-secured)).
 
-2. Install the required software packages. On a slow computer, this step can take over 20 minutes. Copy-and-paste the following lines into Terminal:
+2. Open the Terminal. On Linux, press `Ctrl+Alt+T`. On macOS, press `Command+Space`, type terminal, and press `return`.
+
+3. Install the required software packages. On a slow computer, this step can take over 20 minutes. Copy-and-paste the following lines into Terminal:
     ```bash
     sudo apt update
     sudo apt install -y cmake git python3-pip python3-venv
@@ -176,14 +183,14 @@ This options is provided for people who want to run the commands themselves.
     ```
 TODO: Add instructions for installing macOS dependendies.
   
-3. Download the Jade source code. Copy-and-paste the following lines into Terminal:
+4. Download the Jade source code. Copy-and-paste the following lines into Terminal:
     ```bash
     git clone --recursive https://github.com/blockstream/jade "${HOME}"/jade
     cd "${HOME}"/jade/
     git checkout $(git tag | grep -v miner | sort -V | tail -1)
     ```
   
-4. Load the pre-built configuration file for your DIY hardware.
+5. Load the pre-built configuration file for your DIY hardware.
     - For the TTGO T-Display, run:
         ```bash
         cp configs/sdkconfig_display_ttgo_tdisplay.defaults sdkconfig.defaults
@@ -201,25 +208,36 @@ TODO: Add instructions for installing macOS dependendies.
         cp configs/sdkconfig_display_m5fire.defaults sdkconfig.defaults
         ```
 
-5. Modify the configuration file you just loaded to disable logging in debug mode (a.k.a. "research and development" mode).
+6. Modify the configuration file you just loaded to disable logging in debug mode (a.k.a. "research and development" mode).
     ```bash
     sed -i.bak '/CONFIG_DEBUG_MODE/d' ./sdkconfig.defaults
     sed -i.bak '1s/^/CONFIG_LOG_DEFUALT_LEVEL_NONE=y\n/' sdkconfig.defaults
     rm sdkconfig.defaults.bak
     ```
-  
-6. Connect your device to your computer via USB.
 
-7. Enable read-write permissions for your device.
+7. Build the firmware.
+    ```
+    idf.py build
+    ```
+
+8. Connect your device to your computer via USB.
+
+9. Enable read-write permissions for your device.
     ```bash
     [ -f /dev/ttyACM0 ] && sudo chmod o+rw /dev/ttyACM0
-    [ -f /dev/ttyUSB0 ] && sudo chmod a+rw /dev/ttyUSB0
+    [ -f /dev/ttyUSB0 ] && sudo chmod o+rw /dev/ttyUSB0
     ```
 TODO: Add macOS instructions.
 
-8. Flash (install) Jade onto your device. On a slow computer, this step can take over 10 minutes. Run the following command in Terminal:
+10. Flash (install) Jade onto your device. On a slow computer, this step can take over 10 minutes. Run the following command in Terminal:
     ```bash
     idf.py -b 115200 flash
+    ```
+
+11. Either disable read-write permissions for your device or disconnect it. (Default permissions will be restored when you re-connect it.)
+    ```bash
+    [ -f /dev/ttyACM0 ] && sudo chmod o-rw /dev/ttyACM0
+    [ -f /dev/ttyUSB0 ] && sudo chmod o-rw /dev/ttyUSB0
     ```
 
 After the build and flash process completes, you should see the Jade initialization screen on your device.
