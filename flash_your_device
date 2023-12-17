@@ -48,7 +48,6 @@ Linux*)
   machine="Linux"
   echo "Detected ${machine}."
   echo -n "Checking for dependencies... "
-  
   while read -r dependency; do
     if ! command -v "${dependency}" &> /dev/null; then
       echo -en "\n\nERROR:\n${dependency} was not found on your system.\nPlease install ${dependency} by running:\n\n"
