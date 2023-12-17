@@ -198,7 +198,7 @@ echo -e "Ready to install Jade ${jade_version} on your ${chosen_device}.\n  (Thi
 read -srn1 -p "  PRESS ANY KEY to continue... " && echo
 
 final_confirmation_sleep_time="10"
-echo -ne "\nJade ${jade_version} installion will begin in ${final_confirmation_sleep_time} seconds.\nPress Ctrl+C to cancel... "
+echo -ne "\nContinuing Jade ${jade_version} installion in ${final_confirmation_sleep_time} seconds.\nPress Ctrl+C to abort ... "
 sleep "${final_confirmation_sleep_time}"
 echo
 
