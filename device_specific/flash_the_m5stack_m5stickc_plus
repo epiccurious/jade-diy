@@ -91,8 +91,6 @@ if [ "${initial_tty_device_permissions:2}" -lt 6 ]; then
   echo
 fi
 
-idf.py flash
-
 idf.py -p ${tty_device} -b 115200 flash
 
 echo -e "\nSUCCESS! Jade ${jade_version} is now installed on your ${chosen_device}.\nYou can close this window.\n"
