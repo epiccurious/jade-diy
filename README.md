@@ -119,7 +119,7 @@ This option is recommended for the average user who doesn't know how to read and
 1. Open the Terminal.
     - On Linux, press `Ctrl+Alt+T`.
     - On macOS, press `Command+Space`, type terminal, and press `return`.
-    - on ChromeOS, install Linux under Settings -> Advanced -> Developers. Then press `search 🔍` on the keyboard, type terminal and press `enter`.
+    - on ChromeOS, install Linux under Settings -> Advanced -> Developers. Then press `🔍 (search)` on the keyboard, type terminal and press `enter`.
 
 2. Copy-paste the following full command in Terminal (you might have to scroll right):
     ```bash
