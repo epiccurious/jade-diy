@@ -1,0 +1,4 @@
+cmake
+git
+pip
+virtualenv
