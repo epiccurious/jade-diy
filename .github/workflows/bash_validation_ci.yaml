@@ -8,24 +8,27 @@ on:
 
   workflow_dispatch:
 
+env:
+  TERM: xterm
+
 jobs:
-  shellcheck:
-    name: Validation with ShellCheck
+  steps:
+    name: Bash Validation
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
       - name: Run ShellCheck on jade-diy
         uses: ludeeus/action-shellcheck@master
         env:
           SHELLCHECK_OPTS: -e SC1091
-  shfmt-checker:
-    name: Validation with shfmt
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
+
       - name: Run shfmt on jade-diy scripts
         uses: luizm/action-sh-checker@master
         env:
           SHFMT_OPTS: -i 2 -sr
         with:
           sh_checker_shellcheck_disable: true
+
+      - name: Run flash_your_device
+        run: timeout 600 /bin/bash -x ./flash_your_device || [[ "$?" -eq "124" ]] && true
