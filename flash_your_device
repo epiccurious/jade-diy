@@ -1,10 +1,12 @@
 #!/bin/bash
-set -e
+set -o errexit
+set -o nounset
+set -o pipefail
 
 cleanup() {
   rm -rf -- "${temp_directory}"
   if [ "${machine}" == "Linux" ] &&
-    [ -n "${initial_tty_device_permissions}" ] &&
+    [ -n "${initial_tty_device_permissions:-}" ] &&
     [ "$(stat -c '%a' "${tty_device}")" != "${initial_tty_device_permissions}" ]; then
     sudo chmod "${initial_tty_device_permissions}" "${tty_device}"
   fi
