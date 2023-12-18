@@ -31,4 +31,6 @@ jobs:
           sh_checker_shellcheck_disable: true
 
       - name: Run flash_your_device
-        run: timeout 600 /bin/bash -x ./flash_your_device || [[ "$?" -eq "124" ]] && true
+        run: |
+          sudo apt update && sudo apt install -y python3-virtualenv
+          timeout 600 /bin/bash -x ./flash_your_device || [[ "$?" -eq "124" ]] && true
