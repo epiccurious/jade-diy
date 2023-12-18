@@ -101,9 +101,6 @@ if [ ! -f "${esp_idf_save_directory}"/export.sh ]; then
   git -c advice.detachedHead=false clone --branch "${esp_idf_git_tag}" --single-branch --depth 1 --quiet "${esp_idf_repo_url}" "${esp_idf_temp_directory}"
   cd "${esp_idf_temp_directory}"/
   git submodule update --depth 1 --init --recursive --quiet &> /dev/null
-  ./install.sh esp32 &> /dev/null
-  # shellcheck source=/dev/null
-  source ./export.sh 1> /dev/null
   mv "${esp_idf_temp_directory}" "${esp_idf_save_directory}"
   echo "ok."
 else
