@@ -1,4 +1,4 @@
-name: Bash CI
+name: Validation CI
 
 on:
   push:
@@ -12,7 +12,7 @@ env:
   TERM: xterm
 
 jobs:
-  validate-shellcheck:
+  bash-lint:
     name: Validate with ShellCheck
     runs-on: ubuntu-latest
     steps:
@@ -22,7 +22,7 @@ jobs:
         env:
           SHELLCHECK_OPTS: -e SC1091
 
-  validate-shfmt:
+  bash-format:
     name: Validate with shfmt
     runs-on: ubuntu-latest
     steps:
@@ -34,21 +34,31 @@ jobs:
         with:
           sh_checker_shellcheck_disable: true
 
+  markdown-links:
+    name: Validation with markdown-link-check
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Run markdown-link-check on Documentation
+      uses: gaurav-nelson/github-action-markdown-link-check@v1
+      with:
+        use-verbose-mode: 'yes'
+
   run-scripts:
     name: Execute the scripts
     runs-on: ubuntu-latest
-    needs: [validate-shellcheck, validate-shfmt]
+    needs: [bash-lint, bash-format]
     steps:
       - uses: actions/checkout@v4
       - name: Install runtime dependency python3-virtualenv
         run: sudo apt update && sudo apt install -y python3-virtualenv
-      - name: Run flash_your_device
-        run: timeout 240 /bin/bash -x ./flash_your_device
       - name: Run flash_the_ttgo_tdisplay
-        run: timeout 30 /bin/bash -x ./device_specific/flash_the_ttgo_tdisplay
+        run: timeout 300 /bin/bash -x ./device_specific/flash_the_ttgo_tdisplay
       - name: Run flash_the_m5stack_m5stickc_plus
-        run: timeout 30 /bin/bash -x ./device_specific/flash_the_m5stack_m5stickc_plus
+        run: timeout 20 /bin/bash -x ./device_specific/flash_the_m5stack_m5stickc_plus
       - name: Run flash_the_m5stack_core_basic
-        run: timeout 30 /bin/bash -x ./device_specific/flash_the_m5stack_core_basic
+        run: timeout 20 /bin/bash -x ./device_specific/flash_the_m5stack_core_basic
       - name: Run flash_the_m5stack_fire
-        run: timeout 30 /bin/bash -x ./device_specific/flash_the_m5stack_fire
+        run: timeout 20 /bin/bash -x ./device_specific/flash_the_m5stack_fire
+      - name: Run flash_your_device
+        run: timeout 60 /bin/bash -x ./flash_your_device
