@@ -24,7 +24,6 @@ jobs:
   validate-shfmt:
     name: Validate with shfmt
     runs-on: ubuntu-latest
-    needs: validate-shellcheck
     steps:
       - uses: actions/checkout@v3
       - name: Run shfmt on jade-diy scripts
