@@ -8,24 +8,47 @@ on:
 
   workflow_dispatch:
 
+env:
+  TERM: xterm
+
 jobs:
-  shellcheck:
-    name: Validation with ShellCheck
+  validate-shellcheck:
+    name: Validate with ShellCheck
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Run ShellCheck on jade-diy
         uses: ludeeus/action-shellcheck@master
         env:
           SHELLCHECK_OPTS: -e SC1091
-  shfmt-checker:
-    name: Validation with shfmt
+
+  validate-shfmt:
+    name: Validate with shfmt
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Run shfmt on jade-diy scripts
         uses: luizm/action-sh-checker@master
         env:
           SHFMT_OPTS: -i 2 -sr
         with:
           sh_checker_shellcheck_disable: true
+
+  run-scripts:
+    name: Execute the scripts
+    runs-on: ubuntu-latest
+    needs: [validate-shellcheck, validate-shfmt]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install runtime dependency python3-virtualenv
+        run: sudo apt update && sudo apt install -y python3-virtualenv
+      - name: Run flash_your_device
+        run: timeout 240 /bin/bash -x ./flash_your_device
+      - name: Run flash_the_ttgo_tdisplay
+        run: timeout 30 /bin/bash -x ./device_specific/flash_the_ttgo_tdisplay
+      - name: Run flash_the_m5stack_m5stickc_plus
+        run: timeout 30 /bin/bash -x ./device_specific/flash_the_m5stack_m5stickc_plus
+      - name: Run flash_the_m5stack_core_basic
+        run: timeout 30 /bin/bash -x ./device_specific/flash_the_m5stack_core_basic
+      - name: Run flash_the_m5stack_fire
+        run: timeout 30 /bin/bash -x ./device_specific/flash_the_m5stack_fire

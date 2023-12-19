@@ -125,52 +125,57 @@ cd "${jade_save_directory}"
 jade_version="$(git describe --tags)"
 echo "ok."
 
-echo -e "\nWhich device do you want to flash?"
-PS3='Please enter the number for your device or QUIT: '
-options=("${device1}" "${device2}" "${device3}" "${device4}" "QUIT")
-select choice in "${options[@]}"; do
-  case "${choice}" in
-  "${device1}")
-    tty_device="/dev/ttyACM0"
-    flash_command="idf.py flash"
-    cp configs/sdkconfig_display_ttgo_tdisplay.defaults sdkconfig.defaults
-    break
-    ;;
-  "${device2}")
-    tty_device="/dev/ttyUSB0"
-    flash_command="idf.py -b 115200 flash"
-    cp configs/sdkconfig_display_m5stickcplus.defaults sdkconfig.defaults
-    break
-    ;;
-  "${device3}")
-    tty_device="/dev/ttyACM0"
-    flash_command="idf.py flash"
-    cp configs/sdkconfig_display_m5blackgray.defaults sdkconfig.defaults
-    break
-    ;;
-  "${device4}")
-    tty_device="/dev/ttyACM0"
-    flash_command="idf.py flash"
-    cp configs/sdkconfig_display_m5fire.defaults sdkconfig.defaults
-    break
-    ;;
-  "QUIT")
-    echo "You chose to quit."
-    exit 0
-    ;;
-  *) echo "You entered ${REPLY}, which is invalid." ;;
-  esac
-done
-chosen_device="${choice}"
-echo
+if [ "${CI:-false}" = true ]; then
+  cp configs/sdkconfig_display_ttgo_tdisplay.defaults sdkconfig.defaults
+else
+  echo -e "\nWhich device do you want to flash?"
+  PS3='Please enter the number for your device or QUIT: '
+  options=("${device1}" "${device2}" "${device3}" "${device4}" "QUIT")
+  select chosen_device in "${options[@]}"; do
+    case "${chosen_device}" in
+    "${device1}")
+      tty_device="/dev/ttyACM0"
+      flash_command="idf.py flash"
+      cp configs/sdkconfig_display_ttgo_tdisplay.defaults sdkconfig.defaults
+      break
+      ;;
+    "${device2}")
+      tty_device="/dev/ttyUSB0"
+      flash_command="idf.py -b 115200 flash"
+      cp configs/sdkconfig_display_m5stickcplus.defaults sdkconfig.defaults
+      break
+      ;;
+    "${device3}")
+      tty_device="/dev/ttyACM0"
+      flash_command="idf.py flash"
+      cp configs/sdkconfig_display_m5blackgray.defaults sdkconfig.defaults
+      break
+      ;;
+    "${device4}")
+      tty_device="/dev/ttyACM0"
+      flash_command="idf.py flash"
+      cp configs/sdkconfig_display_m5fire.defaults sdkconfig.defaults
+      break
+      ;;
+    "QUIT")
+      echo "You chose to quit."
+      exit 0
+      ;;
+    *) echo "You entered ${REPLY}, which is invalid." ;;
+    esac
+  done
+  echo
+fi
 
 [ -f sdkconfig ] && rm sdkconfig
 sed -i.bak '/CONFIG_DEBUG_MODE/d' ./sdkconfig.defaults
 sed -i.bak '1s/^/CONFIG_LOG_DEFUALT_LEVEL_NONE=y\n/' sdkconfig.defaults
 
-echo -n "Creating the Jade firmware... "
+echo -n "Building the Jade firmware... "
 idf.py build &> /dev/null
 echo "ok."
+
+[ "${CI:-false}" = true ] && echo "Exiting the script for CI runners." && exit 0
 
 case "${machine}" in
 Linux*)
