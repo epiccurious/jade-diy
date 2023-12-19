@@ -176,10 +176,7 @@ echo -n "Creating the Jade firmware... "
 idf.py build &> /dev/null
 echo "ok."
 
-if [ "${CI:-false}" = true ]; then
-  echo "Exiting the script for CI runners."
-  exit 0
-fi
+[ "${CI:-false}" = true ] && echo "Exiting the script for CI runners." && exit 0
 
 case "${machine}" in
 Linux*)

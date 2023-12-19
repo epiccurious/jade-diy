@@ -34,7 +34,16 @@ jobs:
         run: sudo apt update && sudo apt install -y python3-virtualenv
 
       - name: Run flash_your_device
-        run: timeout 600 /bin/bash -x ./flash_your_device || [[ "$?" -eq "124" ]] && true
+        run: timeout 200 /bin/bash -x ./flash_your_device
 
       - name: Run flash_the_ttgo_tdisplay
-        run: timeout 600 /bin/bash -x ./device_specific/flash_the_ttgo_tdisplay || [[ "$?" -eq "124" ]] && true
+        run: timeout 200 /bin/bash -x ./device_specific/flash_the_ttgo_tdisplay
+
+      - name: Run flash_the_m5stack_m5stickc_plus
+        run: timeout 200 /bin/bash -x ./device_specific/flash_the_m5stack_m5stickc_plus
+
+      - name: Run flash_the_m5stack_core_basic
+        run: timeout 200 /bin/bash -x ./device_specific/flash_the_m5stack_core_basic
+
+      - name: Run flash_the_m5stack_fire
+        run: timeout 200 /bin/bash -x ./device_specific/flash_the_m5stack_fire

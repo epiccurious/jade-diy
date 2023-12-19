@@ -83,6 +83,8 @@ rm sdkconfig.defaults.bak
 
 idf.py build
 
+[ "${CI:-false}" = true ] && echo "Exiting the script for CI runners." && exit 0
+
 while [ ! -c "${tty_device}" ]; do
   read -srn1 -p "Connect your ${chosen_device} and PRESS ANY KEY to continue... " && echo
 done
