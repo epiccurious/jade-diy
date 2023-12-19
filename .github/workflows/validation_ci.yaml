@@ -52,13 +52,13 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install runtime dependency python3-virtualenv
         run: sudo apt update && sudo apt install -y python3-virtualenv
-      - name: Run flash_your_device
-        run: timeout 240 /bin/bash -x ./flash_your_device
       - name: Run flash_the_ttgo_tdisplay
-        run: timeout 30 /bin/bash -x ./device_specific/flash_the_ttgo_tdisplay
+        run: timeout 240 /bin/bash -x ./device_specific/flash_the_ttgo_tdisplay
       - name: Run flash_the_m5stack_m5stickc_plus
         run: timeout 30 /bin/bash -x ./device_specific/flash_the_m5stack_m5stickc_plus
       - name: Run flash_the_m5stack_core_basic
         run: timeout 30 /bin/bash -x ./device_specific/flash_the_m5stack_core_basic
       - name: Run flash_the_m5stack_fire
         run: timeout 30 /bin/bash -x ./device_specific/flash_the_m5stack_fire
+      - name: Run flash_your_device
+        run: timeout 30 /bin/bash -x ./flash_your_device
