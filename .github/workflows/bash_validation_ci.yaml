@@ -30,7 +30,7 @@ jobs:
         with:
           sh_checker_shellcheck_disable: true
 
-      - name: Install dependency python3-virtualenv
+      - name: Install runtime dependency python3-virtualenv
         run: sudo apt update && sudo apt install -y python3-virtualenv
 
       - name: Run flash_your_device
