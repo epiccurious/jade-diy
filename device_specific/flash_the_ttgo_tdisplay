@@ -78,7 +78,7 @@ jade_version="$(git describe --tags)"
 
 cp configs/sdkconfig_display_ttgo_tdisplay.defaults sdkconfig.defaults
 sed -i.bak '/CONFIG_DEBUG_MODE/d' ./sdkconfig.defaults
-sed -i.bak '1s/^/CONFIG_LOG_DEFUALT_LEVEL_NONE=y\n/' sdkconfig.defaults
+sed -i.bak '1s/^/CONFIG_LOG_DEFAULT_LEVEL_NONE=y\n/' sdkconfig.defaults
 rm sdkconfig.defaults.bak
 
 idf.py build
