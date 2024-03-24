@@ -213,7 +213,7 @@ TODO: Add instructions for installing macOS dependendies.
 6. Modify the configuration file you just loaded to disable logging in debug mode (a.k.a. "research and development" mode).
     ```bash
     sed -i.bak '/CONFIG_DEBUG_MODE/d' ./sdkconfig.defaults
-    sed -i.bak '1s/^/CONFIG_LOG_DEFUALT_LEVEL_NONE=y\n/' sdkconfig.defaults
+    sed -i.bak '1s/^/CONFIG_LOG_DEFAULT_LEVEL_NONE=y\n/' sdkconfig.defaults
     rm sdkconfig.defaults.bak
     ```
 

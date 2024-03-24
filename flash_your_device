@@ -169,7 +169,7 @@ fi
 
 [ -f sdkconfig ] && rm sdkconfig
 sed -i.bak '/CONFIG_DEBUG_MODE/d' ./sdkconfig.defaults
-sed -i.bak '1s/^/CONFIG_LOG_DEFUALT_LEVEL_NONE=y\n/' sdkconfig.defaults
+sed -i.bak '1s/^/CONFIG_LOG_DEFAULT_LEVEL_NONE=y\n/' sdkconfig.defaults
 
 echo -n "Building the Jade firmware... "
 idf.py build &> /dev/null
