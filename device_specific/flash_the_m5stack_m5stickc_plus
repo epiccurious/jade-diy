@@ -15,11 +15,11 @@ working_directory="${HOME}/Downloads/diy_jade"
 temp_directory="${working_directory}/temp"
 trap cleanup EXIT
 
-jade_git_tag="1.0.26"
+jade_git_tag="1.0.28"
 jade_save_directory="${working_directory}/jade"
 jade_repo_url="https://github.com/blockstream/jade.git"
 
-esp_idf_git_tag="v5.1.1"
+esp_idf_git_tag="v5.1.2"
 esp_idf_temp_directory="${temp_directory}/esp-idf"
 esp_idf_save_directory="${working_directory}/esp-idf"
 esp_idf_repo_url="https://github.com/espressif/esp-idf.git"
