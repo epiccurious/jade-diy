@@ -172,7 +172,7 @@ sed -i.bak '/CONFIG_DEBUG_MODE/d' ./sdkconfig.defaults
 sed -i.bak '1s/^/CONFIG_LOG_DEFAULT_LEVEL_NONE=y\n/' sdkconfig.defaults
 
 echo -n "Building the Jade firmware... "
-idf.py build &> /dev/null
+idf.py build
 echo "ok."
 
 [ "${CI:-false}" = true ] && echo "Exiting the script for CI runners." && exit 0
